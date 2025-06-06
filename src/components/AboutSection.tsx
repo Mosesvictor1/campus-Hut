@@ -15,7 +15,7 @@ const AboutSection = () => {
               Founded by students, for students, our mission is to democratize access to quality educational tools and create a connected campus community across Africa.
             </p>
             
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-36">
               <div className="text-center">
                 <div className="text-3xl font-bold text-campusGreen-600">50K+</div>
                 <div className="text-gray-600">Active Students</div>
@@ -30,9 +30,9 @@ const AboutSection = () => {
           <div className="mt-12 lg:mt-0">
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&h=400&fit=crop"
+                src="assets/about2.jpg"
                 alt="African students collaborating"
-                className="w-full h-96 object-cover rounded-2xl shadow-2xl"
+                className="w-full h-[500px] object-cover rounded-2xl shadow-2xl"
               />
               <div className="absolute inset-0 bg-campusGreen-600/20 rounded-2xl"></div>
             </div>

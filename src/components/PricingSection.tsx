@@ -9,18 +9,18 @@ const PricingSection = () => {
   const [isYearly, setIsYearly] = useState(false);
 
   return (
-    <section id="pricing" className="py-16 bg-gradient-to-br from-campusGreen-50 to-blue-50">
+    <section id="pricing" className="py-16 bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Choose Your Plan</h2>
-          <p className="text-xl text-gray-600 mb-8">Start free, upgrade when you're ready for premium features</p>
+          <h2 className="text-3xl font-bold text-gray-50 mb-4" data-aos="fade-up">Choose Your Plan</h2>
+          <p className="text-xl text-gray-100 mb-8" data-aos="fade-up">Start free, upgrade when you're ready for premium features</p>
           
-          <div className="flex items-center justify-center mb-8">
-            <span className={`mr-3 ${!isYearly ? 'text-campusGreen-600 font-semibold' : 'text-gray-600'}`}>Monthly</span>
+          <div className="flex items-center justify-center mb-8" data-aos="fade-up">
+            <span className={`mr-3 ${!isYearly ? 'text-campusGreen-600 font-semibold' : 'text-gray-100'}`}>Monthly</span>
             <button
               onClick={() => setIsYearly(!isYearly)}
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                isYearly ? 'bg-campusGreen-600' : 'bg-gray-200'
+                isYearly ? 'bg-campusGreen-600' : 'bg-gray-100'
               }`}
             >
               <span
@@ -29,7 +29,7 @@ const PricingSection = () => {
                 }`}
               />
             </button>
-            <span className={`ml-3 ${isYearly ? 'text-campusGreen-600 font-semibold' : 'text-gray-600'}`}>
+            <span className={`ml-3 ${isYearly ? 'text-campusGreen-600 font-semibold' : 'text-gray-600'}`} data-aos="fade-up">
               Yearly <Badge variant="secondary" className="ml-1">Save 17%</Badge>
             </span>
           </div>
@@ -37,7 +37,7 @@ const PricingSection = () => {
 
         <div className="grid lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {/* Free Plan */}
-          <Card className="border-2 border-gray-200 shadow-lg">
+          <Card className="border-2 border-gray-200 shadow-lg" data-aos="zoom-in-right">
             <CardContent className="p-8">
               <div className="text-center mb-8">
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">Free Plan</h3>
@@ -69,7 +69,7 @@ const PricingSection = () => {
           </Card>
 
           {/* Premium Plan */}
-          <Card className="border-2 border-campusGreen-500 shadow-xl relative">
+          <Card className="border-2 border-campusGreen-500 shadow-xl relative" data-aos="zoom-in-left">
             <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
               <Badge className="bg-campusGreen-500 text-white px-4 py-2">Most Popular</Badge>
             </div>

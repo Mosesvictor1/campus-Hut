@@ -20,13 +20,13 @@ const ContactSection = () => {
     <section id="contact" className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Get In Touch</h2>
-          <p className="text-xl text-gray-600">Have questions? We'd love to hear from you</p>
+          <h2 className="text-3xl font-bold text-gray-900 mb-4" data-aos="fade-up" >Get In Touch</h2>
+          <p className="text-xl text-gray-600" data-aos="fade-up">Have questions? We'd love to hear from you</p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
           <div>
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 shadow-lg" data-aos="zoom-out-right">
               <CardContent className="p-8">
                 <form onSubmit={handleContactSubmit} className="space-y-6">
                   <div>
@@ -50,7 +50,7 @@ const ContactSection = () => {
           </div>
 
           <div className="space-y-8">
-            <div>
+            <div data-aos="zoom-out-left">
               <h3 className="text-xl font-semibold text-gray-900 mb-6">Contact Information</h3>
               <div className="space-y-4">
                 <div className="flex items-center">
@@ -68,7 +68,7 @@ const ContactSection = () => {
               </div>
             </div>
 
-            <div>
+            <div  data-aos="zoom-out-left">
               <h3 className="text-xl font-semibold text-gray-900 mb-6">Follow Us</h3>
               <div className="flex space-x-4">
                 <a href="#" className="w-12 h-12 bg-campusGreen-100 rounded-full flex items-center justify-center hover:bg-campusGreen-600 hover:text-white transition-colors">
@@ -83,7 +83,7 @@ const ContactSection = () => {
               </div>
             </div>
 
-            <div className="bg-campusGreen-50 p-6 rounded-2xl">
+            <div className="bg-campusGreen-50 p-6 rounded-2xl"  data-aos="zoom-out-left">
               <h4 className="font-semibold text-gray-900 mb-2">Interested in Partnership?</h4>
               <p className="text-gray-600 mb-4">Join our growing network of university partners across Africa.</p>
               <Button variant="outline" className="border-campusGreen-600 text-campusGreen-600 hover:bg-campusGreen-600 hover:text-white">
