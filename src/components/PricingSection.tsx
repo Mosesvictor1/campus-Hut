@@ -20,7 +20,7 @@ const PricingSection = () => {
             <button
               onClick={() => setIsYearly(!isYearly)}
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                isYearly ? 'bg-campusGreen-600' : 'bg-gray-100'
+                isYearly ? 'bg-campusGreen-600' : 'bg-gray-500'
               }`}
             >
               <span

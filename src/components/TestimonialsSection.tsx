@@ -11,7 +11,7 @@ const TestimonialsSection = () => {
       content:
         "CampusHut's AI study assistant helped me understand complex algorithms. It's like having a personal tutor!",
       avatar:
-        "https://images.unsplash.com/photo-1494790108755-2616b612b5a1?w=100&h=100&fit=crop&crop=face",
+        "assets/tes1.jpg",
     },
     {
       id: 2,

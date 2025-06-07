@@ -9,7 +9,7 @@ const AboutSection = () => {
           <div>
             <h2 className="text-3xl font-bold text-gray-900 mb-6">Empowering African Students with Smart Learning</h2>
             <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              CampusHut was born from the real challenges faced by African university students. We understand the struggle of scattered academic resources, limited access to study materials, and the need for better organization tools.
+              CampusHut was born from the real challenges faced by African students. We understand the struggle of scattered academic resources, limited access to study materials, and the need for better organization tools.
             </p>
             <p className="text-lg text-gray-600 mb-8 leading-relaxed">
               Founded by students, for students, our mission is to democratize access to quality educational tools and create a connected campus community across Africa.

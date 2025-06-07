@@ -42,7 +42,7 @@ const QuickOverview = () => {
             Everything You Need for Academic Success
           </h2>
           <p className="text-xl text-gray-600">
-            Powerful tools designed specifically for African university students
+            Powerful tools designed specifically for African students
           </p>
         </div>
 

@@ -62,7 +62,7 @@ const HeroSection = () => {
               Your Smart <span className="text-orange-500">Campus</span> Companion
             </h1>
             <p className="mt-4 sm:mt-6 text-base sm:text-lg md:text-xl text-gray-200 leading-relaxed">
-              AI tools, study planners, CV builder & more — made specifically for African university students
+              AI tools, study planners, CV builder & more — made specifically for African students
             </p>
 
             <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
