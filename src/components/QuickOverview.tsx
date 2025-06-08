@@ -1,15 +1,15 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { BookOpen, Brain, Calendar, FileText } from "lucide-react";
+import { BookOpen, Brain, Calendar, FileText, BellPlus } from "lucide-react";
 
 const QuickOverview = () => {
   const features = [
     {
       id: 1,
-      icon: BookOpen,
-      title: "Syllabus Navigator",
+      icon: BellPlus,
+      title: "Smart Reminders",
       description:
-        "Navigate through your course syllabus with ease and track your progress",
+        "Stay on top of deadlines and tasks with intelligent reminders tailored to your schedule and study habits.",
     },
     {
       id: 2,

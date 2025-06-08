@@ -7,16 +7,18 @@ import {
   FileText,
   Bell,
   MessageCircle,
+  BellPlus,
+  ShoppingBag
 } from "lucide-react";
 
 const FeaturesOverview = () => {
   const features = [
     {
       id: 1,
-      icon: BookOpen,
-      title: "Syllabus Navigator",
+      icon: BellPlus,
+      title: "Smart Reminders",
       description:
-        "Navigate through your course syllabus with ease and track your progress",
+        "Stay on top of deadlines and tasks with intelligent reminders tailored to your schedule and study habits.",
     },
     {
       id: 2,
@@ -41,10 +43,10 @@ const FeaturesOverview = () => {
     },
     {
       id: 5,
-      icon: Bell,
-      title: "Smart Reminders",
+      icon: ShoppingBag,
+      title: "Marketplace",
       description:
-        "Get intelligent notifications for exams, assignments, and deadlines",
+        "Buy and sell academic resources, study materials, and services within a trusted student community.",
     },
     {
       id: 6,
@@ -58,7 +60,10 @@ const FeaturesOverview = () => {
     <section id="features" className="py-16 bg-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-50 mb-4" data-aos="fade-up">
+          <h2
+            className="text-3xl font-bold text-gray-50 mb-4"
+            data-aos="fade-up"
+          >
             Comprehensive Learning Tools
           </h2>
           <p className="text-xl text-gray-100" data-aos="fade-up">
