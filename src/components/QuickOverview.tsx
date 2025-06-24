@@ -1,69 +1,72 @@
 import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { BookOpen, Brain, Calendar, FileText, BellPlus } from "lucide-react";
+
+const cardData = [
+  {
+    id: 1,
+    title: "Smart Reminders",
+    description:
+      "Stay on top of deadlines and tasks with intelligent reminders tailored to your schedule and study habits.",
+    image: "/assets/quick1.jpg",
+  },
+  {
+    id: 2,
+    title: "AI Study Assistant",
+    description:
+      "Generate personalized study courses, quizzes, and flashcards using AI.",
+    image: "/assets/quick2.jpg",
+  },
+  {
+    id: 3,
+    title: "Schedule Manager",
+    description:
+      "Stay on top of deadlines and tasks with intelligent reminders tailored to your schedule and study habits.",
+    image: "/assets/quick3.jpg",
+  },
+  {
+    id: 4,
+    title: "CV Builder",
+    description:
+      "Create professional CVs with our smart templates and AI suggestions",
+    image: "/assets/quick4.jpg",
+  },
+];
 
 const QuickOverview = () => {
-  const features = [
-    {
-      id: 1,
-      icon: BellPlus,
-      title: "Smart Reminders",
-      description:
-        "Stay on top of deadlines and tasks with intelligent reminders tailored to your schedule and study habits.",
-    },
-    {
-      id: 2,
-      icon: Brain,
-      title: "AI Study Assistant",
-      description:
-        "Generate personalized study courses, quizzes, and flashcards using AI",
-    },
-    {
-      id: 3,
-      icon: Calendar,
-      title: "Schedule Manager",
-      description:
-        "Organize your academic schedule and never miss important dates",
-    },
-    {
-      id: 4,
-      icon: FileText,
-      title: "CV Builder",
-      description:
-        "Create professional CVs with our smart templates and AI suggestions",
-    },
-  ];
-
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-[#EAFFE9]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            Everything You Need for Academic Success
+          <h2 className="text-3xl font-bold text-gray-900 mb-2" data-aos="fade-up">
+            Everything You Need for Academic{" "}
+            <span className="text-orange-500">Success</span>
           </h2>
-          <p className="text-xl text-gray-600">
+          <p className="text-base text-gray-700" data-aos="fade-up">
             Powerful tools designed specifically for African students
           </p>
         </div>
-
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((feature, index) => (
-            <Card
-              key={index}
-              className="border-0 shadow-lg bg-white/50 backdrop-blur-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
-              data-aos="zoom-out-up"
-              data-aos-delay={`${(feature.id % 3) * 100}`}
+          {cardData.map((card, idx) => (
+            <div
+              key={idx}
+              className="rounded-xl overflow-hidden shadow-lg relative group min-h-[320px] flex flex-col justify-end"
+              style={{
+                backgroundImage: `url(${card.image})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+              data-aos="zoom-in"
+              data-aos-delay={`${(card.id % 3) * 100}`}
             >
-              <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 bg-campusGreen-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <feature.icon className="w-8 h-8 text-campusGreen-600" />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  {feature.title}
+              <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-[#040f04] via-[#0aff054e]  group-hover:bg-opacity-70 transition-all duration-300" />
+              <div className="relative z-10 p-6 text-center flex flex-col items-center justify-end h-full">
+                <h3 className="text-xl font-bold text-white mb-2 drop-shadow-lg">
+                  {card.title}
                 </h3>
-                <p className="text-gray-600 text-sm">{feature.description}</p>
-              </CardContent>
-            </Card>
+                <p className="text-white text-sm drop-shadow-lg">
+                  {card.description}
+                </p>
+              </div>
+            </div>
           ))}
         </div>
       </div>

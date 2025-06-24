@@ -133,18 +133,18 @@ const ContactSection = () => {
             </div>
 
             <div
-              className="bg-campusGreen-50 p-6 rounded-2xl"
+              className="bg-campusGreen-600 p-6 rounded-2xl"
               data-aos="zoom-out-left"
             >
-              <h4 className="font-semibold text-gray-900 mb-2">
+              <h4 className="font-bold text-gray-50 mb-2 text-lg">
                 Interested in Partnership?
               </h4>
-              <p className="text-gray-600 mb-4">
+              <p className="text-gray-50 mb-4">
                 Join our growing network of university partners across Africa.
               </p>
               <Button
                 variant="outline"
-                className="border-campusGreen-600 text-campusGreen-600 hover:bg-campusGreen-600 hover:text-white"
+                className="border-campusGreen-600 text-campusGreen-600 hover:bg-gray-100 hover:text-black font-semibold" 
               >
                 Partner with Us
               </Button>

@@ -18,13 +18,25 @@ const Footer = () => {
               and campus life.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-campusGreen-400">
+              <a
+                href="https://www.instagram.com/campushut_?igsh=MWs1ZTVtZ29hdGg5cQ"
+                target="_blank"
+                className="text-gray-400 hover:text-campusGreen-400"
+              >
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-campusGreen-400">
+              <a
+                href="https://www.facebook.com/share/1BnLaYDnEd/"
+                target="_blank"
+                className="text-gray-400 hover:text-campusGreen-400"
+              >
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-campusGreen-400">
+              <a
+                href="https://www.linkedin.com/company/campushut-limited/"
+                target="_blank"
+                className="text-gray-400 hover:text-campusGreen-400"
+              >
                 <Linkedin className="w-5 h-5" />
               </a>
             </div>

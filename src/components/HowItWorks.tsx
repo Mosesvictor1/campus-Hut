@@ -43,11 +43,11 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section className="py-16 bg-gradient-to-br from-gray-50 to-campusGreen-50">
+    <section className="py-16 bg-[#EAFFE9]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4" data-aos="fade-up">
-            How CampusHut Works
+            How Campus<span className="text-orange-500">Hut</span>  Works
           </h2>
           <p className="text-xl text-gray-600" data-aos="fade-up">
             Get started in just a few simple steps
