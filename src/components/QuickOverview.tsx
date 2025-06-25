@@ -19,7 +19,7 @@ const cardData = [
     id: 3,
     title: "Schedule Manager",
     description:
-      "Stay on top of deadlines and tasks with intelligent reminders tailored to your schedule and study habits.",
+      "Schedule Manager helps students plan their day by organizing classes, tasks, and events, ensuring better time use and productivity.",
     image: "/assets/quick3.jpg",
   },
   {
