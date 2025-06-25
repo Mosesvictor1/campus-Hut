@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -12,13 +12,53 @@ import {
   Facebook,
   Linkedin,
 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog";
 
 const ContactSection = () => {
+  const [partnerOpen, setPartnerOpen] = useState(false);
+  const [partnerForm, setPartnerForm] = useState({
+    name: "",
+    company: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
       title: "Message sent!",
       description: "Thank you for your interest. We'll get back to you soon.",
+    });
+  };
+
+  const handlePartnerChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setPartnerForm({ ...partnerForm, [e.target.name]: e.target.value });
+  };
+
+  const handlePartnerSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast({
+      title: "Partnership Request Sent!",
+      description:
+        "Thank you for your interest in partnering with us. We'll reach out soon.",
+    });
+    setPartnerOpen(false);
+    setPartnerForm({
+      name: "",
+      company: "",
+      email: "",
+      phone: "",
+      message: "",
     });
   };
 
@@ -49,6 +89,7 @@ const ContactSection = () => {
                     <Input
                       placeholder="Your full name"
                       className="border-gray-300"
+                      required
                     />
                   </div>
                   <div>
@@ -59,6 +100,7 @@ const ContactSection = () => {
                       type="email"
                       placeholder="your.email@university.edu"
                       className="border-gray-300"
+                      required
                     />
                   </div>
                   <div>
@@ -69,6 +111,7 @@ const ContactSection = () => {
                       placeholder="Tell us how we can help..."
                       rows={5}
                       className="border-gray-300"
+                      required
                     />
                   </div>
                   <Button
@@ -99,8 +142,8 @@ const ContactSection = () => {
                 <div className="flex items-center">
                   <MapPin className="w-8 h-8 text-campusGreen-600 mr-4" />
                   <span className="text-gray-700">
-                    The Philippi Centre, Oluwalogbon House, Plot A
-                    Obafemi Awolowo Way, Alausa Ikeja, Lagos.
+                    The Philippi Centre, Oluwalogbon House, Plot A Obafemi
+                    Awolowo Way, Alausa Ikeja, Lagos.
                   </span>
                 </div>
               </div>
@@ -112,19 +155,22 @@ const ContactSection = () => {
               </h3>
               <div className="flex space-x-4">
                 <a
-                  href="https://www.instagram.com/campushut_?igsh=MWs1ZTVtZ29hdGg5cQ" target="_blank"
+                  href="https://www.instagram.com/campushut_?igsh=MWs1ZTVtZ29hdGg5cQ"
+                  target="_blank"
                   className="w-12 h-12 bg-campusGreen-100 rounded-full flex items-center justify-center hover:bg-campusGreen-600 hover:text-white transition-colors"
                 >
                   <Instagram className="w-6 h-6" />
                 </a>
                 <a
-                  href="https://www.facebook.com/share/1BnLaYDnEd/" target="_blank"
+                  href="https://www.facebook.com/share/1BnLaYDnEd/"
+                  target="_blank"
                   className="w-12 h-12 bg-campusGreen-100 rounded-full flex items-center justify-center hover:bg-campusGreen-600 hover:text-white transition-colors"
                 >
                   <Facebook className="w-6 h-6" />
                 </a>
                 <a
-                  href="https://www.linkedin.com/company/campushut-limited/" target="_blank"
+                  href="https://www.linkedin.com/company/campushut-limited/"
+                  target="_blank"
                   className="w-12 h-12 bg-campusGreen-100 rounded-full flex items-center justify-center hover:bg-campusGreen-600 hover:text-white transition-colors"
                 >
                   <Linkedin className="w-6 h-6" />
@@ -144,7 +190,8 @@ const ContactSection = () => {
               </p>
               <Button
                 variant="outline"
-                className="border-campusGreen-600 text-campusGreen-600 hover:bg-gray-100 hover:text-black font-semibold" 
+                className="border-campusGreen-600 text-campusGreen-600 hover:bg-gray-100 hover:text-black font-semibold"
+                onClick={() => setPartnerOpen(true)}
               >
                 Partner with Us
               </Button>
@@ -152,6 +199,90 @@ const ContactSection = () => {
           </div>
         </div>
       </div>
+      <Dialog open={partnerOpen} onOpenChange={setPartnerOpen}>
+        <DialogContent className="max-w-lg w-full">
+          <DialogHeader>
+            <DialogTitle>Partner with CampusHut</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handlePartnerSubmit} className="space-y-4 mt-2">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Name
+              </label>
+              <Input
+                name="name"
+                value={partnerForm.name}
+                onChange={handlePartnerChange}
+                required
+                placeholder="Your name"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Company Name
+              </label>
+              <Input
+                name="company"
+                value={partnerForm.company}
+                onChange={handlePartnerChange}
+                required
+                placeholder="Company name"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Email address
+              </label>
+              <Input
+                name="email"
+                type="email"
+                value={partnerForm.email}
+                onChange={handlePartnerChange}
+                required
+                placeholder="Email address"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Phone number
+              </label>
+              <Input
+                name="phone"
+                value={partnerForm.phone}
+                onChange={handlePartnerChange}
+                required
+                placeholder="Phone number"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Message
+              </label>
+              <Textarea
+                name="message"
+                value={partnerForm.message}
+                onChange={handlePartnerChange}
+                required
+                placeholder="How would you like to partner with us?"
+                rows={4}
+              />
+            </div>
+            <DialogFooter className="mt-4 flex flex-row gap-2 justify-end">
+              <DialogClose asChild>
+                <Button type="button" variant="outline">
+                  Cancel
+                </Button>
+              </DialogClose>
+              <Button
+                type="submit"
+                className="bg-campusGreen-600 hover:bg-campusGreen-700 text-white"
+              >
+                Send Request
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };
