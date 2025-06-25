@@ -140,7 +140,7 @@ const ContactSection = () => {
                 Interested in Partnership?
               </h4>
               <p className="text-gray-50 mb-4">
-                Join our growing network of university partners across Africa.
+                Join our growing network of partners across Africa.
               </p>
               <Button
                 variant="outline"
