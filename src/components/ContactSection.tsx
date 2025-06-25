@@ -97,9 +97,9 @@ const ContactSection = () => {
                   <span className="text-gray-700">+2347030250057</span>
                 </div>
                 <div className="flex items-center">
-                  <MapPin className="w-6 h-6 text-campusGreen-600 mr-4" />
+                  <MapPin className="w-8 h-8 text-campusGreen-600 mr-4" />
                   <span className="text-gray-700">
-                    Address: The Philippi Centre, Oluwalogbon House, Plot A
+                    The Philippi Centre, Oluwalogbon House, Plot A
                     Obafemi Awolowo Way, Alausa Ikeja, Lagos.
                   </span>
                 </div>

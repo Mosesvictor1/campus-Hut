@@ -1,5 +1,6 @@
 import React from "react";
 import { BookOpen, Instagram, Facebook, Linkedin } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -108,24 +109,20 @@ const Footer = () => {
             <h3 className="font-semibold mb-4">Legal</h3>
             <ul className="space-y-2 text-gray-400">
               <li>
-                <a href="#" className="hover:text-campusGreen-400">
-                  Terms of Service
-                </a>
+                <Link
+                  to="/terms-and-conditions"
+                  className="hover:text-campusGreen-400"
+                >
+                  Terms and Conditions
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-campusGreen-400">
+                <Link
+                  to="/privacy-policy"
+                  className="hover:text-campusGreen-400"
+                >
                   Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-campusGreen-400">
-                  Cookie Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-campusGreen-400">
-                  Support
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
