@@ -20,9 +20,16 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
+import axios from "axios";
 
 const ContactSection = () => {
   const [partnerOpen, setPartnerOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [contactForm, setContactForm] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
   const [partnerForm, setPartnerForm] = useState({
     name: "",
     company: "",
@@ -31,12 +38,47 @@ const ContactSection = () => {
     message: "",
   });
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  // Google Apps Script web app URL
+  const GOOGLE_SCRIPT_URL =
+    "https://script.google.com/macros/s/AKfycbwIw4SHtCehsJycLyWVvaiBRlZ42iir97KXNbWevd7ZfRnGDdT9qPDFd9Zv6jOcaJZ_tQ/exec";
+
+  const handleContactChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setContactForm({ ...contactForm, [e.target.name]: e.target.value });
+  };
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Message sent!",
-      description: "Thank you for your interest. We'll get back to you soon.",
-    });
+    setIsSubmitting(true);
+
+    try {
+      const response = await axios.post(GOOGLE_SCRIPT_URL, contactForm, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response);
+      if (response.data.success) {
+        toast({
+          title: "Message sent!",
+          description:
+            "Thank you for your message. We'll get back to you soon.",
+        });
+        setContactForm({ name: "", email: "", message: "" });
+      } else {
+        throw new Error(response.data.message || "Failed to send message");
+      }
+    } catch (error) {
+      console.error("Contact form error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handlePartnerChange = (
@@ -87,6 +129,9 @@ const ContactSection = () => {
                       Name
                     </label>
                     <Input
+                      name="name"
+                      value={contactForm.name}
+                      onChange={handleContactChange}
                       placeholder="Your full name"
                       className="border-gray-300"
                       required
@@ -97,7 +142,10 @@ const ContactSection = () => {
                       Email
                     </label>
                     <Input
+                      name="email"
                       type="email"
+                      value={contactForm.email}
+                      onChange={handleContactChange}
                       placeholder="your.email@university.edu"
                       className="border-gray-300"
                       required
@@ -108,6 +156,9 @@ const ContactSection = () => {
                       Message
                     </label>
                     <Textarea
+                      name="message"
+                      value={contactForm.message}
+                      onChange={handleContactChange}
                       placeholder="Tell us how we can help..."
                       rows={5}
                       className="border-gray-300"
@@ -116,9 +167,10 @@ const ContactSection = () => {
                   </div>
                   <Button
                     type="submit"
-                    className="w-full bg-campusGreen-600 hover:bg-campusGreen-700 text-white"
+                    disabled={isSubmitting}
+                    className="w-full bg-campusGreen-600 hover:bg-campusGreen-700 text-white disabled:opacity-50"
                   >
-                    Send Message
+                    {isSubmitting ? "Sending..." : "Send Message"}
                   </Button>
                 </form>
               </CardContent>
