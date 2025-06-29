@@ -40,7 +40,7 @@ const ContactSection = () => {
 
   // Google Apps Script web app URL
   const GOOGLE_SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbyX3ua1W_4zXRwZc5Od58E6L14N2rly6rQ69JYVgXb0v0teQZOlMMXfgwYOXpQulYcpHQ/exec";
+    "https://script.google.com/macros/s/AKfycbzUuaVi-kfm4fPePxDF6B-r4FMLFTGokcmwWHzFIdCVj9HpzEQ2UbWAwGzQY5jHNWen/exec";
 
   const handleContactChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -48,23 +48,125 @@ const ContactSection = () => {
     setContactForm({ ...contactForm, [e.target.name]: e.target.value });
   };
 
+  // const handleContactSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setIsSubmitting(true);
+
+  //   try {
+  //     console.log("Sending form data:", contactForm);
+
+  //     const response = await axios.post(GOOGLE_SCRIPT_URL, contactForm, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+
+  //     console.log("Response received:", response);
+  //     console.log("Response data:", response.data);
+
+  //     if (response.data.success) {
+  //       toast({
+  //         title: "Message sent!",
+  //         description:
+  //           "Thank you for your message. We'll get back to you soon.",
+  //       });
+  //       setContactForm({ name: "", email: "", message: "" });
+  //     } else {
+  //       throw new Error(response.data.message || "Failed to send message");
+  //     }
+  //   } catch (error) {
+  //     console.error("Contact form error:", error);
+  //     console.error("Error response:", (error).response);
+  //     console.error("Error message:", (error).message);
+
+  //     toast({
+  //       title: "Error",
+  //       description: "Failed to send message. Please try again.",
+  //       variant: "destructive",
+  //     });
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
+  //
+
+  // const handleContactSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setIsSubmitting(true);
+
+  //   try {
+  //     console.log("Sending form data:", contactForm);
+
+  //     // Use fetch instead of axios for better CORS handling
+  //     const response = await fetch(GOOGLE_SCRIPT_URL, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(contactForm),
+  //       // Add these for better CORS handling
+  //       mode: 'cors',
+  //       credentials: 'omit'
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP error! status: ${response.status}`);
+  //     }
+
+  //     const data = await response.json();
+  //     console.log("Response data:", data);
+
+  //     if (data.success) {
+  //       toast({
+  //         title: "Message sent!",
+  //         description: "Thank you for your message. We'll get back to you soon.",
+  //       });
+  //       setContactForm({ name: "", email: "", message: "" });
+  //     } else {
+  //       throw new Error(data.message || "Failed to send message");
+  //     }
+  //   } catch (error) {
+  //     console.error("Contact form error:", error);
+
+  //     toast({
+  //       title: "Error",
+  //       description: "Failed to send message. Please try again.",
+  //       variant: "destructive",
+  //     });
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      console.log("Sending form data:", contactForm);
-
-      const response = await axios.post(GOOGLE_SCRIPT_URL, contactForm, {
-        headers: {
-          "Content-Type": "application/json",
-        },
+      const formData = new FormData();
+      formData.append("name", contactForm.name);
+      formData.append("email", contactForm.email);
+      formData.append("message", contactForm.message);
+      console.log("formdata=",formData);
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        body: formData,
       });
+      console.log(response);
+      const text = await response.text();
+      console.log("Response:", text);
 
-      console.log("Response received:", response);
-      console.log("Response data:", response.data);
+      // Parse the response if it's JSON
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        // If it's not JSON, assume success
+        data = { success: true };
+      }
 
-      if (response.data.success) {
+      if (data.success) {
         toast({
           title: "Message sent!",
           description:
@@ -72,13 +174,10 @@ const ContactSection = () => {
         });
         setContactForm({ name: "", email: "", message: "" });
       } else {
-        throw new Error(response.data.message || "Failed to send message");
+        throw new Error(data.message || "Failed to send message");
       }
     } catch (error) {
       console.error("Contact form error:", error);
-      console.error("Error response:", (error as any).response);
-      console.error("Error message:", (error as any).message);
-
       toast({
         title: "Error",
         description: "Failed to send message. Please try again.",
@@ -88,7 +187,6 @@ const ContactSection = () => {
       setIsSubmitting(false);
     }
   };
-
   const handlePartnerChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
