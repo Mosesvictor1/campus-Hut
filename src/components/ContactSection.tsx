@@ -40,7 +40,7 @@ const ContactSection = () => {
 
   // Google Apps Script web app URL
   const GOOGLE_SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbwIw4SHtCehsJycLyWVvaiBRlZ42iir97KXNbWevd7ZfRnGDdT9qPDFd9Zv6jOcaJZ_tQ/exec";
+    "https://script.google.com/macros/s/AKfycbyX3ua1W_4zXRwZc5Od58E6L14N2rly6rQ69JYVgXb0v0teQZOlMMXfgwYOXpQulYcpHQ/exec";
 
   const handleContactChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -53,12 +53,17 @@ const ContactSection = () => {
     setIsSubmitting(true);
 
     try {
+      console.log("Sending form data:", contactForm);
+
       const response = await axios.post(GOOGLE_SCRIPT_URL, contactForm, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      console.log(response);
+
+      console.log("Response received:", response);
+      console.log("Response data:", response.data);
+
       if (response.data.success) {
         toast({
           title: "Message sent!",
@@ -71,6 +76,9 @@ const ContactSection = () => {
       }
     } catch (error) {
       console.error("Contact form error:", error);
+      console.error("Error response:", (error as any).response);
+      console.error("Error message:", (error as any).message);
+
       toast({
         title: "Error",
         description: "Failed to send message. Please try again.",
