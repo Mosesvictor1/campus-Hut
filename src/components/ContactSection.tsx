@@ -40,7 +40,7 @@ const ContactSection = () => {
 
   // Google Apps Script web app URL
   const GOOGLE_SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbzUuaVi-kfm4fPePxDF6B-r4FMLFTGokcmwWHzFIdCVj9HpzEQ2UbWAwGzQY5jHNWen/exec";
+    "https://script.google.com/macros/s/AKfycbwsvCns420DA7NQnGeiXIeGTXgnlR3FDz-Gjh8UzWUtiELUzNydCT4nVVTnoKsTfA6hog/exec";
 
   const handleContactChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -145,27 +145,24 @@ const ContactSection = () => {
 
     try {
       const formData = new FormData();
+      formData.append("type", "contact");
       formData.append("name", contactForm.name);
       formData.append("email", contactForm.email);
       formData.append("message", contactForm.message);
-      console.log("formdata=",formData);
+      console.log("formdata=", formData);
       const response = await fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
         body: formData,
       });
-      console.log(response);
+      console.log("response=", response);
       const text = await response.text();
-      console.log("Response:", text);
-
-      // Parse the response if it's JSON
+      console.log("text==", text);
       let data;
       try {
         data = JSON.parse(text);
       } catch {
-        // If it's not JSON, assume success
         data = { success: true };
       }
-
       if (data.success) {
         toast({
           title: "Message sent!",
