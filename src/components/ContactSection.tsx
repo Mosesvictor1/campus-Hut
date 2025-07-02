@@ -190,21 +190,65 @@ const ContactSection = () => {
     setPartnerForm({ ...partnerForm, [e.target.name]: e.target.value });
   };
 
-  const handlePartnerSubmit = (e: React.FormEvent) => {
+  const handlePartnerSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Partnership Request Sent!",
-      description:
-        "Thank you for your interest in partnering with us. We'll reach out soon.",
-    });
-    setPartnerOpen(false);
-    setPartnerForm({
-      name: "",
-      company: "",
-      email: "",
-      phone: "",
-      message: "",
-    });
+    setIsSubmitting(true);
+    try {
+      const formData = new FormData();
+      formData.append("type", "partnership");
+      formData.append("name", partnerForm.name);
+      formData.append("company", partnerForm.company);
+      formData.append("email", partnerForm.email);
+      formData.append("phone", partnerForm.phone);
+      formData.append("message", partnerForm.message);
+      console.log(formData);
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        body: formData,
+      });
+      console.log(response);
+      const text = await response.text();
+      console.log("text==", text);
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        data = { success: true };
+      }
+      if (data.success) {
+        toast({
+          title: "Partnership Request Sent!",
+          description:
+            "Thank you for your interest in partnering with us. We'll reach out soon.",
+        });
+        setPartnerOpen(false);
+        setPartnerForm({
+          name: "",
+          company: "",
+          email: "",
+          phone: "",
+          message: "",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description:
+            data.message ||
+            "Failed to send partnership request. Please try again.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Error Sending Request",
+        description:
+          error.message || "Unable to send request. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -249,7 +293,7 @@ const ContactSection = () => {
                       type="email"
                       value={contactForm.email}
                       onChange={handleContactChange}
-                      placeholder="your.email@university.edu"
+                      placeholder="your.email@gmail.com"
                       className="border-gray-300"
                       required
                     />
@@ -271,8 +315,30 @@ const ContactSection = () => {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-campusGreen-600 hover:bg-campusGreen-700 text-white disabled:opacity-50"
+                    className="w-full bg-campusGreen-600 hover:bg-campusGreen-700 text-white disabled:opacity-50 flex items-center justify-center gap-2"
                   >
+                    {isSubmitting && (
+                      <svg
+                        className="animate-spin h-5 w-5 mr-2 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                        ></path>
+                      </svg>
+                    )}
                     {isSubmitting ? "Sending..." : "Send Message"}
                   </Button>
                 </form>
@@ -430,9 +496,32 @@ const ContactSection = () => {
               </DialogClose>
               <Button
                 type="submit"
-                className="bg-campusGreen-600 hover:bg-campusGreen-700 text-white"
+                className="bg-campusGreen-600 hover:bg-campusGreen-700 text-white flex items-center justify-center gap-2"
+                disabled={isSubmitting}
               >
-                Send Request
+                {isSubmitting && (
+                  <svg
+                    className="animate-spin h-5 w-5 mr-2 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                    ></path>
+                  </svg>
+                )}
+                {isSubmitting ? "Sending..." : "Send Request"}
               </Button>
             </DialogFooter>
           </form>
