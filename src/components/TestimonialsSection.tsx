@@ -6,30 +6,24 @@ const TestimonialsSection = () => {
   const testimonials = [
     {
       id: 1,
-      name: "Adunni Olatunji",
-      role: "Computer Science Student, University of Lagos",
       content:
-        "CampusHut's AI study assistant helped me understand complex algorithms. It's like having a personal tutor!",
-      avatar:
-        "assets/tes1.jpg",
+        "As a student, CampusHut has been a game-changer in my software development journey. Its resources on Java and frontend development gave me clarity and confidence about the real-world skills I need after graduation.",
+      name: "Mustapha Ramon",
+      role: "Computer Science Student, Federal College of Fisheries and Marine Technology, Lagos.",
     },
     {
       id: 2,
-      name: "Kwame Asante",
-      role: "Engineering Student, KNUST Ghana",
       content:
-        "The CV builder feature got me my first internship. The templates are professional and ATS-friendly.",
-      avatar:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face",
+        "CampusHut's AI Study Assistant helped me understand difficult topics like statistical analysis. It breaks things down in simple language, like a real tutor. Studying feels less overwhelming now, I actually get things I used to skip before.",
+      name: "Eniola Babalola",
+      role: "Demography and Social Statistics Student, Obafemi Awolowo University (OAU).",
     },
     {
       id: 3,
-      name: "Fatima Hassan",
-      role: "Medical Student, University of Khartoum",
       content:
-        "Managing my medical school schedule was chaos until I found CampusHut. Now everything is organized!",
-      avatar:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face",
+        "As someone who forget deadlines a lot, CampusHut's Schedule Manager has been a lifesaver. I now organize my classes, assignments, to-dos, and daily tasks in one place. The reminders keep me on track without the stress of missing anything.",
+      name: "Bernard immaculatacarol",
+      role: "Animal Breeding and Genetics Student, Federal University of Agriculture Abeokuta.",
     },
   ];
 
@@ -48,39 +42,34 @@ const TestimonialsSection = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
           {testimonials.map((testimonial, index) => (
             <Card
               key={index}
-              className="border-0 shadow-lg bg-gradient-to-br from-white to-campusGreen-50"
+              className="relative overflow-hidden border border-campusGreen-100 bg-campusGreen-100 shadow-xl transition-transform duration-300 hover:scale-105 hover:shadow-2xl group"
               data-aos="zoom-in"
               data-aos-delay={`${(testimonial.id % 3) * 100}`}
             >
-              <CardContent className="p-8">
-                <div className="flex items-center mb-4">
+              {/* Accent bar */}
+              <div className="absolute left-0 top-0 h-full w-1 bg-campusGreen-500 group-hover:bg-campusGreen-600 transition-colors duration-300" />
+              <CardContent className="p-5 sm:p-6 md:p-8 flex flex-col h-full">
+                <div className="flex items-center mb-3 sm:mb-4">
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className="w-5 h-5 text-yellow-400 fill-current"
+                      className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 fill-current"
                     />
                   ))}
                 </div>
-                <p className="text-gray-700 mb-6 italic">
-                  "{testimonial.content}"
+                <p className="text-black text-sm sm:text-base md:text-lg md:text-balance mb-4 italic flex-1">
+                  “{testimonial.content}”
                 </p>
-                <div className="flex items-center">
-                  <img
-                    src={testimonial.avatar}
-                    alt={testimonial.name}
-                    className="w-12 h-12 rounded-full object-cover mr-4"
-                  />
-                  <div>
-                    <div className="font-semibold text-gray-900">
-                      {testimonial.name}
-                    </div>
-                    <div className="text-sm text-gray-600">
-                      {testimonial.role}
-                    </div>
+                <div className="mt-auto">
+                  <div className="font-semibold text-campusGreen-700 text-sm sm:text-base md:text-lg">
+                    {testimonial.name}
+                  </div>
+                  <div className="text-xs sm:text-sm md:text-base text-gray-800">
+                    {testimonial.role}
                   </div>
                 </div>
               </CardContent>

@@ -38,12 +38,12 @@ const Navigation = () => {
               >
                 About
               </a>
-              <a
+              {/* <a
                 href="#pricing"
                 className="text-gray-700 hover:text-campusGreen-600 px-3 py-2 text-sm font-medium transition-colors"
               >
                 Pricing
-              </a>
+              </a> */}
               <a
                 href="#contact"
                 className="text-gray-700 hover:text-campusGreen-600 px-3 py-2 text-sm font-medium transition-colors"
@@ -79,24 +79,27 @@ const Navigation = () => {
               <a
                 href="#features"
                 className="block px-3 py-2 text-gray-700 hover:text-campusGreen-600"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Features
               </a>
               <a
                 href="#about"
                 className="block px-3 py-2 text-gray-700 hover:text-campusGreen-600"
+                onClick={() => setIsMenuOpen(false)}
               >
                 About
               </a>
-              <a
+              {/* <a
                 href="#pricing"
                 className="block px-3 py-2 text-gray-700 hover:text-campusGreen-600"
               >
                 Pricing
-              </a>
+              </a> */}
               <a
                 href="#contact"
                 className="block px-3 py-2 text-gray-700 hover:text-campusGreen-600"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Contact
               </a>

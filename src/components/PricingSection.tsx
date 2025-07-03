@@ -77,10 +77,10 @@ const PricingSection = () => {
               <div className="text-center mb-8">
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">Premium Plan</h3>
                 <div className="text-4xl font-bold text-campusGreen-600 mb-2">
-                  ₦{isYearly ? '12,500' : '1,500'}
+                  ₦{isYearly ? '10,000' : '1,000'}
                 </div>
                 <p className="text-gray-600">{isYearly ? 'per year' : 'per month'}</p>
-                {isYearly && <p className="text-sm text-campusGreen-600 font-semibold">Save ₦5,500 yearly!</p>}
+                {isYearly && <p className="text-sm text-campusGreen-600 font-semibold">Save ₦2,000 yearly!</p>}
               </div>
               
               <ul className="space-y-4 mb-8">

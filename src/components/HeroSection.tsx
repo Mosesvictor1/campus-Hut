@@ -83,16 +83,8 @@ const HeroSection = () => {
               </Button>
             </div>
 
-            <div className="mt-6 sm:mt-8 flex justify-center lg:justify-start items-center gap-6 text-sm text-gray-100">
-              <div className="flex items-center gap-2">
-                <Users className="w-5 h-5 text-yellow-500" />
-                <span>50K+ Students</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Award className="w-5 h-5 text-yellow-500" />
-                <span>4.8★ Rating</span>
-              </div>
-            </div>
+            
+
           </div>
 
           {/* Right Slider */}
