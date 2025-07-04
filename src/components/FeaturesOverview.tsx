@@ -8,7 +8,7 @@ import {
   Bell,
   MessageCircle,
   BellPlus,
-  ShoppingBag
+  ShoppingBag,
 } from "lucide-react";
 
 const FeaturesOverview = () => {
@@ -46,7 +46,7 @@ const FeaturesOverview = () => {
       icon: ShoppingBag,
       title: "Marketplace",
       description:
-        "Buy and sell academic resources, study materials, and services within a trusted student community.",
+        "Shop and sell across categories like academics, groceries, fashion, gadgets, and services within a trusted student community.",
     },
     {
       id: 6,

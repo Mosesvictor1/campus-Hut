@@ -10,7 +10,7 @@ const Footer = () => {
           <div>
             <div className="flex items-center mb-4">
               <div className="w-8 h-8 bg-campusGreen-500 rounded-lg flex items-center justify-center">
-                <BookOpen className="w-5 h-5 text-white" />
+                <img src="icons.png" alt="" />
               </div>
               <span className="ml-2 text-xl font-bold">CampusHut</span>
             </div>
@@ -62,8 +62,8 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#pricing" className="hover:text-campusGreen-400">
-                  Pricing
+                <a href="#faq" className="hover:text-campusGreen-400">
+                  FAQ
                 </a>
               </li>
               <li>
@@ -78,27 +78,27 @@ const Footer = () => {
             <h3 className="font-semibold mb-4">Features</h3>
             <ul className="space-y-2 text-gray-400">
               <li>
-                <a href="#" className="hover:text-campusGreen-400">
+                <a href="#features" className="hover:text-campusGreen-400">
                   AI Study Assistant
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-campusGreen-400">
+                <a href="#features" className="hover:text-campusGreen-400">
                   CV Builder
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-campusGreen-400">
+                <a href="#features" className="hover:text-campusGreen-400">
                   Schedule Manager
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-campusGreen-400">
+                <a href="#features" className="hover:text-campusGreen-400">
                   Campus News
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-campusGreen-400">
+                <a href="#features" className="hover:text-campusGreen-400">
                   Marketplace
                 </a>
               </li>
