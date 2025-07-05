@@ -2,7 +2,13 @@
     "redirects": [
       {
         "source": "/(.*)",
-        "destination": "https://www.mycampushut.com/$1",
+        "has": [
+          {
+            "type": "host",
+            "value": "campus-hut.vercel.app"
+          }
+        ],
+        "destination": "https://www.mycampushut.com/",
         "permanent": true
       }
     ]
