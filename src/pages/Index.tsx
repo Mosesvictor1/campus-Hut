@@ -24,8 +24,10 @@ const Index = () => {
     });
   }, []);
   return (
-    <div className="min-h-screen bg-white font-inter overflow-x-hidden" id="home">
-      {showBanner && <ComingSoonBanner onClose={() => setShowBanner(false)} />}
+    <div
+      className="min-h-screen bg-white font-inter overflow-x-hidden"
+      id="home"
+    >
       <Navigation />
       <HeroSection />
       <QuickOverview />
@@ -37,6 +39,7 @@ const Index = () => {
       <DownloadSection />
       <FAQSection />
       <ContactSection />
+      {showBanner && <ComingSoonBanner onClose={() => setShowBanner(false)} />}
       <Footer />
     </div>
   );
