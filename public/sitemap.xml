@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://campus-hut.vercel.app/</loc>
+    <loc>https://mycampushut.com/</loc>
     <lastmod>2024-01-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://campus-hut.vercel.app/privacy-policy</loc>
+    <loc>https://mycampushut.com/privacy-policy</loc>
     <lastmod>2024-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://campus-hut.vercel.app/terms-and-conditions</loc>
+    <loc>https://mycampushut.com/terms-and-conditions</loc>
     <lastmod>2024-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>

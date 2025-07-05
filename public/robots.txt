@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://campus-hut.vercel.app/sitemap.xml
+Sitemap: https://mycampushut.com/sitemap.xml
 
 # Specific bot instructions
 User-agent: Googlebot
