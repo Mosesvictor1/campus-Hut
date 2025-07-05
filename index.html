@@ -1,33 +1,136 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/icons.png" />
-    <title>CampusHut - Your Smart Campus Companion | AI-Powered Learning for African Students</title>
-    <meta name="description" content="CampusHut is an AI-powered smart campus companion designed for African students. Features include AI Study Assistant, Syllabus Navigator, CV Builder, and more." />
-    <meta name="keywords" content="campus app, african students, university app, AI study assistant, student planner, academic tools" />
+    <link rel="canonical" href="https://campus-hut.vercel.app/" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Primary Meta Tags -->
+    <title>
+      CampusHut - Your Smart Campus Companion | AI-Powered Learning for African
+      Students
+    </title>
+    <meta
+      name="description"
+      content="CampusHut is an AI-powered smart campus companion designed for African students. Features include AI Study Assistant, Syllabus Navigator, CV Builder, and more."
+    />
+    <meta
+      name="keywords"
+      content="campus app, african students, university app, AI study assistant, student planner, academic tools, Nigerian students, university app, study app, CV builder, internship finder"
+    />
     <meta name="author" content="CampusHut" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    <meta name="revisit-after" content="7 days" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://campus-hut-khwm.vercel.app/" />
-    <meta property="og:title" content="CampusHut - Your Smart Campus Companion" />
-    <meta property="og:description" content="AI-powered learning tools designed specifically for African university students. Download now on Play Store and App Store." />
-    <meta property="og:image" content="https://campus-hut-khwm.vercel.app/icon.png" />
+    <meta property="og:url" content="https://campus-hut.vercel.app/" />
+    <meta
+      property="og:title"
+      content="CampusHut - Your Smart Campus Companion"
+    />
+    <meta
+      property="og:description"
+      content="AI-powered learning tools designed specifically for African university students. Download now on Play Store and App Store."
+    />
+    <meta
+      property="og:image"
+      content="https://campus-hut.vercel.app/icons.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="CampusHut - AI Study Assistant for African Students"
+    />
+    <meta property="og:site_name" content="CampusHut" />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://campushut.com/" />
-    <meta property="twitter:title" content="CampusHut - Your Smart Campus Companion" />
-    <meta property="twitter:description" content="AI-powered learning tools designed specifically for African university students." />
-    <meta property="twitter:image" content="https://campushut.com/twitter-image.jpg" />
+    <meta property="twitter:url" content="https://campus-hut.vercel.app/" />
+    <meta
+      property="twitter:title"
+      content="CampusHut - Your Smart Campus Companion"
+    />
+    <meta
+      property="twitter:description"
+      content="AI-powered learning tools designed specifically for African university students."
+    />
+    <meta
+      property="twitter:image"
+      content="https://campus-hut.vercel.app/icons.png"
+    />
+    <meta property="twitter:creator" content="@campushut" />
+
+    <!-- Additional SEO Meta Tags -->
+    <meta name="theme-color" content="#16a34a" />
+    <meta name="msapplication-TileColor" content="#16a34a" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="CampusHut" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "MobileApplication",
+        "name": "CampusHut",
+        "description": "AI-powered smart campus companion designed for African students",
+        "url": "https://campus-hut.vercel.app/",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Android, iOS",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "NGN",
+          "availability": "https://schema.org/InStock"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.8",
+          "ratingCount": "150"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "CampusHut",
+          "url": "https://campus-hut.vercel.app/"
+        }
+      }
+    </script>
+
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "CampusHut",
+        "url": "https://campus-hut.vercel.app/",
+        "logo": "https://campus-hut.vercel.app/icons.png",
+        "description": "AI-powered smart campus companion for African students",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Lagos",
+          "addressCountry": "Nigeria"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer service",
+          "email": "support@mycampushut.com"
+        }
+      }
+    </script>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
   </head>
 
   <body>

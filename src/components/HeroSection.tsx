@@ -53,16 +53,22 @@ const HeroSection = () => {
   ];
 
   return (
-    <section className="pt-24 pb-16 bg-gradient-to-br from-green- to-green- bg-gray-800 overflow-hidden min-h-[740px]">
+    <section
+      className="pt-24 pb-16 bg-gradient-to-br from-green- to-green- bg-gray-800 overflow-hidden min-h-[740px]"
+      role="banner"
+      aria-label="Hero section"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 lg:gap-8 items-center">
           {/* Left Content */}
-          <div className="mt-10 lg:mt-0 text-center lg:text-left animate-fade-in ">
+          <div className="mt-10 lg:mt-0 text-center lg:text-left animate-fade-in">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
-              Your Smart <span className="text-orange-500">Campus</span> Companion
+              Your Smart <span className="text-orange-500">Campus</span>{" "}
+              Companion
             </h1>
             <p className="mt-4 sm:mt-6 text-base sm:text-lg md:text-xl text-gray-200 leading-relaxed">
-              AI tools, study planners, CV builder & more, made specifically for African students
+              AI tools, study planners, CV builder & more, made specifically for
+              African students
             </p>
 
             <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -82,9 +88,6 @@ const HeroSection = () => {
                 Download on App Store
               </Button>
             </div>
-
-            
-
           </div>
 
           {/* Right Slider */}
