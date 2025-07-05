@@ -57,11 +57,11 @@ const FAQSection = () => {
             <AccordionItem
               key={index}
               value={`item-${index}`}
-              className="bg-white border border-gray-200 rounded-lg mb-4 px-6"
+              className="bg-white rounded-lg mb-4 px-6"
               data-aos="zoom-in"
               data-aos-delay={`${(faq.id % 3) * 100}`}
             >
-              <AccordionTrigger className="text-left font-semibold text-gray-900 hover:text-campusGreen-600">
+              <AccordionTrigger className="text-left font-semibold text-gray-900 hover:text-campusGreen-600 focus:outline-none focus:ring-0">
                 {faq.question}
               </AccordionTrigger>
               <AccordionContent className="text-gray-600 leading-relaxed">
