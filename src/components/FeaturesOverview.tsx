@@ -15,10 +15,10 @@ const FeaturesOverview = () => {
   const features = [
     {
       id: 1,
-      icon: BellPlus,
-      title: "Smart Reminders",
+      icon: BookOpen,
+      title: "e-Learning",
       description:
-        "Stay on top of deadlines and tasks with intelligent reminders tailored to your schedule and study habits.",
+        "Access top-quality courses and earn internationally recognized certificates through CampusHut’s e-learning module anytime, anywhere, right from your device.",
     },
     {
       id: 2,
@@ -32,7 +32,7 @@ const FeaturesOverview = () => {
       icon: Calendar,
       title: "Schedule Manager",
       description:
-        "Organize your academic schedule and never miss important dates",
+        "Organize your academic schedule and stay on top of deadlines and tasks, with intelligent reminders tailored to study habits.",
     },
     {
       id: 4,
