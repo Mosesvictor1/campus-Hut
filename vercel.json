@@ -1,15 +1,16 @@
 {
-    "redirects": [
-      {
-        "source": "/(.*)",
-        "has": [
-          {
-            "type": "host",
-            "value": "campus-hut.vercel.app"
-          }
-        ],
-        "destination": "https://www.mycampushut.com/",
-        "permanent": true
-      }
-    ]
-  }
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "campus-hut.vercel.app"
+        }
+      ],
+      "destination": "https://www.mycampushut.com/",
+      "permanent": true
+    }
+  ],
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+}
