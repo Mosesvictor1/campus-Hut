@@ -4,10 +4,8 @@ import React, { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Download, Brain, BookOpen, Users, Award } from "lucide-react";
 import Slider from "react-slick";
-// import ComingSoonPopup from "./ComingSoonPopup"; // Adjust path if needed
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-// ComingSoonPopup removed — replaced with direct download links
 
 interface SlideType {
   title: string;
@@ -79,14 +77,6 @@ const HeroSection = () => {
                 <Button className="bg-orange-500 hover:bg-orange-600 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg rounded-full">
                   <Download className="w-5 h-5 mr-2" />
                   Download on Play Store
-                </Button>
-              </a>
-              <a href="#download">
-                <Button
-                  variant="outline"
-                  className="border-orange-500 border-2 bg-transparent text-white hover:bg-orange-600 hover:text-white px-6 sm:px-8 py-4 sm:py-6 rounded-full text-base sm:text-lg"
-                >
-                  Learn More
                 </Button>
               </a>
             </div>
