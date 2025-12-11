@@ -114,7 +114,6 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* ComingSoon popup removed; download buttons now link directly */}
     </section>
   );
 };
