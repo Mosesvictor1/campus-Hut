@@ -13,9 +13,10 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import ComingSoonBanner from "@/components/ComingSoonBanner";
+import LaunchPopup from "@/components/LiveLaunchBanner";
+
 const Index = () => {
-  const [showBanner, setShowBanner] = useState(true);
+  const [showPopup, setShowPopup] = useState(true);
   useEffect(() => {
     AOS.init({
       duration: 800,
@@ -39,7 +40,12 @@ const Index = () => {
       <DownloadSection />
       <FAQSection />
       <ContactSection />
-      {showBanner && <ComingSoonBanner onClose={() => setShowBanner(false)} />}
+       {showPopup && (
+        <LaunchPopup
+          playStoreUrl="https://play.google.com/store/apps/details?id=com.campushut.app"
+          onClose={() => setShowPopup(false)}
+        />
+      )}
       <Footer />
     </div>
   );

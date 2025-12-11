@@ -50,9 +50,16 @@ const Navigation = () => {
               >
                 Contact
               </a>
-              <Button className="bg-campusGreen-600 hover:bg-campusGreen-700 text-white">
-                Download App
-              </Button>
+
+              <a
+                href="https://play.google.com/store/apps/details?id=com.campushut.app"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button className="bg-campusGreen-600 hover:bg-campusGreen-700 text-white">
+                  Download App
+                </Button>
+              </a>
             </div>
           </div>
 

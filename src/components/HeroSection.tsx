@@ -7,7 +7,7 @@ import Slider from "react-slick";
 // import ComingSoonPopup from "./ComingSoonPopup"; // Adjust path if needed
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import ComingSoonPopup from "./ComingSoonPopup";
+// ComingSoonPopup removed — replaced with direct download links
 
 interface SlideType {
   title: string;
@@ -17,7 +17,6 @@ interface SlideType {
 
 const HeroSection = () => {
   const sliderRef = useRef<Slider | null>(null);
-  const [showPopup, setShowPopup] = useState(false);
 
   const settings = {
     dots: false,
@@ -72,21 +71,24 @@ const HeroSection = () => {
             </p>
 
             <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button
-                className="bg-orange-500 hover:bg-orange-600 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg rounded-full"
-                onClick={() => setShowPopup(true)}
+              <a
+                href="https://play.google.com/store/apps/details?id=com.campushut.app"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <Download className="w-5 h-5 mr-2" />
-                Download on Play Store
-              </Button>
-              <Button
-                variant="outline"
-                className="border-orange-500 border-2 bg-transparent text-white hover:bg-orange-600 hover:text-white px-6 sm:px-8 py-4 sm:py-6 rounded-full text-base sm:text-lg"
-                onClick={() => setShowPopup(true)}
-              >
-                <Download className="w-5 h-5 mr-2" />
-                Download on App Store
-              </Button>
+                <Button className="bg-orange-500 hover:bg-orange-600 text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg rounded-full">
+                  <Download className="w-5 h-5 mr-2" />
+                  Download on Play Store
+                </Button>
+              </a>
+              <a href="#download">
+                <Button
+                  variant="outline"
+                  className="border-orange-500 border-2 bg-transparent text-white hover:bg-orange-600 hover:text-white px-6 sm:px-8 py-4 sm:py-6 rounded-full text-base sm:text-lg"
+                >
+                  Learn More
+                </Button>
+              </a>
             </div>
           </div>
 
@@ -122,8 +124,7 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Modal */}
-      {showPopup && <ComingSoonPopup onClose={() => setShowPopup(false)} />}
+      {/* ComingSoon popup removed; download buttons now link directly */}
     </section>
   );
 };
