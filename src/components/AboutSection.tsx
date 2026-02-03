@@ -18,27 +18,29 @@ const AboutSection = () => {
               className="text-base text-center md:text-start sm:text-lg text-gray-600 mb-4 sm:mb-6 leading-relaxed"
               data-aos="fade-right"
             >
-              CampusHut was built to transform the student experience across
-              Africa beyond just academics. We understand the struggle of
-              scattered resources, limited learning support, and lack of access
-              to real career opportunities.
+              CampusHut is a next-generation edtech platform reimagining student
+              life across tertiary institutions in Africa. We connect students
+              to essential digital tools, career opportunities, and peer
+              networks that enable academic success, personal growth, and career
+              readiness.
             </p>
             <p
               className="text-base sm:text-lg text-center md:text-start  text-gray-600 mb-4 sm:mb-8 leading-relaxed"
               data-aos="fade-right"
             >
-              That's why we created an all-in-one platform that offers
-              everything from smart study tools and assignment reminders to a
-              student-focused marketplace and verified internship opportunities.
+              From smart scheduling to internship access, our integrated
+              solutions empower students while accelerating digital
+              transformation within institutions. Built with deep insight into
+              the African education ecosystem, CampusHut delivers locally
+              relevant solutions that meet global standards.
             </p>
             <p
               className="text-base sm:text-lg text-center md:text-start  text-gray-600 mb-6 sm:mb-8 leading-relaxed"
               data-aos="fade-right"
             >
-              Our mission is to create accessible, innovative, and
-              student-centric solutions that enhance academic performance,
-              unlock life-changing opportunities, and simplify campus life
-              through technology.
+              Our mission is to build accessible, student-centered, innovative
+              digital solutions that enhance academic success, expand
+              opportunity, and simplify campus life across Africa.
             </p>
           </div>
 
