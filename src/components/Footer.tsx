@@ -125,12 +125,15 @@ const Footer = () => {
                 </Link>
               </li>
             </ul>
+            <div className="w-28 h-28 rounded-lg mt-4">
+              <img src="NDPR.png" alt="" />
+            </div>
           </div>
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
           <p>
-            &copy; 2025 CampusHut. All rights reserved. Made with ❤️ for African
+            &copy; 2026 CampusHut. All rights reserved. Made with ❤️ for African
             students.
           </p>
         </div>
