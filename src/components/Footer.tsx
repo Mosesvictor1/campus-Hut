@@ -125,9 +125,9 @@ const Footer = () => {
                 </Link>
               </li>
             </ul>
-            <div className="w-28 h-28 rounded-lg mt-4">
-              <img src="NDPR.png" alt="" />
-            </div>
+          <div className=" w-60 rounded-lg mt-4">
+            <img src="NDPR.png" alt="" />
+          </div>
           </div>
         </div>
 
