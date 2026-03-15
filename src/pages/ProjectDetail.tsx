@@ -15,34 +15,92 @@ function useQueryParam() {
   return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
-function parseToc(html: string): { heading: string; items: string[] }[] {
-  if (!html) return [];
+// ─────────────────────────────────────────────────────────────
+// Robust TOC parser — handles BOTH API formats:
+//
+// FORMAT A: <h3>Chapter ONE</h3> ... text nodes as items
+// FORMAT B: <strong>CHAPTER ONE<br>1.1 item<br>CHAPTER TWO<br>...</strong>
+//           May also arrive double-encoded: &lt;strong&gt;...
+// ─────────────────────────────────────────────────────────────
+function parseToc(rawHtml: string): { heading: string; items: string[] }[] {
+  if (!rawHtml) return [];
+
+  // Decode HTML entities if double-encoded
+  let html = rawHtml;
+  if (html.includes("&lt;")) {
+    const tmp = document.createElement("textarea");
+    tmp.innerHTML = html;
+    html = tmp.value;
+  }
+
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, "text/html");
+
+  // ── FORMAT A: <h3> headings ──
+  const h3s = doc.querySelectorAll("h3");
+  if (h3s.length > 0) {
+    const chapters: { heading: string; items: string[] }[] = [];
+    let current: { heading: string; items: string[] } | null = null;
+
+    const walk = (node: Node) => {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        const el = node as Element;
+        if (el.tagName.toLowerCase() === "h3") {
+          if (current) chapters.push(current);
+          current = { heading: el.textContent?.trim() || "", items: [] };
+          return;
+        }
+        el.childNodes.forEach(walk);
+        return;
+      }
+      if (node.nodeType === Node.TEXT_NODE) {
+        const text = node.textContent?.trim();
+        if (text && current) current.items.push(text);
+      }
+    };
+
+    doc.body.childNodes.forEach(walk);
+    if (current) chapters.push(current);
+    if (chapters.length > 0) return chapters;
+  }
+
+  // ── FORMAT B: flat <br>-separated lines, CHAPTER headings in ALL CAPS ──
+  const lines = doc.body.innerHTML
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/p>/gi, "\n")
+    .replace(/<p[^>]*>/gi, "")
+    .replace(/<\/?strong[^>]*>/gi, "")
+    .replace(/<[^>]+>/g, "")
+    // decode &nbsp; and any other HTML entities
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .split("\n")
+    // collapse all internal whitespace runs into a single space, then trim
+    .map((l) => l.replace(/\s+/g, " ").trim())
+    .filter(Boolean);
+
+  if (lines.length === 0) return [];
+
+  const isChapterHeading = (line: string) =>
+    /^CHAPTER\s+(ONE|TWO|THREE|FOUR|FIVE|SIX|SEVEN|EIGHT|NINE|TEN|\d+)/i.test(line);
+
   const chapters: { heading: string; items: string[] }[] = [];
   let current: { heading: string; items: string[] } | null = null;
 
-  const walk = (node: Node) => {
-    if (node.nodeType === Node.ELEMENT_NODE) {
-      const el = node as Element;
-      const tag = el.tagName.toLowerCase();
-      if (tag === "h3") {
-        if (current) chapters.push(current);
-        current = { heading: el.textContent?.trim() || "", items: [] };
-        return;
-      }
-      el.childNodes.forEach(walk);
-      return;
+  for (const line of lines) {
+    if (isChapterHeading(line)) {
+      if (current) chapters.push(current);
+      current = { heading: line, items: [] };
+    } else {
+      if (!current) current = { heading: "", items: [] };
+      current.items.push(line);
     }
-    if (node.nodeType === Node.TEXT_NODE) {
-      const text = node.textContent?.trim();
-      if (text && current) current.items.push(text);
-    }
-  };
-
-  doc.body.childNodes.forEach(walk);
+  }
   if (current) chapters.push(current);
-  return chapters;
+
+  return chapters.filter((c) => c.heading || c.items.length > 0);
 }
 
 export default function ProjectDetail() {
@@ -57,7 +115,10 @@ export default function ProjectDetail() {
   });
 
   const result = (data as any)?.Title?.results?.[0];
-  const chapters = result?.toc ? parseToc(result.toc) : [];
+  const chapters = React.useMemo(
+    () => (result?.toc ? parseToc(result.toc) : []),
+    [result?.toc]
+  );
 
   const handleOrder = () => {
     const phone = "07030250057";
@@ -89,14 +150,14 @@ export default function ProjectDetail() {
         .hero-bg { animation: heroZoom 22s ease-in-out infinite alternate; }
       `}</style>
 
-      <div className="min-h-screen bg-[#F6FAF6] ">
+      <div className="min-h-screen bg-[#F6FAF6]">
 
         {/* ══════════ HERO ══════════ */}
         <div
           className="relative flex items-end overflow-hidden"
           style={{ height: "clamp(380px, 50vw, 480px)", paddingTop: "72px" }}
         >
-          {/* Hero background — reliable div-based bg image */}
+          {/* Hero background */}
           <div
             className="hero-bg absolute inset-0"
             style={{
@@ -125,7 +186,7 @@ export default function ProjectDetail() {
             }}
           />
 
-          {/* Bottom green glow bleeding into page */}
+          {/* Bottom green glow */}
           <div
             className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] h-48 pointer-events-none"
             style={{
@@ -174,7 +235,7 @@ export default function ProjectDetail() {
 
                 {/* Project title */}
                 <h1
-                  className=" text-white font-black leading-[1.2]"
+                  className="text-white font-black leading-[1.2]"
                   style={{
                     fontSize: "clamp(18px, 2.8vw, 28px)",
                     textShadow: "0 2px 20px rgba(0,0,0,0.35)",
@@ -232,8 +293,7 @@ export default function ProjectDetail() {
               <div
                 className="flex items-start gap-3 rounded-2xl p-5 mb-6 shadow-[0_4px_24px_rgba(18,128,16,0.18)]"
                 style={{
-                  background:
-                    "linear-gradient(135deg, #128010 0%, #0d5c0c 100%)",
+                  background: "linear-gradient(135deg, #128010 0%, #0d5c0c 100%)",
                 }}
               >
                 <span className="text-2xl flex-shrink-0">🔒</span>
@@ -258,7 +318,7 @@ export default function ProjectDetail() {
                       Table of Contents
                     </h2>
                     <span className="ml-auto bg-campusGreen-600 text-white text-[10.5px] font-bold px-2.5 py-0.5 rounded-full">
-                      {chapters.length} chapters
+                      {chapters.filter((c) => c.heading).length} chapters
                     </span>
                   </div>
 
@@ -270,18 +330,23 @@ export default function ProjectDetail() {
                         className="ch-block"
                         style={{ animationDelay: `${ci * 60}ms` }}
                       >
-                        {/* Chapter heading row */}
-                        <div
-                          className="flex items-center gap-3 px-6 py-3"
-                          style={{ background: "linear-gradient(135deg, #128010 0%, #0d5c0c 100%)" }}
-                        >
-                          <div className="w-6 h-6 rounded-full bg-white/20 border border-white/30 flex items-center justify-center text-white text-[10px] font-black flex-shrink-0">
-                            {ci + 1}
+                        {/* Chapter heading row — only if heading exists */}
+                        {ch.heading && (
+                          <div
+                            className="flex items-center gap-3 px-6 py-3"
+                            style={{
+                              background:
+                                "linear-gradient(135deg, #128010 0%, #0d5c0c 100%)",
+                            }}
+                          >
+                            <div className="w-6 h-6 rounded-full bg-white/20 border border-white/30 flex items-center justify-center text-white text-[10px] font-black flex-shrink-0">
+                              {ci + 1}
+                            </div>
+                            <span className="text-[12px] font-black tracking-wide text-white uppercase leading-snug">
+                              {ch.heading}
+                            </span>
                           </div>
-                          <span className="text-[12px] font-black tracking-wide text-white uppercase">
-                            {ch.heading}
-                          </span>
-                        </div>
+                        )}
 
                         {/* Section items */}
                         <ul className="px-6 py-2">
@@ -329,7 +394,7 @@ export default function ProjectDetail() {
                     Original: ₦{ORIGINAL_PRICE.toLocaleString()}
                   </span>
                   <div className="flex items-baseline gap-2.5">
-                    <span className=" text-[36px] font-black text-campusGreen-600 leading-none">
+                    <span className="text-[36px] font-black text-campusGreen-600 leading-none">
                       ₦{STUDENT_PRICE.toLocaleString()}
                     </span>
                     <span className="bg-[#e8f7e8] text-campusGreen-700 border border-[#B8D8B8] text-[10.5px] font-bold px-2.5 py-0.5 rounded-full">
