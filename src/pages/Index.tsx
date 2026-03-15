@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import QuickOverview from "@/components/QuickOverview";
 import AboutSection from "@/components/AboutSection";
@@ -10,7 +9,7 @@ import PricingSection from "@/components/PricingSection";
 import DownloadSection from "@/components/DownloadSection";
 import FAQSection from "@/components/FAQSection";
 import ContactSection from "@/components/ContactSection";
-import Footer from "@/components/Footer";
+// Navigation and Footer are provided by the app layout
 import AOS from "aos";
 import "aos/dist/aos.css";
 import LaunchPopup from "@/components/LiveLaunchBanner";
@@ -26,10 +25,9 @@ const Index = () => {
   }, []);
   return (
     <div
-      className="min-h-screen bg-white font-inter overflow-x-hidden"
+      className="min-h-screen pt-24 bg-white font-inter overflow-x-hidden"
       id="home"
     >
-      <Navigation />
       <HeroSection />
       <QuickOverview />
       <AboutSection />
@@ -40,13 +38,12 @@ const Index = () => {
       <DownloadSection />
       <FAQSection />
       <ContactSection />
-       {showPopup && (
+      {showPopup && (
         <LaunchPopup
           playStoreUrl="https://play.google.com/store/apps/details?id=com.campushut.app"
           onClose={() => setShowPopup(false)}
         />
       )}
-      <Footer />
     </div>
   );
 };

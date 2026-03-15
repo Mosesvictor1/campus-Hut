@@ -7,6 +7,11 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Projects from "./pages/Projects";
+import DepartmentProjects from "./pages/DepartmentProjects";
+import ProjectDetail from "./pages/ProjectDetail";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
 const queryClient = new QueryClient();
 
@@ -16,15 +21,25 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route
-            path="/terms-and-conditions"
-            element={<TermsAndConditions />}
-          />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/" element={<Index />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Navigation />
+        <main className="min-h-screen">
+          <Routes>
+            <Route path="/projects" element={<Projects />} />
+            <Route
+              path="/projects/:department"
+              element={<DepartmentProjects />}
+            />
+            <Route path="/project" element={<ProjectDetail />} />
+            <Route
+              path="/terms-and-conditions"
+              element={<TermsAndConditions />}
+            />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/" element={<Index />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+        <Footer />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
