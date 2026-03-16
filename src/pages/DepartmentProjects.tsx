@@ -126,7 +126,7 @@ export default function DepartmentProjects() {
                 {[
                   `📄 ${allTopics.length} topics on this page`,
                   `📑 Page ${page} of ${totalPages}`,
-                  `💰 ₦15,000 per project`,
+                  `📄Structured Material`,
                 ].map((label) => (
                   <span
                     key={label}

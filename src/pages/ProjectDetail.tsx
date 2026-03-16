@@ -84,7 +84,9 @@ function parseToc(rawHtml: string): { heading: string; items: string[] }[] {
   if (lines.length === 0) return [];
 
   const isChapterHeading = (line: string) =>
-    /^CHAPTER\s+(ONE|TWO|THREE|FOUR|FIVE|SIX|SEVEN|EIGHT|NINE|TEN|\d+)/i.test(line);
+    /^CHAPTER\s+(ONE|TWO|THREE|FOUR|FIVE|SIX|SEVEN|EIGHT|NINE|TEN|\d+)/i.test(
+      line,
+    );
 
   const chapters: { heading: string; items: string[] }[] = [];
   let current: { heading: string; items: string[] } | null = null;
@@ -117,7 +119,7 @@ export default function ProjectDetail() {
   const result = (data as any)?.Title?.results?.[0];
   const chapters = React.useMemo(
     () => (result?.toc ? parseToc(result.toc) : []),
-    [result?.toc]
+    [result?.toc],
   );
 
   const handleOrder = () => {
@@ -126,7 +128,7 @@ export default function ProjectDetail() {
       result?.title || title
     } (Dept: ${result?.dept || "N/A"}). Price: NGN ${STUDENT_PRICE}.`;
     const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(
-      message
+      message,
     )}`;
     window.open(url, "_blank");
   };
@@ -151,7 +153,6 @@ export default function ProjectDetail() {
       `}</style>
 
       <div className="min-h-screen bg-[#F6FAF6]">
-
         {/* ══════════ HERO ══════════ */}
         <div
           className="relative flex items-end overflow-hidden"
@@ -261,11 +262,13 @@ export default function ProjectDetail() {
 
         {/* ══════════ BODY ══════════ */}
         <div className="max-w-4xl mx-auto px-6 lg:px-10 pb-36">
-
           {/* Loading */}
           {isLoading && (
             <div className="space-y-4">
-              <div className="h-20 rounded-2xl animate-pulse" style={{ background: "rgba(18,128,16,0.12)" }} />
+              <div
+                className="h-20 rounded-2xl animate-pulse"
+                style={{ background: "rgba(18,128,16,0.12)" }}
+              />
               <div className="h-64 rounded-2xl bg-white border-[1.5px] border-[#E8F0E8] animate-pulse" />
             </div>
           )}
@@ -293,7 +296,8 @@ export default function ProjectDetail() {
               <div
                 className="flex items-start gap-3 rounded-2xl p-5 mb-6 shadow-[0_4px_24px_rgba(18,128,16,0.18)]"
                 style={{
-                  background: "linear-gradient(135deg, #128010 0%, #0d5c0c 100%)",
+                  background:
+                    "linear-gradient(135deg, #128010 0%, #0d5c0c 100%)",
                 }}
               >
                 <span className="text-2xl flex-shrink-0">🔒</span>
@@ -305,6 +309,23 @@ export default function ProjectDetail() {
                     Preview the table of contents below, then order via WhatsApp
                     to receive the complete project instantly.
                   </p>
+                </div>
+              </div>
+
+              {/* Disclaimer */}
+              <div className="bg-amber-50 border-[1.5px] border-amber-200 rounded-2xl p-5 mb-6">
+                <div className="flex items-start gap-3">
+                  <span className="text-xl flex-shrink-0">⚠️</span>
+                  <div>
+                    <p className="text-amber-800 font-semibold text-[14px] mb-1">
+                      Academic Disclaimer
+                    </p>
+                    <p className="text-amber-700 text-[13px] leading-snug">
+                      All project materials are provided for research guidance
+                      and academic reference only. Students should use them
+                      responsibly and produce their own original work.
+                    </p>
+                  </div>
                 </div>
               </div>
 

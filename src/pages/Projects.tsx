@@ -222,18 +222,18 @@ export default function Projects() {
               Find Your{" "}
               <span className="text-campusGreen-500 italic">Perfect</span>
               <br />
-              Research Project
+              Research Resources
             </h1>
 
             <p className="text-white/70 text-[15.5px] leading-relaxed max-w-[500px] mb-8">
-              Browse thousands of student research topics across all faculties.
-              Complete projects delivered instantly at an unbeatable student price.
+              Browse thousands of educational research topics across all departments,
+              Get structured project materials instantly at affordable student prices
             </p>
 
             <div className="flex flex-wrap gap-3">
               {[
                 { icon: "🎓", label: "Student Friendly", accent: true },
-                { icon: "💰", label: "₦15,000 — 70% Off" },
+                { icon: "📚", label: "Structured Material" },
                 { icon: "📲", label: "WhatsApp Delivery" },
                 { icon: "📚", label: "All Departments" },
               ].map(({ icon, label, accent }) => (
