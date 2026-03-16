@@ -226,9 +226,8 @@ export default function Projects() {
 
             <p className="text-white/70 text-[15.5px] leading-relaxed max-w-[500px] mb-8">
               <span>
-                {" "}
                 Browse thousands of educational research topics across all
-                departments,
+                departments
               </span>{" "}
               <br />
               Get structured project materials instantly at affordable student
