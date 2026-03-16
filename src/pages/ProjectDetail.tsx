@@ -123,7 +123,7 @@ export default function ProjectDetail() {
   );
 
   const handleOrder = () => {
-    const phone = "07030250057";
+    const phone = "+2347030250057";
     const message = `Hello Campushut, I want to order the project: ${
       result?.title || title
     } (Dept: ${result?.dept || "N/A"}). Price: NGN ${STUDENT_PRICE}.`;
