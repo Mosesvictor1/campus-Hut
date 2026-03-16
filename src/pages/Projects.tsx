@@ -7,7 +7,7 @@ const HERO_IMAGE =
   "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1800&q=80&auto=format&fit=crop";
 
 const deptIconMap: Record<string, string> = {
-  "accounting": "🧾",
+  accounting: "🧾",
   "adult education": "👩‍🎓",
   "agric and bioresources engineering": "🌿",
   "agric economics": "🌾",
@@ -15,23 +15,23 @@ const deptIconMap: Record<string, string> = {
   "agricultural education": "🌱",
   "agricultural science education": "🌻",
   "agriculture and forestry": "🌲",
-  "anatomy": "🦴",
+  anatomy: "🦴",
   "animal science": "🐄",
   "applied science": "🔬",
   "archaeology and tourism": "🏺",
-  "architecture": "🏛️",
+  architecture: "🏛️",
   "art and design": "🎨",
   "art education": "🖌️",
   "banking and finance": "💰",
-  "biochemistry": "🧬",
+  biochemistry: "🧬",
   "biology edcuation": "🔭",
-  "botany": "🌿",
-  "building": "🏗️",
+  botany: "🌿",
+  building: "🏗️",
   "business administration": "📊",
   "business administration and management": "📊",
   "business edcuation": "📋",
   "chemical engineering": "⚗️",
-  "chemistry": "🧪",
+  chemistry: "🧪",
   "chemistry edcuation": "🧫",
   "civil engineering": "🏗️",
   "co-operative economics and management": "🤝",
@@ -39,27 +39,27 @@ const deptIconMap: Record<string, string> = {
   "computer education": "🖥️",
   "computer engineering": "💾",
   "computer science": "💻",
-  "criminology": "⚖️",
+  criminology: "⚖️",
   "crop science": "🌽",
-  "dentistry": "🦷",
-  "dermatology": "🩺",
-  "economics": "📈",
+  dentistry: "🦷",
+  dermatology: "🩺",
+  economics: "📈",
   "economics education": "📉",
   "electrical electronics engineering": "⚡",
   "english and literary studies": "📖",
-  "entrepreneurship": "💡",
+  entrepreneurship: "💡",
   "environmental management": "♻️",
   "environmental science": "🌍",
   "estate management": "🏘️",
   "fine and applied arts": "🖼️",
   "food science and technology": "🍽️",
   "food technology": "🥗",
-  "french": "🇫🇷",
+  french: "🇫🇷",
   "general studies": "📚",
   "geo-science": "🌐",
-  "geography": "🗺️",
-  "geology": "🪨",
-  "geophysics": "🌋",
+  geography: "🗺️",
+  geology: "🪨",
+  geophysics: "🌋",
   "guidance and counselling": "🧠",
   "health and physical education": "🏃",
   "history and international studies": "📜",
@@ -68,51 +68,51 @@ const deptIconMap: Record<string, string> = {
   "human resource management": "👥",
   "industrial and production engineering": "🏭",
   "industrial chemistry": "🧲",
-  "insurance": "🛡️",
+  insurance: "🛡️",
   "international relation": "🌐",
-  "law": "⚖️",
+  law: "⚖️",
   "library and information science": "📚",
   "library science education": "📕",
-  "linguistics": "🔤",
+  linguistics: "🔤",
   "m.sc accounting": "🧾",
   "m.sc management": "📊",
-  "marketing": "📣",
+  marketing: "📣",
   "mass communication": "📡",
   "materials and metallurgical engineering": "🔩",
-  "mathematics": "∑",
+  mathematics: "∑",
   "mechanical engineering": "⚙️",
   "medical laboratory science": "🔬",
   "medical rehabilitation": "🏥",
-  "microbiology": "🦠",
-  "music": "🎵",
-  "nursing": "💊",
+  microbiology: "🦠",
+  music: "🎵",
+  nursing: "💊",
   "office technology": "🖨️",
-  "paediatrics": "👶",
+  paediatrics: "👶",
   "petroleum engineering": "🛢️",
-  "pharmacy": "💉",
-  "philosophy": "🤔",
-  "physiology": "❤️",
-  "physiotheraphy": "🤸",
+  pharmacy: "💉",
+  philosophy: "🤔",
+  physiology: "❤️",
+  physiotheraphy: "🤸",
   "political science": "🗳️",
-  "psychology": "🧠",
+  psychology: "🧠",
   "public administration": "🏛️",
   "purchasing and supply": "📦",
   "pure and industrial chemistry": "🧪",
   "quantity surveying": "📐",
-  "radiography": "🩻",
+  radiography: "🩻",
   "religious and cultural studies": "🕌",
   "science education": "🔭",
   "secretarial administration and management": "🗂️",
   "secretarial studies": "📝",
   "sociology and anthropology": "👥",
   "soil science": "🌱",
-  "statistics": "📊",
+  statistics: "📊",
   "surveying and geo-informatics": "📍",
   "technical education": "🔧",
   "theatre art": "🎭",
   "urban and regional planning": "🏙️",
   "veterinary medicine": "🐾",
-  "zoology": "🦁",
+  zoology: "🦁",
 };
 
 const getIcon = (dept: string): string => {
@@ -157,7 +157,6 @@ export default function Projects() {
       `}</style>
 
       <div className="min-h-screen bg-[#F6FAF6] ">
-
         {/* ── HERO ── */}
         <div
           className="relative flex items-end overflow-hidden"
@@ -226,8 +225,14 @@ export default function Projects() {
             </h1>
 
             <p className="text-white/70 text-[15.5px] leading-relaxed max-w-[500px] mb-8">
-              Browse thousands of educational research topics across all departments,
-              Get structured project materials instantly at affordable student prices
+              <span>
+                {" "}
+                Browse thousands of educational research topics across all
+                departments,
+              </span>{" "}
+              <br />
+              Get structured project materials instantly at affordable student
+              prices
             </p>
 
             <div className="flex flex-wrap gap-3">
@@ -264,7 +269,6 @@ export default function Projects() {
 
         {/* ── BODY ── */}
         <div className="max-w-6xl mx-auto px-6 lg:px-10 pb-24">
-
           {/* Section header */}
           <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
             <div>
@@ -274,7 +278,8 @@ export default function Projects() {
               </h2>
               {!isLoading && !error && (
                 <p className="text-sm text-[#527052] mt-1">
-                  {departments.length} department{departments.length !== 1 ? "s" : ""} available
+                  {departments.length} department
+                  {departments.length !== 1 ? "s" : ""} available
                 </p>
               )}
             </div>
@@ -342,7 +347,8 @@ export default function Projects() {
                   }}
                 >
                   {/* Shine sweep on hover */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
                     style={{
                       background:
                         "linear-gradient(135deg, rgba(255,255,255,0.10) 0%, transparent 50%)",
