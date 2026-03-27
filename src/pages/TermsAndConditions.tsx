@@ -24,70 +24,106 @@ const TermsAndConditions = () => (
           <li>
             <strong>Acceptance of Terms</strong>
             <p className="ml-2 sm:ml-4 mt-1 sm:mt-2 text-gray-600">
-              By using CampusHut, you agree to comply with and be legally bound
-              by these Terms. If you do not agree, please do not use the
-              platform.
+              By accessing or using CampusHut (the "Platform"), you agree to be
+              bound by these Terms. If you do not agree, please do not use the
+              Platform.
             </p>
           </li>
           <li>
             <strong>Eligibility</strong>
             <p className="ml-2 sm:ml-4 mt-1 sm:mt-2 text-gray-600">
-              You must be a student or affiliated with a tertiary institution in
-              Africa and at least 16 years old to use this platform.
+              You must be at least 16 years old and affiliated with a tertiary
+              institution to use CampusHut.
             </p>
           </li>
           <li>
             <strong>Use of the Platform</strong>
             <p className="ml-2 sm:ml-4 mt-1 sm:mt-2 text-gray-600">
-              You agree to use CampusHut only for lawful purposes. You must not
-              misuse, hack, or interfere with the platform or its features.
+              You agree to use CampusHut only for lawful and academic purposes.
+              You must not:
+            </p>
+            <ul className="list-disc ml-6 mt-1 sm:mt-2 text-gray-600">
+              <li>Misuse, hack, or disrupt the platform</li>
+              <li>Upload or distribute unlawful, harmful, or misleading content</li>
+              <li>Use materials from the platform for plagiarism or academic dishonesty</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Academic Disclaimer</strong>
+            <p className="ml-2 sm:ml-4 mt-1 sm:mt-2 text-gray-600">
+              Campushut Limited provides educational resources, project
+              materials, and study tools strictly for learning and reference
+              purposes. Users are solely responsible for how they use any
+              content obtained from the platform.
+            </p>
+          </li>
+          <li>
+            <strong>AI Disclaimer</strong>
+            <p className="ml-2 sm:ml-4 mt-1 sm:mt-2 text-gray-600">
+              CampusHut's AI features provide automated responses that may not
+              always be accurate or complete. Users are advised to verify
+              information independently before relying on it.
             </p>
           </li>
           <li>
             <strong>User Content</strong>
             <p className="ml-2 sm:ml-4 mt-1 sm:mt-2 text-gray-600">
-              You retain ownership of content you upload but grant us a
-              non-exclusive, royalty-free license to use it in connection with
-              the service. You're responsible for the legality and accuracy of
-              your content.
+              You retain ownership of content you upload but grant Campushut a
+              non-exclusive license to use it for platform operations. You are
+              responsible for the legality and accuracy of your content.
+            </p>
+          </li>
+          <li>
+            <strong>Marketplace and Third-Party Services</strong>
+            <p className="ml-2 sm:ml-4 mt-1 sm:mt-2 text-gray-600">
+              Campushut may provide access to third-party services, including
+              marketplaces and internships. CampusHut is not responsible for
+              transactions, quality, or outcomes of third-party services.
+            </p>
+          </li>
+          <li>
+            <strong>Payments and Transactions</strong>
+            <p className="ml-2 sm:ml-4 mt-1 sm:mt-2 text-gray-600">
+              All payments made on CampusHut are subject to applicable fees.
+              Transactions may be processed through third-party providers.
+              Refund policies, where applicable, will be communicated within
+              specific services.
             </p>
           </li>
           <li>
             <strong>Intellectual Property</strong>
             <p className="ml-2 sm:ml-4 mt-1 sm:mt-2 text-gray-600">
-              All content, branding, and features on CampusHut are our
-              intellectual property and may not be copied, modified, or reused
-              without permission.
-            </p>
-          </li>
-          <li>
-            <strong>Privacy and Data</strong>
-            <p className="ml-2 sm:ml-4 mt-1 sm:mt-2 text-gray-600">
-              We collect and process personal data in accordance with our
-              Privacy Policy. By using our platform, you consent to such
-              processing.
+              All platform content, features, and branding are owned by
+              Campushut Limited and may not be copied or reused without
+              permission.
             </p>
           </li>
           <li>
             <strong>Service Availability</strong>
             <p className="ml-2 sm:ml-4 mt-1 sm:mt-2 text-gray-600">
-              We strive for uptime but do not guarantee uninterrupted service.
-              We reserve the right to suspend or terminate access at any time.
+              We strive to provide uninterrupted service but do not guarantee
+              it. We reserve the right to modify, suspend, or discontinue
+              services at any time.
             </p>
           </li>
           <li>
             <strong>Termination</strong>
             <p className="ml-2 sm:ml-4 mt-1 sm:mt-2 text-gray-600">
               We may suspend or terminate your account if you violate these
-              Terms or engage in unlawful behavior on the platform.
+              Terms.
             </p>
           </li>
           <li>
             <strong>Limitation of Liability</strong>
             <p className="ml-2 sm:ml-4 mt-1 sm:mt-2 text-gray-600">
-              CampusHut will not be liable for any indirect or consequential
-              loss arising from use of the platform.
+              Campushut Limited shall not be liable for:
             </p>
+            <ul className="list-disc ml-6 mt-1 sm:mt-2 text-gray-600">
+              <li>Academic outcomes</li>
+              <li>Errors in AI-generated content</li>
+              <li>Losses from use of the platform</li>
+              <li>Third-party interactions</li>
+            </ul>
           </li>
           <li>
             <strong>Governing Law</strong>
