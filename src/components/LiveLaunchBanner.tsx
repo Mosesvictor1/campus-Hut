@@ -232,7 +232,7 @@ const LaunchPopup: React.FC<Props> = ({
                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 border-2 border-white" />
                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 border-2 border-white" />
                 </span>
-                Join 1,000+ students already on CampusHut
+                Join 5,000+ students already on CampusHut
               </span>
             </div>
           </div>
