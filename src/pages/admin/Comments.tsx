@@ -34,10 +34,11 @@ export default function Comments() {
     queryKey: ["comments-counts"],
     queryFn: () => blogRequest<any[]>("comments", { token }),
   });
+  const allCommentsList = allComments.data?.comments || [];
   const counts = {
-    all: (allComments.data || []).length,
-    pending: (allComments.data || []).filter((c: any) => c.status === "pending").length,
-    approved: (allComments.data || []).filter((c: any) => c.status === "approved").length,
+    all: allCommentsList.length,
+    pending: allCommentsList.filter((c: any) => c.status === "pending").length,
+    approved: allCommentsList.filter((c: any) => c.status === "approved").length,
   };
 
   const approve = useMutation({
@@ -61,7 +62,7 @@ export default function Comments() {
     onError: (e: any) => toast.error(e.message),
   });
 
-  const items = data || [];
+  const items = data?.comments || [];
 
   return (
     <div className="space-y-4">

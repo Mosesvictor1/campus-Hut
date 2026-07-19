@@ -49,7 +49,7 @@ export default function BlogList() {
     onError: (e: any) => toast.error(e.message),
   });
 
-  const blogs = data || [];
+  const blogs = data?.blogs || [];
 
   return (
     <div className="space-y-4">
@@ -75,7 +75,7 @@ export default function BlogList() {
           </select>
           <select value={category} onChange={(e) => setCategory(e.target.value)} className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-md px-3 py-2 text-sm text-white">
             <option value="">All Categories</option>
-            {(cats.data || []).map((c: any) => <option key={c.id} value={c.slug || c.name}>{c.name}</option>)}
+            {(cats.data?.categories || []).map((c: any) => <option key={c.id} value={c.slug || c.name}>{c.name}</option>)}
           </select>
           <Link to="/dashboard/blogs/new" className="bg-campusGreen-600 hover:bg-campusGreen-700 text-white text-sm px-3 py-2 rounded-md flex items-center gap-1">
             <Plus className="w-4 h-4" /> New Post

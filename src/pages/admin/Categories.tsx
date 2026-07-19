@@ -62,8 +62,8 @@ export default function Categories() {
     onError: (e: any) => toast.error(e.message),
   });
 
-  const cats = data || [];
-  const countFor = (name: string) => (blogs.data || []).filter((b: any) => b.category === name).length;
+  const cats = data?.categories || [];
+  const countFor = (name: string) => (blogs.data?.blogs || []).filter((b: any) => b.category === name).length;
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[60%_40%] gap-4">

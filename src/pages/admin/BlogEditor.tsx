@@ -205,7 +205,7 @@ export default function BlogEditor() {
           <h3 className="text-white font-semibold flex items-center gap-2 mb-2"><TagIcon className="w-4 h-4 text-orange-500" /> Category</h3>
           <select value={blog.category} onChange={(e) => update({ category: e.target.value })} className="w-full bg-[#1a1a1a] border border-[#2a2a2a] rounded px-2 py-2 text-white text-sm focus:border-campusGreen-600">
             <option value="">Select category…</option>
-            {(cats.data || []).map((c: any) => <option key={c.id} value={c.name}>{c.name}</option>)}
+            {(cats.data?.categories || []).map((c: any) => <option key={c.id} value={c.name}>{c.name}</option>)}
           </select>
           {!blog.category && <p className="text-red-500 text-xs mt-1">Required</p>}
         </div>

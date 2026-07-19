@@ -34,13 +34,10 @@ export default function Dashboard() {
     queryFn: () => newsRequest<any>("api/news/getAllNews?page=0&size=1000"),
   });
 
-  const recentBlogs = useQuery({
-    queryKey: ["recent-blogs"],
-    queryFn: () => blogRequest<any[]>("blogs", { token }),
-  });
-
   const newsList: any[] = Array.isArray(news.data) ? news.data : news.data?.content || [];
   const uniqueTypes = new Set(newsList.map((n) => n.newsType)).size;
+
+  const recentBlogList: any[] = blogStats.data?.recentBlogs || [];
 
   return (
     <div className="space-y-8">
@@ -51,10 +48,10 @@ export default function Dashboard() {
             Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="h-24 bg-[#1a1a1a]" />)
           ) : (
             <>
-              <StatCard icon={FileText} label="Total Blogs" value={blogStats.data?.blogs ?? 0} accent="green" />
-              <StatCard icon={CheckCircle} label="Published" value={blogStats.data?.published ?? 0} accent="green" />
-              <StatCard icon={MessageSquare} label="Pending Comments" value={blogStats.data?.pendingComments ?? 0} accent="green" />
-              <StatCard icon={Tag} label="Categories" value={blogStats.data?.categories ?? 0} accent="orange" />
+              <StatCard icon={FileText} label="Total Blogs" value={blogStats.data?.totals?.blogs ?? 0} accent="green" />
+              <StatCard icon={CheckCircle} label="Published" value={blogStats.data?.totals?.published ?? 0} accent="green" />
+              <StatCard icon={MessageSquare} label="Pending Comments" value={blogStats.data?.totals?.pendingComments ?? 0} accent="green" />
+              <StatCard icon={Tag} label="Categories" value={blogStats.data?.totals?.categories ?? 0} accent="orange" />
             </>
           )}
         </div>
@@ -93,7 +90,7 @@ export default function Dashboard() {
                 </tr>
               </thead>
               <tbody>
-                {(recentBlogs.data || []).slice(0, 5).map((b: any) => (
+                {recentBlogList.slice(0, 5).map((b: any) => (
                   <tr key={b.id} className="border-t border-[#2a2a2a]">
                     <td className="py-2 text-white truncate max-w-[180px]">{b.title}</td>
                     <td><span className="text-xs px-2 py-0.5 rounded bg-orange-600 text-white">{b.category}</span></td>
