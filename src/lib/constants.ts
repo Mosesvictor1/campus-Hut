@@ -9,7 +9,7 @@ export const BLOG_BASE_URL =
 
 export const NEWS_BASE_URL = import.meta.env.DEV
   ? "/news-proxy"
-  : "https://api.mycampushut.com/campusHutNews";
+  : "https://corsproxy.io/?https://api.mycampushut.com/campusHutNews";
 
 export const CLOUD_NAME = "dkerrqvao";
 export const UPLOAD_PRESET = "ml_default";
