@@ -1,16 +1,12 @@
 {
-  "redirects": [
+  "rewrites": [
+    {
+      "source": "/news-proxy/:path*",
+      "destination": "https://api.mycampushut.com/campusHutNews/:path*"
+    },
     {
       "source": "/(.*)",
-      "has": [
-        {
-          "type": "host",
-          "value": "campus-hut.vercel.app"
-        }
-      ],
-      "destination": "https://www.mycampushut.com/",
-      "permanent": true
+      "destination": "/"
     }
-  ],
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
+  ]
 }
