@@ -9,7 +9,7 @@ export const BLOG_BASE_URL =
 
 export const NEWS_BASE_URL = import.meta.env.DEV
   ? "/news-proxy"
-  : "http://178.128.36.105:8080/campusHutNews";
+  : "https://api.mycampushut.com/campusHutNews";
 
 export const CLOUD_NAME = "dkerrqvao";
 export const UPLOAD_PRESET = "ml_default";

@@ -47,7 +47,7 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
     proxy: {
       "/news-proxy": {
-        target: "http://178.128.36.105:8080",
+        target: "https://api.mycampushut.com",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/news-proxy/, "/campusHutNews"),
       },
