@@ -24,7 +24,7 @@ export default function BlogList() {
   const { data, isLoading } = useQuery({
     queryKey: ["blogs", { status, category, search }],
     queryFn: () =>
-      blogRequest<any[]>("blogs", {
+      blogRequest<any>("blogs", {
         token,
         body: {
           ...(status && { status }),
@@ -36,7 +36,7 @@ export default function BlogList() {
 
   const cats = useQuery({
     queryKey: ["categories"],
-    queryFn: () => blogRequest<any[]>("categories", { token }),
+    queryFn: () => blogRequest<any>("categories", { token }),
   });
 
   const del = useMutation({

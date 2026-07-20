@@ -21,12 +21,12 @@ export default function Categories() {
 
   const { data, isLoading } = useQuery({
     queryKey: ["categories"],
-    queryFn: () => blogRequest<any[]>("categories", { token }),
+    queryFn: () => blogRequest<any>("categories", { token }),
   });
 
   const blogs = useQuery({
     queryKey: ["blogs-for-cats"],
-    queryFn: () => blogRequest<any[]>("blogs", { token }),
+    queryFn: () => blogRequest<any>("blogs", { token }),
   });
 
   useEffect(() => {

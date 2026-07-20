@@ -32,7 +32,7 @@ export default function BlogEditor() {
 
   const cats = useQuery({
     queryKey: ["categories"],
-    queryFn: () => blogRequest<any[]>("categories", { token }),
+    queryFn: () => blogRequest<any>("categories", { token }),
   });
 
   const existing = useQuery({

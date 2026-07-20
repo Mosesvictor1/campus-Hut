@@ -55,15 +55,15 @@ export default function AdminSidebar({ onNavigate }: { onNavigate?: () => void }
   };
 
   return (
-    <aside className="w-[260px] shrink-0 bg-[#111111] border-r border-[#2a2a2a] flex flex-col h-screen sticky top-0">
-      <div className="p-5 border-b border-[#2a2a2a]">
+    <aside className="w-[260px] shrink-0 bg-gray-50 border-r border-gray-200 dark:bg-[#111111] dark:border-[#2a2a2a] flex flex-col h-screen sticky top-0">
+      <div className="p-5 border-b border-gray-200 dark:border-[#2a2a2a]">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-campusGreen-600 flex items-center justify-center">
             <Feather className="w-4 h-4 text-white" />
           </div>
           <div>
-            <div className="text-white font-bold leading-tight">CampusHut</div>
-            <div className="text-neutral-400 text-xs">CMS Dashboard</div>
+            <div className="text-gray-900 dark:text-white font-bold leading-tight">CampusHut</div>
+            <div className="text-gray-500 dark:text-neutral-400 text-xs">CMS Dashboard</div>
           </div>
         </div>
         <div className="mt-4 flex items-center gap-3">
@@ -71,10 +71,10 @@ export default function AdminSidebar({ onNavigate }: { onNavigate?: () => void }
             {initials}
           </div>
           <div>
-            <div className="text-white text-sm font-medium leading-tight">
+            <div className="text-gray-900 dark:text-white text-sm font-medium leading-tight">
               {admin?.username || "Admin"}
             </div>
-            <div className="text-neutral-500 text-xs">{admin?.email || ""}</div>
+            <div className="text-gray-500 dark:text-neutral-500 text-xs">{admin?.email || ""}</div>
           </div>
         </div>
       </div>
@@ -82,7 +82,7 @@ export default function AdminSidebar({ onNavigate }: { onNavigate?: () => void }
       <nav className="flex-1 overflow-y-auto py-3 px-2">
         {sections.map((section) => (
           <div key={section.label} className="mb-2">
-            <div className="text-neutral-500 text-xs uppercase px-3 mt-4 mb-1 tracking-wider">
+            <div className="text-gray-500 dark:text-neutral-500 text-xs uppercase px-3 mt-4 mb-1 tracking-wider">
               {section.label}
             </div>
             {section.items.map((item) => (
@@ -96,7 +96,7 @@ export default function AdminSidebar({ onNavigate }: { onNavigate?: () => void }
                     "flex items-center gap-3 px-3 py-2 rounded-md text-sm mb-0.5 relative",
                     isActive
                       ? "bg-campusGreen-600 text-white border-l-4 border-orange-400 pl-2"
-                      : "text-neutral-400 hover:bg-[#1a1a1a] hover:text-white"
+                      : "text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-neutral-400 dark:hover:bg-[#1a1a1a] dark:hover:text-white"
                   )
                 }
               >
@@ -108,10 +108,10 @@ export default function AdminSidebar({ onNavigate }: { onNavigate?: () => void }
         ))}
       </nav>
 
-      <div className="border-t border-[#2a2a2a] p-3">
+      <div className="border-t border-gray-200 dark:border-[#2a2a2a] p-3">
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-red-500 hover:bg-[#1a1a1a]"
+          className="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-red-500 hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
         >
           <LogOut className="w-4 h-4" /> Logout
         </button>

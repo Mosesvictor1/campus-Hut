@@ -24,7 +24,7 @@ export default function NewsList() {
     queryKey: ["news", page, q, by],
     queryFn: async () => {
       if (q.trim()) {
-        return newsRequest<any[]>(`api/news/search/${by}?${by}=${encodeURIComponent(q)}`);
+        return newsRequest<any>(`api/news/search/${by}?${by}=${encodeURIComponent(q)}`);
       }
       return newsRequest<any>(`api/news/getAllNews?page=${page}&size=20`);
     },
