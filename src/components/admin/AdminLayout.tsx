@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Bell, Menu, X } from "lucide-react";
 import AdminSidebar from "./AdminSidebar";
 import { useAuthStore } from "@/store/authStore";
+import ThemeToggle from "@/components/theme/ThemeToggle";
 
 const titleMap: Record<string, string> = {
   "/dashboard": "Dashboard",
@@ -30,7 +31,7 @@ export default function AdminLayout() {
   const initials = admin?.username?.slice(0, 2).toUpperCase() || "AD";
 
   return (
-    <div className="flex min-h-screen w-full bg-[#0a0a0a] text-white">
+    <div className="flex min-h-screen w-full bg-white text-gray-900 dark:bg-[#0a0a0a] dark:text-white">
       {/* Desktop sidebar */}
       <div className="hidden md:block">
         <AdminSidebar />
@@ -53,18 +54,19 @@ export default function AdminLayout() {
       )}
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="h-14 bg-[#111111] border-b border-[#2a2a2a] flex items-center justify-between px-4 sticky top-0 z-30">
+        <header className="h-14 bg-white border-b border-gray-200 dark:bg-[#111111] dark:border-[#2a2a2a] flex items-center justify-between px-4 sticky top-0 z-30">
           <div className="flex items-center gap-3">
             <button
-              className="md:hidden text-neutral-400"
+              className="md:hidden text-gray-600 dark:text-neutral-400"
               onClick={() => setMobileOpen(true)}
             >
               <Menu className="w-5 h-5" />
             </button>
-            <h1 className="text-white font-semibold">{title}</h1>
+            <h1 className="text-gray-900 dark:text-white font-semibold">{title}</h1>
           </div>
           <div className="flex items-center gap-3">
-            <Bell className="w-5 h-5 text-neutral-400" />
+            <ThemeToggle variant="ghost" />
+            <Bell className="w-5 h-5 text-gray-500 dark:text-neutral-400" />
             <div className="w-8 h-8 rounded-full bg-campusGreen-600 text-white flex items-center justify-center text-xs font-semibold">
               {initials}
             </div>
