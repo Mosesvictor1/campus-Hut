@@ -67,7 +67,7 @@ const Navigation = () => {
                   Download App
                 </Button>
               </a>
-              <ThemeToggle />
+              
             </div>
           </div>
 
