@@ -24,7 +24,7 @@ export default function Comments() {
   const { data, isLoading } = useQuery({
     queryKey: ["comments", tab],
     queryFn: () =>
-      blogRequest<any[]>("comments", {
+      blogRequest<any>("comments", {
         token,
         body: tab === "all" ? {} : { status: tab },
       }),
@@ -32,7 +32,7 @@ export default function Comments() {
 
   const allComments = useQuery({
     queryKey: ["comments-counts"],
-    queryFn: () => blogRequest<any[]>("comments", { token }),
+    queryFn: () => blogRequest<any>("comments", { token }),
   });
   const allCommentsList = allComments.data?.comments || [];
   const counts = {
