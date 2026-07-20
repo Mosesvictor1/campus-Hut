@@ -7,6 +7,7 @@ import HowItWorks from "@/components/HowItWorks";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import PricingSection from "@/components/PricingSection";
 import DownloadSection from "@/components/DownloadSection";
+import BlogSection from "@/components/BlogSection";
 import FAQSection from "@/components/FAQSection";
 import ContactSection from "@/components/ContactSection";
 // Navigation and Footer are provided by the app layout
@@ -35,6 +36,7 @@ const Index = () => {
       <HowItWorks />
       <TestimonialsSection />
       {/* <PricingSection /> */}
+      <BlogSection />
       <DownloadSection />
       <FAQSection />
       <ContactSection />
