@@ -57,6 +57,12 @@ const Navigation = () => {
               >
                 Projects
               </a>
+              <a
+                href="/blog"
+                className="text-gray-700 hover:text-campusGreen-600 px-3 py-2 text-sm font-medium transition-colors"
+              >
+                Blog
+              </a>
 
               <a
                 href="https://play.google.com/store/apps/details?id=com.campushut.app"
@@ -124,6 +130,13 @@ const Navigation = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Projects
+              </a>
+              <a
+                href="/blog"
+                className="block px-3 py-2 text-gray-700 hover:text-campusGreen-600"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Blog
               </a>
               <a
                 href="https://play.google.com/store/apps/details?id=com.campushut.app"

@@ -10,6 +10,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Projects from "./pages/Projects";
 import DepartmentProjects from "./pages/DepartmentProjects";
 import ProjectDetail from "./pages/ProjectDetail";
+import Blog from "./pages/Blog";
+import BlogDetail from "./pages/BlogDetail";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import AuthGuard from "@/components/admin/AuthGuard";
@@ -67,6 +69,8 @@ const AppRoutes = () => (
       <Route path="/projects" element={<Projects />} />
       <Route path="/projects/:department" element={<DepartmentProjects />} />
       <Route path="/project" element={<ProjectDetail />} />
+      <Route path="/blog" element={<Blog />} />
+      <Route path="/blog/:slug" element={<BlogDetail />} />
       <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/" element={<Index />} />
