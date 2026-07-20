@@ -158,58 +158,6 @@
   background: #16a34a;
 }
 
-/* ============================================================
-   Global dark-mode overrides for hardcoded light utility colors
-   used across the public marketing site. Lets us ship a working
-   light/dark toggle without editing every legacy component.
-   ============================================================ */
-.dark body {
-  background-color: #0a0a0a;
-  color: #f5f5f5;
-}
-
-/* Backgrounds */
-.dark .bg-white { background-color: #111111 !important; }
-.dark .bg-gray-50 { background-color: #141414 !important; }
-.dark .bg-gray-100 { background-color: #1a1a1a !important; }
-.dark .bg-gray-200 { background-color: #222222 !important; }
-.dark .bg-gray-900 { background-color: #050505 !important; }
-.dark .bg-green-50 { background-color: #0f1a12 !important; }
-.dark .bg-green-100 { background-color: #14261a !important; }
-
-/* Gradients that assume a light backdrop */
-.dark .from-white { --tw-gradient-from: #111111 var(--tw-gradient-from-position) !important; }
-.dark .to-white { --tw-gradient-to: #111111 var(--tw-gradient-to-position) !important; }
-.dark .via-white { --tw-gradient-via: #111111 var(--tw-gradient-via-position) !important; }
-.dark .from-gray-50 { --tw-gradient-from: #141414 var(--tw-gradient-from-position) !important; }
-.dark .from-gray-100 { --tw-gradient-from: #1a1a1a var(--tw-gradient-from-position) !important; }
-.dark .to-gray-50 { --tw-gradient-to: #141414 var(--tw-gradient-to-position) !important; }
-.dark .to-gray-100 { --tw-gradient-to: #1a1a1a var(--tw-gradient-to-position) !important; }
-
-/* Text colors */
-.dark .text-gray-900 { color: #f5f5f5 !important; }
-.dark .text-gray-800 { color: #ececec !important; }
-.dark .text-gray-700 { color: #d4d4d4 !important; }
-.dark .text-gray-600 { color: #b5b5b5 !important; }
-.dark .text-gray-500 { color: #9a9a9a !important; }
-.dark .text-black { color: #f5f5f5 !important; }
-
-/* Borders */
-.dark .border-gray-100 { border-color: #262626 !important; }
-.dark .border-gray-200 { border-color: #2a2a2a !important; }
-.dark .border-gray-300 { border-color: #333333 !important; }
-.dark .border-white { border-color: #2a2a2a !important; }
-
-/* Shadow softening on dark */
-.dark .shadow-lg,
-.dark .shadow-xl,
-.dark .shadow-2xl { box-shadow: 0 10px 30px rgba(0,0,0,0.6) !important; }
-
-/* Glassmorphism variant in dark */
-.dark .glassmorphism {
-  background: rgba(20, 20, 20, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
 
 /* Smooth animations */
 * {
