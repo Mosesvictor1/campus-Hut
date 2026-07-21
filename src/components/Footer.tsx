@@ -46,62 +46,23 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2 text-gray-400">
-              <li>
-                <a href="#" className="hover:text-campusGreen-400">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a href="#about" className="hover:text-campusGreen-400">
-                  About
-                </a>
-              </li>
-              <li>
-                <a href="#features" className="hover:text-campusGreen-400">
-                  Features
-                </a>
-              </li>
-              <li>
-                <a href="#faq" className="hover:text-campusGreen-400">
-                  FAQ
-                </a>
-              </li>
-              <li>
-                <a href="#contact" className="hover:text-campusGreen-400">
-                  Contact
-                </a>
-              </li>
+              <li><a href="/#home" className="hover:text-campusGreen-400">Home</a></li>
+              <li><a href="/#how-it-works" className="hover:text-campusGreen-400">How It Works</a></li>
+              <li><a href="/#ai-learning" className="hover:text-campusGreen-400">AI Learning</a></li>
+              <li><a href="/#student-success" className="hover:text-campusGreen-400">Student Success</a></li>
+              <li><a href="/blog" className="hover:text-campusGreen-400">Blog</a></li>
+              <li><a href="/#contact" className="hover:text-campusGreen-400">Contact</a></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4">Features</h3>
+            <h3 className="font-semibold mb-4">AI Features</h3>
             <ul className="space-y-2 text-gray-400">
-              <li>
-                <a href="#features" className="hover:text-campusGreen-400">
-                  AI Study Assistant
-                </a>
-              </li>
-              <li>
-                <a href="#features" className="hover:text-campusGreen-400">
-                  CV Builder
-                </a>
-              </li>
-              <li>
-                <a href="#features" className="hover:text-campusGreen-400">
-                  Schedule Manager
-                </a>
-              </li>
-              <li>
-                <a href="#features" className="hover:text-campusGreen-400">
-                  Campus News
-                </a>
-              </li>
-              <li>
-                <a href="#features" className="hover:text-campusGreen-400">
-                  Marketplace
-                </a>
-              </li>
+              <li><a href="/#ai-features" className="hover:text-campusGreen-400">AI Study Assistant</a></li>
+              <li><a href="/#ai-features" className="hover:text-campusGreen-400">AI Course Generator</a></li>
+              <li><a href="/#ai-features" className="hover:text-campusGreen-400">AI Flashcards & Quizzes</a></li>
+              <li><a href="/#ai-features" className="hover:text-campusGreen-400">Smart Study Planner</a></li>
+              <li><a href="/#ai-features" className="hover:text-campusGreen-400">Assignment Reminder</a></li>
             </ul>
           </div>
 
