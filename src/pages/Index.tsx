@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import HeroSection from "@/components/HeroSection";
-import QuickOverview from "@/components/QuickOverview";
-import AboutSection from "@/components/AboutSection";
-import FeaturesOverview from "@/components/FeaturesOverview";
+import ProblemSection from "@/components/ProblemSection";
+import AdaptiveLearningSection from "@/components/AdaptiveLearningSection";
 import HowItWorks from "@/components/HowItWorks";
-import TestimonialsSection from "@/components/TestimonialsSection";
-import PricingSection from "@/components/PricingSection";
-import DownloadSection from "@/components/DownloadSection";
+import AILearningSection from "@/components/AILearningSection";
+import StudentSuccessSection from "@/components/StudentSuccessSection";
 import BlogSection from "@/components/BlogSection";
 import FAQSection from "@/components/FAQSection";
 import ContactSection from "@/components/ContactSection";
-// Navigation and Footer are provided by the app layout
 import AOS from "aos";
 import "aos/dist/aos.css";
 import LaunchPopup from "@/components/LiveLaunchBanner";
@@ -26,18 +23,16 @@ const Index = () => {
   }, []);
   return (
     <div
-      className="min-h-screen pt-24 bg-white font-inter overflow-x-hidden"
+      className="min-h-screen bg-white font-inter overflow-x-hidden"
       id="home"
     >
       <HeroSection />
-      <QuickOverview />
-      <AboutSection />
-      <FeaturesOverview />
+      <ProblemSection />
+      <AdaptiveLearningSection />
       <HowItWorks />
-      <TestimonialsSection />
-      {/* <PricingSection /> */}
+      <AILearningSection />
+      <StudentSuccessSection />
       <BlogSection />
-      <DownloadSection />
       <FAQSection />
       <ContactSection />
       {showPopup && (
