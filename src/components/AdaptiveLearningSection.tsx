@@ -33,14 +33,8 @@ const AdaptiveLearningSection = () => {
     <section id="ai-learning" className="py-16 sm:py-20 bg-[#EAFFE9]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center mb-14">
-          <span
-            className="text-xs font-bold tracking-widest text-campusGreen-600 uppercase"
-            data-aos="fade-up"
-          >
-            Section C
-          </span>
           <h2
-            className="mt-3 text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 leading-tight"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 leading-tight"
             data-aos="fade-up"
           >
             Learning That Adapts to You,{" "}

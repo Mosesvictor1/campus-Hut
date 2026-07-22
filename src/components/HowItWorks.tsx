@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
+import StoreButtons from "./StoreButtons";
 import {
   UserCircle2,
   Brain,
@@ -14,7 +14,6 @@ import {
   Layers,
   CheckSquare,
   BookOpen,
-  Download,
 } from "lucide-react";
 
 const HowItWorks = () => {
@@ -146,16 +145,10 @@ const HowItWorks = () => {
 
         {/* Bottom CTA */}
         <div className="mt-14 text-center" data-aos="fade-up">
-          <a
-            href="https://play.google.com/store/apps/details?id=com.campushut.app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button className="bg-campusGreen-600 hover:bg-campusGreen-700 text-white px-8 py-6 text-base sm:text-lg rounded-full shadow-lg shadow-campusGreen-600/30">
-              <Download className="w-5 h-5 mr-2" />
-              Start Learning Smarter Today
-            </Button>
-          </a>
+          <p className="mb-5 text-base sm:text-lg font-medium text-gray-800">
+            Start Learning Smarter Today
+          </p>
+          <StoreButtons />
         </div>
       </div>
     </section>

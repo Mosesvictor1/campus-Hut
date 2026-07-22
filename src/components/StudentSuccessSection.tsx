@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
+import StoreButtons from "./StoreButtons";
 import {
   Flame,
   CalendarCheck,
@@ -13,12 +13,10 @@ import {
   CalendarClock,
   TrendingUp,
   Rocket,
-  Download,
 } from "lucide-react";
 
 const sections = [
   {
-    label: "Section A",
     title: "Better Study Habits",
     accent: "bg-campusGreen-600",
     icon: Flame,
@@ -29,7 +27,6 @@ const sections = [
     ],
   },
   {
-    label: "Section B",
     title: "Better Academic Planning",
     accent: "bg-orange-500",
     icon: CalendarCheck,
@@ -40,7 +37,6 @@ const sections = [
     ],
   },
   {
-    label: "Section C",
     title: "Smarter Exam Preparation",
     accent: "bg-campusGreen-600",
     icon: GraduationCap,
@@ -52,7 +48,6 @@ const sections = [
     ],
   },
   {
-    label: "Section D",
     title: "Career Readiness",
     accent: "bg-orange-500",
     icon: Briefcase,
@@ -106,9 +101,6 @@ const StudentSuccessSection = () => {
                   >
                     <Icon className="w-6 h-6 text-white" />
                   </div>
-                  <span className="text-[10px] font-bold tracking-widest text-gray-400 uppercase">
-                    {s.label}
-                  </span>
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 mb-4">
                   {s.title}
@@ -130,16 +122,10 @@ const StudentSuccessSection = () => {
         </div>
 
         <div className="mt-14 text-center" data-aos="fade-up">
-          <a
-            href="https://play.google.com/store/apps/details?id=com.campushut.app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button className="bg-campusGreen-600 hover:bg-campusGreen-700 text-white px-8 py-6 text-base sm:text-lg rounded-full shadow-lg shadow-campusGreen-600/30">
-              <Download className="w-5 h-5 mr-2" />
-              Become the Next Student Success Story
-            </Button>
-          </a>
+          <p className="mb-5 text-base sm:text-lg font-medium text-gray-800">
+            Become the Next Student Success Story
+          </p>
+          <StoreButtons />
         </div>
       </div>
     </section>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
+import StoreButtons from "./StoreButtons";
 import {
   Brain,
   BookOpen,
@@ -8,7 +8,6 @@ import {
   CalendarClock,
   BellRing,
   Library,
-  Download,
   ArrowDown,
 } from "lucide-react";
 
@@ -182,16 +181,7 @@ const AILearningSection = () => {
           <p className="text-lg text-gray-700 mb-5 font-medium">
             Ready to experience personalized learning?
           </p>
-          <a
-            href="https://play.google.com/store/apps/details?id=com.campushut.app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button className="bg-campusGreen-600 hover:bg-campusGreen-700 text-white px-8 py-6 text-base sm:text-lg rounded-full shadow-lg shadow-campusGreen-600/30">
-              <Download className="w-5 h-5 mr-2" />
-              Download App
-            </Button>
-          </a>
+          <StoreButtons />
         </div>
       </div>
     </section>
