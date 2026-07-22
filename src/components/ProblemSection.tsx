@@ -15,13 +15,11 @@ const ProblemSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div data-aos="fade-right">
-            <span className="text-xs font-bold tracking-widest text-campusGreen-600 uppercase">
-              Section B
-            </span>
-            <h2 className="mt-3 text-4xl sm:text-5xl font-bold text-gray-900">
+            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900">
               The <span className="text-campusGreen-600">Problem</span>
             </h2>
             <div className="mt-3 h-1 w-16 bg-campusGreen-500 rounded-full" />
+
 
             <p className="mt-6 text-lg text-gray-700">
               Students don't fail because they lack potential.
