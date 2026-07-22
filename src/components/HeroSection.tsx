@@ -32,7 +32,7 @@ const HeroSection = () => {
       <div className="absolute bottom-0 -right-20 w-96 h-96 bg-orange-200/30 rounded-full blur-3xl" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-center">
           {/* Left: copy */}
           <div className="text-center lg:text-left">
             <div
@@ -86,18 +86,21 @@ const HeroSection = () => {
           <div className="relative flex justify-center lg:justify-end" data-aos="fade-left">
             <div className="relative w-[280px] sm:w-[320px] md:w-[360px]">
               <div className="absolute -inset-6 bg-campusGreen-400/20 rounded-[3rem] blur-3xl" />
-              <div className="relative aspect-[9/18]">
-                {slides.map((s, i) => (
-                  <img
-                    key={s.src}
-                    src={s.src}
-                    alt={s.alt}
-                    loading={i === 0 ? "eager" : "lazy"}
-                    className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-700 ease-in-out ${
-                      i === active ? "opacity-100" : "opacity-0"
-                    }`}
-                  />
-                ))}
+              <div className="relative aspect-[9/18] overflow-hidden rounded-[2rem]">
+                <div
+                  className="absolute inset-0 flex transition-transform duration-700 ease-in-out"
+                  style={{ transform: `translateX(-${active * 100}%)` }}
+                >
+                  {slides.map((s, i) => (
+                    <img
+                      key={s.src}
+                      src={s.src}
+                      alt={s.alt}
+                      loading={i === 0 ? "eager" : "lazy"}
+                      className="w-full h-full flex-shrink-0 object-contain"
+                    />
+                  ))}
+                </div>
               </div>
               <div className="mt-4 flex justify-center gap-2">
                 {slides.map((_, i) => (
