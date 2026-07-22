@@ -268,8 +268,8 @@ const ContactSection = () => {
 
         <div className="grid lg:grid-cols-2 gap-12">
           <div>
-            <Card className="border-0 shadow-lg" data-aos="zoom-out-right">
-              <CardContent className="p-8">
+            <Card className="border-0 shadow-lg" data-aos="zoom-out-right ">
+              <CardContent className="p-8 bg-gray-100 shadow">
                 <form onSubmit={handleContactSubmit} className="space-y-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -280,7 +280,7 @@ const ContactSection = () => {
                       value={contactForm.name}
                       onChange={handleContactChange}
                       placeholder="Your full name"
-                      className="border-gray-300"
+                      className="border-gray-300 bg-gray-50 text-gray-700"
                       required
                     />
                   </div>
@@ -294,7 +294,7 @@ const ContactSection = () => {
                       value={contactForm.email}
                       onChange={handleContactChange}
                       placeholder="your.email@gmail.com"
-                      className="border-gray-300"
+                      className="border-gray-300 bg-gray-50 text-gray-700"
                       required
                     />
                   </div>
@@ -308,7 +308,7 @@ const ContactSection = () => {
                       onChange={handleContactChange}
                       placeholder="Tell us how we can help..."
                       rows={5}
-                      className="border-gray-300"
+                      className="border-gray-300 bg-gray-50 text-gray-700"
                       required
                     />
                   </div>
@@ -378,21 +378,21 @@ const ContactSection = () => {
                 <a
                   href="https://www.instagram.com/campushut_?igsh=MWs1ZTVtZ29hdGg5cQ"
                   target="_blank"
-                  className="w-12 h-12 bg-campusGreen-100 rounded-full flex items-center justify-center hover:bg-campusGreen-600 hover:text-white transition-colors"
+                  className="w-12 h-12 bg-campusGreen-600 rounded-full flex items-center justify-center hover:bg-campusGreen-600 hover:text-white transition-colors"
                 >
                   <Instagram className="w-6 h-6" />
                 </a>
                 <a
                   href="https://www.facebook.com/share/1BnLaYDnEd/"
                   target="_blank"
-                  className="w-12 h-12 bg-campusGreen-100 rounded-full flex items-center justify-center hover:bg-campusGreen-600 hover:text-white transition-colors"
+                  className="w-12 h-12 bg-campusGreen-600 rounded-full flex items-center justify-center hover:bg-campusGreen-600 hover:text-white transition-colors"
                 >
                   <Facebook className="w-6 h-6" />
                 </a>
                 <a
                   href="https://www.linkedin.com/company/campushut-limited/"
                   target="_blank"
-                  className="w-12 h-12 bg-campusGreen-100 rounded-full flex items-center justify-center hover:bg-campusGreen-600 hover:text-white transition-colors"
+                  className="w-12 h-12 bg-campusGreen-600 rounded-full flex items-center justify-center hover:bg-campusGreen-600 hover:text-white transition-colors"
                 >
                   <Linkedin className="w-6 h-6" />
                 </a>
@@ -411,7 +411,7 @@ const ContactSection = () => {
               </p>
               <Button
                 variant="outline"
-                className="border-campusGreen-600 text-campusGreen-600 hover:bg-gray-100 hover:text-black font-semibold"
+                className="border-campusGreen-600 bg-white text-campusGreen-600 hover:bg-gray-100 hover:text-black font-semibold"
                 onClick={() => setPartnerOpen(true)}
               >
                 Partner with Us
