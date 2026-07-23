@@ -12,7 +12,7 @@ const FAQSection = () => {
       id: 1,
       question: "Is CampusHut free to use?",
       answer:
-        "Yes! CampusHut offers a robust free plan with essential features like task scheduling, campus news, and basic CV templates. Premium features are available for ₦1,500/month.",
+        "Yes! CampusHut's free plan includes a basic AI Assistant, task scheduling, and assignment management. Upgrade to CampusHut Premium for ₦3,000/month to unlock a personalized AI learning experience tailored to you.",
     },
     {
       id: 2,
