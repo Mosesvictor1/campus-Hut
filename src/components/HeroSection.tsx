@@ -39,7 +39,7 @@ const HeroSection = () => {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-campusGreen-200 shadow-sm mb-6"
               data-aos="fade-down"
             >
-              <Sparkles className="w-4 h-4 text-campusGreen-600" />
+              {/* <Sparkles className="w-4 h-4 text-campusGreen-600" /> */}
               <span className="text-xs sm:text-sm font-medium text-campusGreen-700">
                 Africa's AI-Powered Personalized Student Success Platform
               </span>
@@ -78,7 +78,7 @@ const HeroSection = () => {
               data-aos="fade-up"
               data-aos-delay="300"
             >
-              Trusted by 10,000+ students across African universities.
+              Trusted by 15,000+ students across African universities.
             </p>
           </div>
 
