@@ -61,7 +61,7 @@ export async function blogRequest<T = any>(
 }
 
 interface NewsReqOpts {
-  method?: "GET" | "POST" | "PUT" | "DELETE";
+  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   body?: any;
   isFormData?: boolean;
 }
