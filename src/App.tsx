@@ -25,6 +25,10 @@ import Comments from "./pages/admin/Comments";
 import NewsList from "./pages/admin/NewsList";
 import NewsEditor from "./pages/admin/NewsEditor";
 import Settings from "./pages/admin/Settings";
+import Advertisers from "./pages/admin/Advertisers";
+import AdvertiserEditor from "./pages/admin/AdvertiserEditor";
+import Campaigns from "./pages/admin/Campaigns";
+import CampaignEditor from "./pages/admin/CampaignEditor";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 
 const queryClient = new QueryClient();
@@ -63,6 +67,12 @@ const AppRoutes = () => (
         <Route path="news" element={<NewsList />} />
         <Route path="news/new" element={<NewsEditor />} />
         <Route path="news/:id/edit" element={<NewsEditor />} />
+        <Route path="advertisers" element={<Advertisers />} />
+        <Route path="advertisers/new" element={<AdvertiserEditor />} />
+        <Route path="advertisers/:id/edit" element={<AdvertiserEditor />} />
+        <Route path="campaigns" element={<Campaigns />} />
+        <Route path="campaigns/new" element={<CampaignEditor />} />
+        <Route path="campaigns/:id/edit" element={<CampaignEditor />} />
         <Route path="settings" element={<Settings />} />
       </Route>
 

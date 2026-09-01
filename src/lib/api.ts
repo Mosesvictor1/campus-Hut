@@ -61,7 +61,7 @@ export async function blogRequest<T = any>(
 }
 
 interface NewsReqOpts {
-  method?: "GET" | "POST" | "PUT" | "DELETE";
+  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   body?: any;
   isFormData?: boolean;
 }
@@ -91,4 +91,12 @@ export async function newsRequest<T = any>(
   } catch {
     return text as unknown as T;
   }
+}
+
+/** Ad management uses the same Spring Boot base URL as the news API. */
+export async function adsRequest<T = any>(
+  path: string,
+  options: NewsReqOpts = {}
+): Promise<T | null> {
+  return newsRequest<T>(path, options);
 }

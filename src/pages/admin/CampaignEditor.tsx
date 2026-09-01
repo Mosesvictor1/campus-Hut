@@ -1,0 +1,45 @@
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useNavigate, useParams } from "react-router-dom";
+import { CalendarDays, ImagePlus, Loader2, Megaphone, X } from "lucide-react";
+import { toast } from "sonner";
+import { adsRequest } from "@/lib/api";
+import { firstValue, unwrapList, unwrapObject } from "@/lib/ads";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+
+const schema = z.object({
+  name: z.string().min(2, "Campaign name is required"),
+  advertiserId: z.string().min(1, "Advertiser is required"),
+  description: z.string().max(1000).optional(),
+  targetUrl: z.string().url("Enter a valid destination URL"),
+  placement: z.string().min(1, "Placement is required"),
+  priority: z.string().min(1, "Priority is required"),
+  startDate: z.string().min(1, "Start date is required"),
+  endDate: z.string().min(1, "End date is required"),
+  budget: z.coerce.number().min(0, "Budget cannot be negative"),
+});
+type FormValues = z.infer<typeof schema>;
+const defaults: FormValues = { name: "", advertiserId: "", description: "", targetUrl: "", placement: "", priority: "", startDate: "", endDate: "", budget: 0 };
+
+export default function CampaignEditor() {
+  const { id } = useParams(); const isEdit = Boolean(id); const navigate = useNavigate(); const qc = useQueryClient(); const [file, setFile] = useState<File | null>(null); const [preview, setPreview] = useState("");
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormValues>({ resolver: zodResolver(schema), defaultValues: defaults });
+  const advertisersQuery = useQuery({ queryKey: ["advertisers"], queryFn: () => adsRequest("api/getAllAdvertiser") });
+  const prioritiesQuery = useQuery({ queryKey: ["campaign-priorities"], queryFn: () => adsRequest("api/ad-campaigns/priorities") });
+  const placementsQuery = useQuery({ queryKey: ["campaign-placements"], queryFn: () => adsRequest("api/ad-campaigns/placements") });
+  const existing = useQuery({ queryKey: ["campaign", id], queryFn: () => adsRequest(`api/ad-campaigns/getCampaign/${id}`), enabled: isEdit });
+  useEffect(() => { if (!existing.data) return; const item = unwrapObject(existing.data); reset({ name: item.name || item.title || item.campaignName || "", advertiserId: String(item.advertiserId || item.advertiser?.id || ""), description: item.description || "", targetUrl: item.targetUrl || item.url || "", placement: item.placement || item.placementType || "", priority: String(item.priority || ""), startDate: String(item.startDate || item.startAt || "").slice(0, 16), endDate: String(item.endDate || item.endAt || "").slice(0, 16), budget: Number(item.budget || 0) }); }, [existing.data, reset]);
+  useEffect(() => { if (!file) { setPreview(""); return; } const url = URL.createObjectURL(file); setPreview(url); return () => URL.revokeObjectURL(url); }, [file]);
+  const save = useMutation({ mutationFn: async (values: FormValues) => { const body = new FormData(); body.append("request", JSON.stringify(values)); if (file) body.append("banner", file); if (isEdit) return adsRequest(`api/ad-campaigns/updateCampaign?campaignId=${encodeURIComponent(String(id))}`, { method: "POST", body, isFormData: true }); return adsRequest(`api/ad-campaigns/createCampaign?request=${encodeURIComponent(JSON.stringify(values))}`, { method: "POST", body: file ? (() => { const form = new FormData(); form.append("images", file); return form; })() : new FormData(), isFormData: true }); }, onSuccess: () => { toast.success(isEdit ? "Campaign updated" : "Campaign created"); qc.invalidateQueries({ queryKey: ["campaigns"] }); navigate("/dashboard/campaigns"); }, onError: (error: any) => toast.error(error.message || "Could not save campaign") });
+  const advertisers = unwrapList(advertisersQuery.data, ["advertisers", "content", "items"]); const priorities = getOptions(prioritiesQuery.data, ["priorities", "items"]); const placements = getOptions(placementsQuery.data, ["placements", "items"]);
+  return <div className="max-w-4xl mx-auto"><form onSubmit={handleSubmit((values) => save.mutate(values))} className="bg-[#111111] border border-[#2a2a2a] rounded-xl p-5 md:p-7 space-y-5"><div><h2 className="text-xl font-semibold text-white flex items-center gap-2"><Megaphone className="text-orange-500" />{isEdit ? "Edit Ad Campaign" : "New Ad Campaign"}</h2><p className="text-sm text-neutral-400 mt-1">Set the campaign details, placement, schedule, and creative.</p></div><div className="grid grid-cols-1 md:grid-cols-2 gap-4"><Field label="Campaign name" error={errors.name?.message}><Input {...register("name")} className="bg-[#1a1a1a] border-[#2a2a2a] text-white" /></Field><Field label="Advertiser" error={errors.advertiserId?.message}><select {...register("advertiserId")} className="h-10 w-full rounded-md border border-[#2a2a2a] bg-[#1a1a1a] px-3 text-sm text-white"><option value="">Select advertiser…</option>{advertisers.map((advertiser) => <option key={String(firstValue(advertiser, "id", "advertiserId"))} value={String(firstValue(advertiser, "id", "advertiserId"))}>{firstValue(advertiser, "companyName", "name", "businessName")}</option>)}</select></Field><Field label="Destination URL" error={errors.targetUrl?.message}><Input placeholder="https://example.com" {...register("targetUrl")} className="bg-[#1a1a1a] border-[#2a2a2a] text-white" /></Field><Field label="Placement" error={errors.placement?.message}><OptionField register={register("placement")} options={placements} fallback={["HOME_TOP", "HOME_MID", "BLOG_SIDEBAR", "NEWS_BANNER"]} /></Field><Field label="Priority" error={errors.priority?.message}><OptionField register={register("priority")} options={priorities} fallback={["1", "2", "3", "4", "5"]} /></Field><Field label="Budget" error={errors.budget?.message}><Input type="number" min="0" step="0.01" {...register("budget")} className="bg-[#1a1a1a] border-[#2a2a2a] text-white" /></Field><Field label="Start date" error={errors.startDate?.message}><div className="relative"><CalendarDays className="absolute left-3 top-2.5 w-4 h-4 text-neutral-500" /><Input type="datetime-local" {...register("startDate")} className="pl-9 bg-[#1a1a1a] border-[#2a2a2a] text-white" /></div></Field><Field label="End date" error={errors.endDate?.message}><div className="relative"><CalendarDays className="absolute left-3 top-2.5 w-4 h-4 text-neutral-500" /><Input type="datetime-local" {...register("endDate")} className="pl-9 bg-[#1a1a1a] border-[#2a2a2a] text-white" /></div></Field></div><Field label="Campaign description"><Textarea rows={4} {...register("description")} className="bg-[#1a1a1a] border-[#2a2a2a] text-white" /></Field><div><label className="text-sm text-neutral-300">Campaign banner</label>{!file && !preview ? <label className="mt-1 cursor-pointer block border-2 border-dashed border-[#2a2a2a] rounded-lg p-7 text-center hover:border-orange-600"><ImagePlus className="w-8 h-8 mx-auto text-orange-500 mb-2" /><span className="text-sm text-neutral-400">Upload banner image</span><input type="file" hidden accept="image/*" onChange={(event) => setFile(event.target.files?.[0] || null)} /></label> : <div className="relative mt-1"><img src={preview} alt="Selected campaign banner" className="w-full h-52 object-cover rounded-lg" /><Button type="button" variant="destructive" size="icon" className="absolute top-2 right-2" onClick={() => setFile(null)}><X /></Button><p className="text-xs text-neutral-500 mt-2">{file?.name}</p></div>}</div><div className="flex justify-end gap-2 pt-2"><Button type="button" variant="outline" onClick={() => navigate("/dashboard/campaigns")} className="border-[#2a2a2a] text-white">Cancel</Button><Button type="submit" disabled={save.isPending} className="bg-orange-600 hover:bg-orange-700 text-white">{save.isPending && <Loader2 className="animate-spin" />} Save campaign</Button></div></form></div>;
+}
+
+function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) { return <div><label className="text-sm text-neutral-300">{label}</label>{children}<p className="text-xs text-red-500 mt-1 min-h-4">{error || ""}</p></div>; }
+function getOptions(value: any, keys: string[]) { const root = value?.data ?? value; const raw = Array.isArray(root) ? root : keys.map((key) => root?.[key]).find(Array.isArray) || []; return raw.map((item: any) => typeof item === "object" ? String(item.value ?? item.name ?? item.label ?? item.id) : String(item)); }
+function OptionField({ register, options, fallback }: { register: any; options: string[]; fallback: string[] }) { const values = options.length ? options : fallback; return <select {...register} className="h-10 w-full rounded-md border border-[#2a2a2a] bg-[#1a1a1a] px-3 text-sm text-white"><option value="">Select…</option>{values.map((value) => <option key={value} value={value}>{value}</option>)}</select>; }
