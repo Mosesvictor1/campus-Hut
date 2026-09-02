@@ -8,6 +8,8 @@ import {
   Settings,
   LogOut,
   Feather,
+  Megaphone,
+  Users,
 } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import { blogRequest } from "@/lib/api";
@@ -29,6 +31,13 @@ const sections = [
   {
     label: "News Management",
     items: [{ to: "/dashboard/news", label: "News Articles", icon: Newspaper }],
+  },
+  {
+    label: "Advertising",
+    items: [
+      { to: "/dashboard/advertisers", label: "Advertisers", icon: Users },
+      { to: "/dashboard/campaigns", label: "Ad Campaigns", icon: Megaphone },
+    ],
   },
   {
     label: "Account",

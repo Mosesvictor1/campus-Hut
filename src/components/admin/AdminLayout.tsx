@@ -13,6 +13,10 @@ const titleMap: Record<string, string> = {
   "/dashboard/comments": "Comments",
   "/dashboard/news": "News Articles",
   "/dashboard/news/new": "New News Article",
+  "/dashboard/advertisers": "Advertisers",
+  "/dashboard/advertisers/new": "New Advertiser",
+  "/dashboard/campaigns": "Ad Campaigns",
+  "/dashboard/campaigns/new": "New Ad Campaign",
   "/dashboard/settings": "Settings",
 };
 
@@ -25,6 +29,8 @@ export default function AdminLayout() {
   if (!title) {
     if (pathname.includes("/blogs/") && pathname.endsWith("/edit")) title = "Edit Blog Post";
     else if (pathname.includes("/news/") && pathname.endsWith("/edit")) title = "Edit News Article";
+    else if (pathname.includes("/advertisers/") && pathname.endsWith("/edit")) title = "Edit Advertiser";
+    else if (pathname.includes("/campaigns/") && pathname.endsWith("/edit")) title = "Edit Ad Campaign";
     else title = "Dashboard";
   }
 
