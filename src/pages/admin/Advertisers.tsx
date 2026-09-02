@@ -26,7 +26,7 @@ export default function Advertisers() {
       qc.invalidateQueries({ queryKey: ["advertisers"] });
       setDeactivateId(null);
     },
-    onError: (error: any) => toast.error(error.message || "Could not deactivate advertiser"),
+    onError: (error: Error) => toast.error(error.message || "Could not deactivate advertiser"),
   });
   const advertisers = unwrapList(advertisersQuery.data, ["advertisers", "content", "items"]);
   const filtered = useMemo(() => {
@@ -61,15 +61,15 @@ export default function Advertisers() {
           <table className="w-full text-sm">
             <thead className="text-neutral-500 text-xs uppercase border-b border-[#2a2a2a]"><tr><th className="p-3 text-left">Company</th><th className="p-3 text-left">Contact</th><th className="p-3 text-left">Website</th><th className="p-3 text-left">Status</th><th className="p-3 text-right">Actions</th></tr></thead>
             <tbody>{filtered.map((advertiser) => {
-              const id = firstValue(advertiser, "id", "advertiserId");
+               const id = firstValue(advertiser, "id", "advertiserId");
               const name = firstValue(advertiser, "companyName", "name", "businessName") || "Unnamed advertiser";
               const active = firstValue(advertiser, "active", "isActive", "status") !== false && firstValue(advertiser, "status") !== "INACTIVE" && firstValue(advertiser, "status") !== "INACTIVE";
               return <tr key={String(id)} className="border-b border-[#2a2a2a] hover:bg-[#1a1a1a]">
-                <td className="p-3"><div className="font-medium text-white">{name}</div><div className="text-xs text-neutral-500">ID: {id || "—"}</div></td>
-                <td className="p-3"><div className="text-neutral-300">{firstValue(advertiser, "contactPerson", "contactName") || "—"}</div><div className="text-xs text-neutral-500 flex items-center gap-1"><Mail className="w-3 h-3" />{firstValue(advertiser, "email", "contactEmail") || "—"}</div></td>
-                <td className="p-3 text-neutral-400"><div className="flex items-center gap-1"><Globe className="w-3 h-3" />{firstValue(advertiser, "website", "url") || "—"}</div></td>
+                 <td className="p-3"><div className="font-medium text-white">{String(name)}</div><div className="text-xs text-neutral-500">ID: {id || "—"}</div></td>
+                 <td className="p-3"><div className="text-neutral-300">{String(firstValue(advertiser, "contactPerson", "contactName") || "—")}</div><div className="text-xs text-neutral-500 flex items-center gap-1"><Mail className="w-3 h-3" />{String(firstValue(advertiser, "email", "contactEmail") || "—")}</div></td>
+                 <td className="p-3 text-neutral-400"><div className="flex items-center gap-1"><Globe className="w-3 h-3" />{String(firstValue(advertiser, "website", "url") || "—")}</div></td>
                 <td className="p-3"><span className={`text-xs px-2 py-1 rounded text-white ${active ? "bg-campusGreen-600" : "bg-neutral-700"}`}>{active ? "Active" : "Inactive"}</span></td>
-                <td className="p-3"><div className="flex justify-end gap-2"><Button variant="ghost" size="icon" aria-label={`Edit ${name}`} onClick={() => navigate(`/dashboard/advertisers/${id}/edit`)} className="text-campusGreen-600 hover:bg-[#2a2a2a]"><Pencil /></Button>{active && <Button variant="ghost" size="icon" aria-label={`Deactivate ${name}`} onClick={() => setDeactivateId(id)} className="text-orange-500 hover:bg-[#2a2a2a]"><ShieldOff /></Button>}</div></td>
+                 <td className="p-3"><div className="flex justify-end gap-2"><Button variant="ghost" size="icon" aria-label={`Edit ${String(name)}`} onClick={() => navigate(`/dashboard/advertisers/${String(id)}/edit`)} className="text-campusGreen-600 hover:bg-[#2a2a2a]"><Pencil /></Button>{active && <Button variant="ghost" size="icon" aria-label={`Deactivate ${String(name)}`} onClick={() => setDeactivateId(typeof id === "boolean" ? String(id) : id)} className="text-orange-500 hover:bg-[#2a2a2a]"><ShieldOff /></Button>}</div></td>
               </tr>;
             })}</tbody>
           </table>

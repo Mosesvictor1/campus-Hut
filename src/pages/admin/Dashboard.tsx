@@ -1,7 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { FileText, CheckCircle, MessageSquare, Tag, Newspaper, Layers } from "lucide-react";
+import { FileText, CheckCircle, MessageSquare, Tag, Newspaper, Layers, Megaphone, Eye, MousePointerClick } from "lucide-react";
 import { blogRequest, newsRequest } from "@/lib/api";
+import { adsRequest } from "@/lib/api";
+import { firstValue, formatMetric, unwrapList, unwrapObject } from "@/lib/ads";
 import { useAuthStore } from "@/store/authStore";
 import { Skeleton } from "@/components/ui/skeleton";
 import { format } from "date-fns";
@@ -34,10 +36,23 @@ export default function Dashboard() {
     queryFn: () => newsRequest<any>("api/news/getAllNews?page=0&size=1000"),
   });
 
+  const campaigns = useQuery({
+    queryKey: ["dashboard-campaigns"],
+    queryFn: () => adsRequest<any>("api/ad-campaigns/getAllCampaign"),
+  });
+
+  const adsDashboard = useQuery({
+    queryKey: ["dashboard-ads-analytics"],
+    queryFn: () => adsRequest<any>("api/ad-campaigns/dashboard"),
+  });
+
   const newsList: any[] = Array.isArray(news.data) ? news.data : news.data?.content || [];
   const uniqueTypes = new Set(newsList.map((n) => n.newsType)).size;
 
   const recentBlogList: any[] = blogStats.data?.recentBlogs || [];
+  const campaignList = unwrapList(campaigns.data, ["campaigns", "content", "items"]);
+  const adMetrics = unwrapObject(adsDashboard.data);
+  const activeCampaigns = campaignList.filter((campaign) => ["ACTIVE", "RUNNING", "APPROVED"].includes(String(firstValue(campaign, "status", "campaignStatus")).toUpperCase())).length;
 
   return (
     <div className="space-y-8">
@@ -54,6 +69,33 @@ export default function Dashboard() {
               <StatCard icon={Tag} label="Categories" value={blogStats.data?.totals?.categories ?? 0} accent="orange" />
             </>
           )}
+        </div>
+      </section>
+
+      <div className="border-t border-[#2a2a2a]" />
+
+      <section>
+        <div className="flex items-center justify-between mb-3">
+          <div>
+            <h2 className="text-lg font-semibold text-white">Advertising overview</h2>
+            <p className="text-sm text-neutral-400 mt-1">Monitor sponsored content performance at a glance.</p>
+          </div>
+          <Link to="/dashboard/campaigns" className="text-campusGreen-600 text-sm">Manage campaigns</Link>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {campaigns.isLoading || adsDashboard.isLoading ? (
+            Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-24 bg-[#1a1a1a]" />)
+          ) : (
+            <>
+              <StatCard icon={Megaphone} label="Total Campaigns" value={campaignList.length} accent="orange" />
+              <StatCard icon={CheckCircle} label="Active Campaigns" value={activeCampaigns} accent="green" />
+              <StatCard icon={Eye} label="Ad Impressions" value={formatMetric(firstValue(adMetrics, "impressions", "totalImpressions"))} accent="orange" />
+            </>
+          )}
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+          <StatCard icon={MousePointerClick} label="Ad Clicks" value={formatMetric(firstValue(adMetrics, "clicks", "totalClicks"))} accent="green" />
+          <StatCard icon={Layers} label="Campaign placements" value={new Set(campaignList.map((campaign) => firstValue(campaign, "placement", "placementType"))).size} accent="orange" />
         </div>
       </section>
 
