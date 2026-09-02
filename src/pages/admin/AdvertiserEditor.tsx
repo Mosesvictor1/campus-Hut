@@ -36,7 +36,7 @@ export default function AdvertiserEditor() {
   useEffect(() => {
     if (!existing.data) return;
     const item = unwrapObject(existing.data);
-    reset({ companyName: item.companyName || item.name || item.businessName || "", contactPerson: item.contactPerson || item.contactName || "", email: item.email || item.contactEmail || "", phone: item.phone || item.contactPhone || "", website: item.website || item.url || "", address: item.address || "", description: item.description || "" });
+    reset({ companyName: String(item.companyName || item.name || item.businessName || ""), contactPerson: String(item.contactPerson || item.contactName || ""), email: String(item.email || item.contactEmail || ""), phone: String(item.phone || item.contactPhone || ""), website: String(item.website || item.url || ""), address: String(item.address || ""), description: String(item.description || "") });
   }, [existing.data, reset]);
   useEffect(() => { if (!file) { setPreview(""); return; } const url = URL.createObjectURL(file); setPreview(url); return () => URL.revokeObjectURL(url); }, [file]);
   const save = useMutation({
