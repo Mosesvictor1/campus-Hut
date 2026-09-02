@@ -26,7 +26,7 @@ export default function Advertisers() {
       qc.invalidateQueries({ queryKey: ["advertisers"] });
       setDeactivateId(null);
     },
-    onError: (error: any) => toast.error(error.message || "Could not deactivate advertiser"),
+    onError: (error: Error) => toast.error(error.message || "Could not deactivate advertiser"),
   });
   const advertisers = unwrapList(advertisersQuery.data, ["advertisers", "content", "items"]);
   const filtered = useMemo(() => {

@@ -1,6 +1,6 @@
-export type AdsRecord = Record<string, any>;
+export type AdsRecord = Record<string, unknown>;
 
-export function unwrapList(value: any, keys: string[] = []): AdsRecord[] {
+export function unwrapList(value: unknown, keys: string[] = []): AdsRecord[] {
   const root = value?.data ?? value;
   if (Array.isArray(root)) return root;
   for (const key of keys) {
@@ -11,7 +11,7 @@ export function unwrapList(value: any, keys: string[] = []): AdsRecord[] {
   return [];
 }
 
-export function unwrapObject(value: any): AdsRecord {
+export function unwrapObject(value: unknown): AdsRecord {
   const root = value?.data ?? value;
   if (root && typeof root === "object" && !Array.isArray(root)) {
     return root;
@@ -19,11 +19,11 @@ export function unwrapObject(value: any): AdsRecord {
   return {};
 }
 
-export function firstValue(item: AdsRecord, ...keys: string[]) {
+export function firstValue(item: AdsRecord, ...keys: string[]): unknown {
   return keys.map((key) => item[key]).find((value) => value !== undefined && value !== null && value !== "") ?? "";
 }
 
-export function formatMetric(value: any) {
+export function formatMetric(value: unknown) {
   const number = Number(value);
   return Number.isFinite(number) ? new Intl.NumberFormat().format(number) : "0";
 }
