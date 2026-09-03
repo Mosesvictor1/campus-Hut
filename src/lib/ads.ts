@@ -2,7 +2,7 @@ export type AdsRecord = Record<string, unknown>;
 export type AdsValue = string | number | boolean;
 
 function asRecord(value: unknown): AdsRecord | null {
-  return value && typeof value === "object" && !Array.isArray(value) ? value as AdsRecord : null;
+  return value && typeof value === "object" && !Array.isArray(value) ? (value as AdsRecord) : null;
 }
 
 export function unwrapList(value: unknown, keys: string[] = []): AdsRecord[] {
@@ -11,17 +11,56 @@ export function unwrapList(value: unknown, keys: string[] = []): AdsRecord[] {
   if (Array.isArray(root)) return root.filter((item): item is AdsRecord => Boolean(asRecord(item))).map((item) => asRecord(item) as AdsRecord);
   const record = asRecord(root);
   if (!record) return [];
-  for (const key of keys) {
-    if (Array.isArray(record[key])) return record[key].filter((item): item is AdsRecord => Boolean(asRecord(item))).map((item) => asRecord(item) as AdsRecord);
+
+  const targetKeys = [...keys, "advertisers", "campaigns", "content", "items"];
+
+  for (const key of targetKeys) {
+    if (Array.isArray(record[key])) {
+      return (record[key] as unknown[]).filter((item): item is AdsRecord => Boolean(asRecord(item))).map((item) => asRecord(item) as AdsRecord);
+    }
   }
-  if (Array.isArray(record.content)) return record.content.filter((item): item is AdsRecord => Boolean(asRecord(item))).map((item) => asRecord(item) as AdsRecord);
-  if (Array.isArray(record.items)) return record.items.filter((item): item is AdsRecord => Boolean(asRecord(item))).map((item) => asRecord(item) as AdsRecord);
+
+  for (const objKey of Object.keys(record)) {
+    const sub = asRecord(record[objKey]);
+    if (sub) {
+      for (const key of targetKeys) {
+        if (Array.isArray(sub[key])) {
+          return (sub[key] as unknown[]).filter((item): item is AdsRecord => Boolean(asRecord(item))).map((item) => asRecord(item) as AdsRecord);
+        }
+      }
+    }
+  }
+
   return [];
 }
 
 export function unwrapObject(value: unknown): AdsRecord {
   const source = asRecord(value);
-  return asRecord(source?.data ?? value) ?? {};
+  if (!source) return {};
+  if (source.companyName || source.title || source.campaignTitle) return source;
+
+  const candidates = ["data", "advertiser", "Advertiser", "campaign", "Campaign", "dashboard", "Dashboard", "analytics", "Analytics"];
+  for (const key of candidates) {
+    if (source[key]) {
+      if (Array.isArray(source[key]) && source[key].length > 0) {
+        const item = asRecord(source[key][0]);
+        if (item) return item;
+      }
+      const rec = asRecord(source[key]);
+      if (rec) return rec;
+    }
+  }
+
+  for (const key of Object.keys(source)) {
+    if (["status", "Status", "message", "Message"].includes(key)) continue;
+    if (Array.isArray(source[key]) && source[key].length > 0) {
+      const item = asRecord(source[key][0]);
+      if (item) return item;
+    }
+    const sub = asRecord(source[key]);
+    if (sub) return sub;
+  }
+  return source;
 }
 
 export function firstValue(item: AdsRecord, ...keys: string[]): AdsValue | "" {

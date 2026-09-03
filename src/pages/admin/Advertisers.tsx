@@ -59,17 +59,54 @@ export default function Advertisers() {
       <div className="bg-[#111111] border border-[#2a2a2a] rounded-lg overflow-x-auto">
         {advertisersQuery.isLoading ? <div className="p-4 space-y-2">{Array.from({ length: 5 }).map((_, index) => <Skeleton key={index} className="h-14 bg-[#1a1a1a]" />)}</div> : filtered.length === 0 ? <EmptyState onCreate={() => navigate("/dashboard/advertisers/new")} /> : (
           <table className="w-full text-sm">
-            <thead className="text-neutral-500 text-xs uppercase border-b border-[#2a2a2a]"><tr><th className="p-3 text-left">Company</th><th className="p-3 text-left">Contact</th><th className="p-3 text-left">Website</th><th className="p-3 text-left">Status</th><th className="p-3 text-right">Actions</th></tr></thead>
+            <thead className="text-neutral-500 text-xs uppercase border-b border-[#2a2a2a]"><tr><th className="p-3 text-left">Company</th><th className="p-3 text-left">Contact</th><th className="p-3 text-left">Phone</th><th className="p-3 text-left">Status</th><th className="p-3 text-right">Actions</th></tr></thead>
             <tbody>{filtered.map((advertiser) => {
                const id = firstValue(advertiser, "id", "advertiserId");
               const name = firstValue(advertiser, "companyName", "name", "businessName") || "Unnamed advertiser";
-              const active = firstValue(advertiser, "active", "isActive", "status") !== false && firstValue(advertiser, "status") !== "INACTIVE" && firstValue(advertiser, "status") !== "INACTIVE";
+              const logo = String(firstValue(advertiser, "logoURL", "logoUrl", "image", "imageUrl") || "");
+              const active = firstValue(advertiser, "active", "isActive", "status") !== false && firstValue(advertiser, "status") !== "INACTIVE";
               return <tr key={String(id)} className="border-b border-[#2a2a2a] hover:bg-[#1a1a1a]">
-                 <td className="p-3"><div className="font-medium text-white">{String(name)}</div><div className="text-xs text-neutral-500">ID: {id || "—"}</div></td>
-                 <td className="p-3"><div className="text-neutral-300">{String(firstValue(advertiser, "contactPerson", "contactName") || "—")}</div><div className="text-xs text-neutral-500 flex items-center gap-1"><Mail className="w-3 h-3" />{String(firstValue(advertiser, "email", "contactEmail") || "—")}</div></td>
-                 <td className="p-3 text-neutral-400"><div className="flex items-center gap-1"><Globe className="w-3 h-3" />{String(firstValue(advertiser, "website", "url") || "—")}</div></td>
+                 <td className="p-3">
+                   <div className="flex items-center gap-3">
+                     {logo ? (
+                       <img src={logo} alt={String(name)} className="w-10 h-10 object-cover rounded-md border border-[#2a2a2a] shrink-0" />
+                     ) : (
+                       <div className="w-10 h-10 rounded-md bg-[#1a1a1a] border border-[#2a2a2a] flex items-center justify-center text-campusGreen-600 shrink-0">
+                         <Building2 className="w-5 h-5" />
+                       </div>
+                     )}
+                     <div>
+                       <div className="font-medium text-white">{String(name)}</div>
+                       <div className="text-xs text-neutral-500">ID: {id || "—"}</div>
+                     </div>
+                   </div>
+                 </td>
+                 <td className="p-3"><div className="text-neutral-300">{String(firstValue(advertiser, "contactName", "contactPerson") || "—")}</div><div className="text-xs text-neutral-500 flex items-center gap-1"><Mail className="w-3 h-3" />{String(firstValue(advertiser, "email", "contactEmail") || "—")}</div></td>
+                 <td className="p-3 text-neutral-400"><div className="flex items-center gap-1"><Phone className="w-3 h-3 text-neutral-500" />{String(firstValue(advertiser, "phone", "contactPhone") || "—")}</div></td>
                 <td className="p-3"><span className={`text-xs px-2 py-1 rounded text-white ${active ? "bg-campusGreen-600" : "bg-neutral-700"}`}>{active ? "Active" : "Inactive"}</span></td>
-                 <td className="p-3"><div className="flex justify-end gap-2"><Button variant="ghost" size="icon" aria-label={`Edit ${String(name)}`} onClick={() => navigate(`/dashboard/advertisers/${String(id)}/edit`)} className="text-campusGreen-600 hover:bg-[#2a2a2a]"><Pencil /></Button>{active && <Button variant="ghost" size="icon" aria-label={`Deactivate ${String(name)}`} onClick={() => setDeactivateId(typeof id === "boolean" ? String(id) : id)} className="text-orange-500 hover:bg-[#2a2a2a]"><ShieldOff /></Button>}</div></td>
+                 <td className="p-3">
+                   <div className="flex justify-end gap-1">
+                     <div className="relative group">
+                       <Button variant="ghost" size="icon" aria-label={`Edit ${String(name)}`} onClick={() => navigate(`/dashboard/advertisers/${String(id)}/edit`)} className="text-campusGreen-600 hover:bg-[#2a2a2a]">
+                         <Pencil className="w-4 h-4" />
+                       </Button>
+                       <div className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-neutral-900 text-white text-[11px] font-medium py-1 px-2.5 rounded shadow-lg border border-[#333] z-30 whitespace-nowrap">
+                         Edit Advertiser
+                       </div>
+                     </div>
+
+                     {active && (
+                       <div className="relative group">
+                         <Button variant="ghost" size="icon" aria-label={`Deactivate ${String(name)}`} onClick={() => setDeactivateId(typeof id === "boolean" ? String(id) : id)} className="text-orange-500 hover:bg-[#2a2a2a]">
+                           <ShieldOff className="w-4 h-4" />
+                         </Button>
+                         <div className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-neutral-900 text-white text-[11px] font-medium py-1 px-2.5 rounded shadow-lg border border-[#333] z-30 whitespace-nowrap">
+                           Deactivate Advertiser
+                         </div>
+                       </div>
+                     )}
+                   </div>
+                 </td>
               </tr>;
             })}</tbody>
           </table>

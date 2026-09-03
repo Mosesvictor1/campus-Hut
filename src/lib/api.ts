@@ -81,16 +81,32 @@ export async function newsRequest<T = any>(
   }
 
   const res = await fetch(`${NEWS_BASE_URL}/${path}`, options);
-  if (!res.ok) throw new Error(`News API error: ${res.status}`);
+  if (!res.ok) throw new Error(`API error: ${res.status}`);
   if (res.status === 204 || res.headers.get("content-length") === "0") return null;
 
   const text = await res.text();
   if (!text) return null;
+  let parsed: unknown;
   try {
-    return JSON.parse(text) as T;
+    parsed = JSON.parse(text);
   } catch {
     return text as unknown as T;
   }
+
+  if (parsed && typeof parsed === "object") {
+    const record = parsed as Record<string, unknown>;
+    const statusVal = record.Status ?? record.status ?? record.statusCode;
+    if (statusVal !== undefined && statusVal !== null) {
+      const statusStr = String(statusVal).trim();
+      if (statusStr !== "200" && statusStr !== "201" && statusStr !== "0" && statusStr !== "204") {
+        const errMsg = record.Message || record.message || record.error || `Request failed with status ${statusStr}`;
+        throw new Error(String(errMsg));
+      }
+    }
+  }
+
+  return parsed as T;
+
 }
 
 /** Ad management uses the same Spring Boot base URL as the news API. */
