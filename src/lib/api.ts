@@ -80,7 +80,7 @@ export async function newsRequest<T = any>(
     options.body = body;
   }
 
-  const res = await fetch(`${NEWS_BASE_URL}/${path}`, options);
+  const res = await fetch(buildApiUrl(path), options);
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   if (res.status === 204 || res.headers.get("content-length") === "0") return null;
 
@@ -110,9 +110,57 @@ export async function newsRequest<T = any>(
 }
 
 /** Ad management uses the same Spring Boot base URL as the news API. */
+export function buildApiUrl(path: string): string {
+  const cleanBase = NEWS_BASE_URL.replace(/\/+$/, "");
+  const cleanPath = path.replace(/^\/+/, "");
+  return `${cleanBase}/${cleanPath}`;
+}
+
 export async function adsRequest<T = any>(
   path: string,
   options: NewsReqOpts = {}
 ): Promise<T | null> {
   return newsRequest<T>(path, options);
+}
+
+export async function getAllCampaigns(): Promise<any> {
+  return adsRequest("api/ad-campaigns/getAllCampaign");
+}
+
+export async function getActiveCampaigns(placement?: string): Promise<any> {
+  const query = placement ? `?placement=${encodeURIComponent(placement)}` : "";
+  return adsRequest(`api/ad-campaigns/active${query}`);
+}
+
+export async function trackCampaignClick(id: string | number, payload: Record<string, any>): Promise<any> {
+  return adsRequest(`api/ad-campaigns/${id}/click`, {
+    method: "POST",
+    body: payload,
+  });
+}
+
+export async function createAdCampaign(payload: Record<string, any>, file?: File): Promise<any> {
+  const formData = new FormData();
+  const jsonStr = JSON.stringify(payload);
+  formData.append("request", jsonStr);
+  if (file) formData.append("images", file);
+
+  return adsRequest(`api/ad-campaigns/createCampaign?request=${encodeURIComponent(jsonStr)}`, {
+    method: "POST",
+    body: formData,
+    isFormData: true,
+  });
+}
+
+export async function updateAdCampaign(id: string | number, payload: Record<string, any>, file?: File): Promise<any> {
+  const formData = new FormData();
+  const jsonStr = JSON.stringify(payload);
+  formData.append("request", jsonStr);
+  if (file) formData.append("banner", file);
+
+  return adsRequest(`api/ad-campaigns/updateCampaign?campaignId=${encodeURIComponent(String(id))}&request=${encodeURIComponent(jsonStr)}`, {
+    method: "POST",
+    body: formData,
+    isFormData: true,
+  });
 }

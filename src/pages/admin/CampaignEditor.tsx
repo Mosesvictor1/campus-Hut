@@ -104,7 +104,6 @@ export default function CampaignEditor() {
       let path: string;
 
       if (!isEdit) {
-        // Create campaign exact payload format string
         const payload = {
           advertiserId: Number(values.advertiserId),
           title: values.title,
@@ -120,7 +119,6 @@ export default function CampaignEditor() {
         jsonStr = JSON.stringify(payload);
         path = `api/ad-campaigns/createCampaign?request=${encodeURIComponent(jsonStr)}`;
       } else {
-        // Update campaign exact payload format string matching OpenAPI spec
         const payload: Record<string, any> = {
           title: values.title,
           description: values.description || "",
@@ -140,14 +138,17 @@ export default function CampaignEditor() {
           payload.advertiserId = Number(values.advertiserId);
         }
         jsonStr = JSON.stringify(payload);
-        path = `api/ad-campaigns/updateCampaign?campaignId=${encodeURIComponent(String(id))}`;
+        path = `api/ad-campaigns/updateCampaign?campaignId=${encodeURIComponent(String(id))}&request=${encodeURIComponent(jsonStr)}`;
       }
 
       const body = new FormData();
       body.append("request", jsonStr);
       if (file) {
         body.append("banner", file);
-        body.append("images", file);
+      }
+
+      if (!isEdit && path.includes("createCampaign")) {
+        body.append("images", file || new Blob([], { type: "application/octet-stream" }), file ? file.name : "campaign-image");
       }
 
       return adsRequest(path, { method: "POST", body, isFormData: true });
