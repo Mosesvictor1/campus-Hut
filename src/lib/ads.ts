@@ -39,7 +39,7 @@ export function unwrapObject(value: unknown): AdsRecord {
   if (!source) return {};
   if (source.companyName || source.title || source.campaignTitle) return source;
 
-  const candidates = ["data", "advertiser", "Advertiser", "campaign", "Campaign", "dashboard", "Dashboard", "analytics", "Analytics"];
+  const candidates = ["data", "body", "advertiser", "Advertiser", "campaign", "Campaign", "dashboard", "Dashboard", "analytics", "Analytics"];
   for (const key of candidates) {
     if (source[key]) {
       if (Array.isArray(source[key]) && source[key].length > 0) {
@@ -52,7 +52,7 @@ export function unwrapObject(value: unknown): AdsRecord {
   }
 
   for (const key of Object.keys(source)) {
-    if (["status", "Status", "message", "Message"].includes(key)) continue;
+    if (["status", "Status", "message", "Message", "statusCode", "statusCodeValue", "headers"].includes(key)) continue;
     if (Array.isArray(source[key]) && source[key].length > 0) {
       const item = asRecord(source[key][0]);
       if (item) return item;

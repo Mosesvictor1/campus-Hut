@@ -60,10 +60,59 @@ export async function blogRequest<T = any>(
   return json.data as T;
 }
 
-interface NewsReqOpts {
-  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
-  body?: any;
-  isFormData?: boolean;
+function isSuccessStatus(record: Record<string, unknown>): boolean {
+  if (record.statusCodeValue !== undefined && record.statusCodeValue !== null) {
+    const val = Number(record.statusCodeValue);
+    if (!isNaN(val)) return val >= 200 && val < 300;
+  }
+
+  if (record.statusCode !== undefined && record.statusCode !== null) {
+    const sc = String(record.statusCode).trim().toUpperCase();
+    if (["OK", "CREATED", "ACCEPTED", "NO_CONTENT", "200", "201", "202", "204", "0"].includes(sc)) return true;
+    const num = Number(record.statusCode);
+    if (!isNaN(num)) return num >= 200 && num < 300;
+  }
+
+  const topStatus = record.Status ?? record.status;
+  if (topStatus !== undefined && topStatus !== null) {
+    const st = String(topStatus).trim().toUpperCase();
+    if (["200", "201", "202", "204", "0", "OK", "SUCCESS", "CREATED"].includes(st)) return true;
+    const num = Number(topStatus);
+    if (!isNaN(num)) return num >= 200 && num < 300;
+  }
+
+  if (record.body && typeof record.body === "object") {
+    const bodyObj = record.body as Record<string, unknown>;
+    const bodyStatus = bodyObj.Status ?? bodyObj.status ?? bodyObj.statusCode;
+    if (bodyStatus !== undefined && bodyStatus !== null) {
+      const st = String(bodyStatus).trim().toUpperCase();
+      if (["200", "201", "202", "204", "0", "OK", "SUCCESS", "CREATED"].includes(st)) return true;
+      const num = Number(bodyStatus);
+      if (!isNaN(num)) return num >= 200 && num < 300;
+    }
+  }
+
+  return true;
+}
+
+function extractErrorMessage(record: Record<string, unknown>): string {
+  const bodyObj = record.body && typeof record.body === "object" ? (record.body as Record<string, unknown>) : null;
+  const msg =
+    record.Message ||
+    record.message ||
+    record.error ||
+    record.detail ||
+    bodyObj?.Message ||
+    bodyObj?.message ||
+    bodyObj?.error ||
+    bodyObj?.detail;
+
+  if (msg) return String(msg);
+  if (record.title && record.detail) return `${record.title}: ${record.detail}`;
+  if (record.title) return String(record.title);
+
+  const statusVal = record.Status ?? record.status ?? record.statusCode ?? record.statusCodeValue;
+  return `Request failed with status ${statusVal ?? "unknown"}`;
 }
 
 export async function newsRequest<T = any>(
@@ -95,18 +144,13 @@ export async function newsRequest<T = any>(
 
   if (parsed && typeof parsed === "object") {
     const record = parsed as Record<string, unknown>;
-    const statusVal = record.Status ?? record.status ?? record.statusCode;
-    if (statusVal !== undefined && statusVal !== null) {
-      const statusStr = String(statusVal).trim();
-      if (statusStr !== "200" && statusStr !== "201" && statusStr !== "0" && statusStr !== "204") {
-        const errMsg = record.Message || record.message || record.error || `Request failed with status ${statusStr}`;
-        throw new Error(String(errMsg));
-      }
+    if (!isSuccessStatus(record)) {
+      const errMsg = extractErrorMessage(record);
+      throw new Error(errMsg);
     }
   }
 
   return parsed as T;
-
 }
 
 /** Ad management uses the same Spring Boot base URL as the news API. */
@@ -124,7 +168,7 @@ export async function adsRequest<T = any>(
 }
 
 export async function getAllCampaigns(): Promise<any> {
-  return adsRequest("api/ad-campaigns/getAllCampaign");
+  return adsRequest("api/ad-campaigns/getAdminAllCampaign");
 }
 
 export async function getActiveCampaigns(placement?: string): Promise<any> {
@@ -142,7 +186,7 @@ export async function trackCampaignClick(id: string | number, payload: Record<st
 export async function createAdCampaign(payload: Record<string, any>, file?: File): Promise<any> {
   const formData = new FormData();
   const jsonStr = JSON.stringify(payload);
-  formData.append("request", jsonStr);
+  formData.append("request", new Blob([jsonStr], { type: "application/json" }));
   if (file) formData.append("images", file);
 
   return adsRequest(`api/ad-campaigns/createCampaign?request=${encodeURIComponent(jsonStr)}`, {
@@ -153,14 +197,30 @@ export async function createAdCampaign(payload: Record<string, any>, file?: File
 }
 
 export async function updateAdCampaign(id: string | number, payload: Record<string, any>, file?: File): Promise<any> {
-  const formData = new FormData();
-  const jsonStr = JSON.stringify(payload);
-  formData.append("request", jsonStr);
-  if (file) formData.append("banner", file);
+  const campaignIdNum = Number(id);
+  const fullPayload = {
+    id: campaignIdNum,
+    campaignId: campaignIdNum,
+    ...payload,
+  };
+  const jsonStr = JSON.stringify(fullPayload);
+  const path = `api/ad-campaigns/updateCampaign?campaignId=${encodeURIComponent(String(id))}&id=${encodeURIComponent(String(id))}&request=${encodeURIComponent(jsonStr)}`;
 
-  return adsRequest(`api/ad-campaigns/updateCampaign?campaignId=${encodeURIComponent(String(id))}&request=${encodeURIComponent(jsonStr)}`, {
+  if (file) {
+    const formData = new FormData();
+    formData.append("request", new Blob([jsonStr], { type: "application/json" }));
+    formData.append("banner", file);
+    formData.append("images", file);
+    formData.append("file", file);
+    return adsRequest(path, {
+      method: "POST",
+      body: formData,
+      isFormData: true,
+    });
+  }
+
+  return adsRequest(path, {
     method: "POST",
-    body: formData,
-    isFormData: true,
+    body: fullPayload,
   });
 }

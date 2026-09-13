@@ -79,16 +79,21 @@ export default function AdvertiserEditor() {
         phone: values.phone,
       };
       const jsonStr = JSON.stringify(payload);
-      const body = new FormData();
-      body.append("request", jsonStr);
-      if (file) {
-        body.append("images", file);
-      }
-
       const path = isEdit
         ? `api/updateAdvertiser/${id}?request=${encodeURIComponent(jsonStr)}`
         : `api/createAdvertiser?request=${encodeURIComponent(jsonStr)}`;
 
+      if (file) {
+        const body = new FormData();
+        body.append("request", new Blob([jsonStr], { type: "application/json" }));
+        body.append("images", file);
+        body.append("logo", file);
+        body.append("file", file);
+        return adsRequest(path, { method: "POST", body, isFormData: true });
+      }
+
+      const body = new FormData();
+      body.append("request", new Blob([jsonStr], { type: "application/json" }));
       return adsRequest(path, { method: "POST", body, isFormData: true });
     },
     onSuccess: () => {

@@ -19,7 +19,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { toast } from "sonner";
-import { adsRequest } from "@/lib/api";
+import { adsRequest, getAllCampaigns } from "@/lib/api";
 import { firstValue, formatDate, formatMetric, unwrapList, unwrapObject } from "@/lib/ads";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -42,7 +42,7 @@ export default function Campaigns() {
   const [analyticsId, setAnalyticsId] = useState<string | number | null>(null);
   const [viewCampaignId, setViewCampaignId] = useState<string | number | null>(null);
 
-  const campaignsQuery = useQuery({ queryKey: ["campaigns"], queryFn: () => adsRequest("api/ad-campaigns/getAllCampaign") });
+  const campaignsQuery = useQuery({ queryKey: ["campaigns"], queryFn: () => getAllCampaigns() });
   const dashboardQuery = useQuery({ queryKey: ["campaign-dashboard"], queryFn: () => adsRequest("api/ad-campaigns/dashboard") });
   const analyticsQuery = useQuery({ queryKey: ["campaign-analytics", analyticsId], queryFn: () => adsRequest(`api/ad-campaigns/${analyticsId}/campaignAnalytics`), enabled: analyticsId !== null });
   const viewCampaignQuery = useQuery({ queryKey: ["get-campaign", viewCampaignId], queryFn: () => adsRequest(`api/ad-campaigns/getCampaign/${viewCampaignId}`), enabled: viewCampaignId !== null });

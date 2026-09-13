@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { FileText, CheckCircle, MessageSquare, Tag, Newspaper, Layers, Megaphone, Eye, MousePointerClick } from "lucide-react";
-import { blogRequest, newsRequest } from "@/lib/api";
-import { adsRequest } from "@/lib/api";
+import { adsRequest, blogRequest, getAllCampaigns, newsRequest } from "@/lib/api";
 import { firstValue, formatMetric, unwrapList, unwrapObject } from "@/lib/ads";
 import { useAuthStore } from "@/store/authStore";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -38,7 +37,7 @@ export default function Dashboard() {
 
   const campaigns = useQuery({
     queryKey: ["dashboard-campaigns"],
-    queryFn: () => adsRequest<any>("api/ad-campaigns/getAllCampaign"),
+    queryFn: () => getAllCampaigns(),
   });
 
   const adsDashboard = useQuery({

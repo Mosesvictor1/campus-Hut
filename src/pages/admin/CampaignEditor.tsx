@@ -6,7 +6,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { CalendarDays, ImagePlus, Loader2, Megaphone, X } from "lucide-react";
 import { toast } from "sonner";
-import { adsRequest } from "@/lib/api";
+import { adsRequest, getAllCampaigns, updateAdCampaign } from "@/lib/api";
 import { firstValue, unwrapList, unwrapObject } from "@/lib/ads";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -45,13 +45,18 @@ function formatIsoDate(val: string): string {
   return val;
 }
 
+function toInputDateTime(val: string): string {
+  if (!val) return "";
+  return val.slice(0, 16);
+}
+
 export default function CampaignEditor() {
   const { id } = useParams();
   const isEdit = Boolean(id);
   const navigate = useNavigate();
   const qc = useQueryClient();
   const [file, setFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState("");
+  const [preview, setPreview] = useState<string>("");
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -62,7 +67,7 @@ export default function CampaignEditor() {
   const prioritiesQuery = useQuery({ queryKey: ["campaign-priorities"], queryFn: () => adsRequest("api/ad-campaigns/priorities") });
   const placementsQuery = useQuery({ queryKey: ["campaign-placements"], queryFn: () => adsRequest("api/ad-campaigns/placements") });
   const existing = useQuery({ queryKey: ["campaign", id], queryFn: () => adsRequest(`api/ad-campaigns/getCampaign/${id}`), enabled: isEdit });
-  const allCampaignsQuery = useQuery({ queryKey: ["campaigns"], queryFn: () => adsRequest("api/ad-campaigns/getAllCampaign"), enabled: isEdit });
+  const allCampaignsQuery = useQuery({ queryKey: ["campaigns"], queryFn: () => getAllCampaigns(), enabled: isEdit });
 
   useEffect(() => {
     if (!isEdit) return;
@@ -73,21 +78,27 @@ export default function CampaignEditor() {
       if (found) item = found;
     }
     if (item.title || item.name || item.campaignName || item.advertiserId) {
-      const advertiser = item.advertiser && typeof item.advertiser === "object" ? (item.advertiser as Record<string, unknown>) : {};
+      const advId = firstValue(item, "advertiserId", "advertiser_id");
+      const advObj = item.advertiser && typeof item.advertiser === "object" ? (item.advertiser as Record<string, unknown>) : {};
+      const finalAdvId = advId || advObj.id || advObj.advertiserId || "";
+
       reset({
         title: String(item.title || item.name || item.campaignName || ""),
-        advertiserId: String(item.advertiserId || advertiser.id || advertiser.advertiserId || ""),
+        advertiserId: String(finalAdvId || ""),
         description: String(item.description || ""),
-        ctaText: String(item.ctaText || item.ctaLabel || "Learn More"),
-        ctaUrl: String(item.ctaUrl || item.targetUrl || item.url || ""),
-        placement: String(item.placement || item.placementType || "DASHBOARD_CAROUSEL"),
+        ctaText: String(item.ctaText || "Learn More"),
+        ctaUrl: String(item.ctaUrl || ""),
+        placement: String(item.placement || "DASHBOARD_CAROUSEL"),
         priority: String(item.priority || "STANDARD"),
-        startDate: String(item.startDate || item.startAt || "").slice(0, 16),
-        endDate: String(item.endDate || item.endAt || "").slice(0, 16),
-        maxImpressions: Number(item.maxImpressions || item.impressionLimit || 10000),
+        startDate: toInputDateTime(String(item.startDate || "")),
+        endDate: toInputDateTime(String(item.endDate || "")),
+        maxImpressions: Number(item.maxImpressions || 10000),
       });
-      const banner = String(item.bannerUrl || item.banner || item.image || item.imageUrl || "");
-      if (banner) setPreview(banner);
+
+      const currentBanner = String(firstValue(item, "bannerUrl", "banner", "imageUrl") || "");
+      if (currentBanner) {
+        setPreview(currentBanner);
+      }
     }
   }, [existing.data, allCampaignsQuery.data, id, isEdit, reset]);
 
@@ -100,9 +111,6 @@ export default function CampaignEditor() {
 
   const save = useMutation({
     mutationFn: async (values: FormValues) => {
-      let jsonStr: string;
-      let path: string;
-
       if (!isEdit) {
         const payload = {
           advertiserId: Number(values.advertiserId),
@@ -116,42 +124,36 @@ export default function CampaignEditor() {
           endDate: formatIsoDate(values.endDate || ""),
           maxImpressions: Number(values.maxImpressions || 10000),
         };
-        jsonStr = JSON.stringify(payload);
-        path = `api/ad-campaigns/createCampaign?request=${encodeURIComponent(jsonStr)}`;
+        const jsonStr = JSON.stringify(payload);
+        const path = `api/ad-campaigns/createCampaign?request=${encodeURIComponent(jsonStr)}`;
+
+        const body = new FormData();
+        body.append("request", new Blob([jsonStr], { type: "application/json" }));
+        if (file) {
+          body.append("banner", file);
+          body.append("images", file);
+        } else {
+          body.append("images", new Blob([], { type: "application/octet-stream" }), "campaign-image");
+        }
+        return adsRequest(path, { method: "POST", body, isFormData: true });
       } else {
-        const payload: Record<string, any> = {
-          title: values.title,
-          description: values.description || "",
-          ctaText: values.ctaText,
-          ctaUrl: values.ctaUrl,
-          placement: values.placement,
-          priority: values.priority,
-          startDate: formatIsoDate(values.startDate),
-        };
-        if (values.endDate) {
-          payload.endDate = formatIsoDate(values.endDate);
-        }
-        if (values.maxImpressions !== undefined && values.maxImpressions !== null && !isNaN(Number(values.maxImpressions))) {
-          payload.maxImpressions = Number(values.maxImpressions);
-        }
-        if (values.advertiserId) {
-          payload.advertiserId = Number(values.advertiserId);
-        }
-        jsonStr = JSON.stringify(payload);
-        path = `api/ad-campaigns/updateCampaign?campaignId=${encodeURIComponent(String(id))}&request=${encodeURIComponent(jsonStr)}`;
+        return updateAdCampaign(
+          id!,
+          {
+            title: values.title,
+            description: values.description || "",
+            ctaText: values.ctaText,
+            ctaUrl: values.ctaUrl,
+            placement: values.placement,
+            priority: values.priority,
+            startDate: formatIsoDate(values.startDate),
+            endDate: values.endDate ? formatIsoDate(values.endDate) : "",
+            maxImpressions: Number(values.maxImpressions || 10000),
+            advertiserId: values.advertiserId ? Number(values.advertiserId) : undefined,
+          },
+          file || undefined
+        );
       }
-
-      const body = new FormData();
-      body.append("request", jsonStr);
-      if (file) {
-        body.append("banner", file);
-      }
-
-      if (!isEdit && path.includes("createCampaign")) {
-        body.append("images", file || new Blob([], { type: "application/octet-stream" }), file ? file.name : "campaign-image");
-      }
-
-      return adsRequest(path, { method: "POST", body, isFormData: true });
     },
     onSuccess: () => {
       toast.success(isEdit ? "Campaign updated" : "Campaign created");
