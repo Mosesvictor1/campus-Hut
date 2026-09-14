@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/news-proxy/:path*",
-      "destination": "https://staging.mycampushut.com/campusHutNews/:path*"
+      "destination": "https://api.mycampushut.com/campusHutNews/:path*"
     },
     {
       "source": "/(.*)",

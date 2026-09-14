@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
     proxy: {
       "/news-proxy": {
-        target: "https://staging.mycampushut.com",
+        target: "https://api.mycampushut.com",
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/news-proxy/, "/campusHutNews"),
