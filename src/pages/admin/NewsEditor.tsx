@@ -4,7 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import MDEditor from "@uiw/react-md-editor";
 import { Loader2, Upload, X } from "lucide-react";
 import { toast } from "sonner";
-import { newsRequest } from "@/lib/api";
+import { buildApiUrl, newsRequest } from "@/lib/api";
 
 export default function NewsEditor() {
   const { id } = useParams();
@@ -53,7 +53,7 @@ export default function NewsEditor() {
       if (file) fd.append("images", file);
       
       try {
-        const res = await fetch("https://api.mycampushut.com/campusHutNews/api/news/createNews", {
+        const res = await fetch(buildApiUrl("api/news/createNews"), {
           method: "POST",
           body: fd
         });
@@ -71,7 +71,9 @@ export default function NewsEditor() {
           throw new Error("Failed to parse JSON response");
         }
 
-        if (data.Status !== "200" && data.Status !== "0" && data.Status !== "SUCCESS") {
+        const st = String(data.Status).trim();
+        const stNum = Number(data.Status);
+        if (st !== "200" && st !== "201" && st !== "0" && st !== "SUCCESS" && (isNaN(stNum) || stNum < 200 || stNum >= 300)) {
            throw new Error(data.Message || "Failed to create news");
         }
         return data;

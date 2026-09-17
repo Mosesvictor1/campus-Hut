@@ -185,7 +185,8 @@ export async function trackCampaignClick(id: string | number, payload: Record<st
 
 export async function createAdCampaign(payload: Record<string, any>, file?: File): Promise<any> {
   const jsonStr = JSON.stringify(payload);
-  const url = `https://api.mycampushut.com/campusHutNews/api/ad-campaigns/createCampaign?request=${encodeURIComponent(jsonStr)}`;
+  const path = `api/ad-campaigns/createCampaign?request=${encodeURIComponent(jsonStr)}`;
+  const url = buildApiUrl(path);
 
   const body = new FormData();
   if (file) {
@@ -211,8 +212,11 @@ export async function createAdCampaign(payload: Record<string, any>, file?: File
       throw new Error("Failed to parse JSON response");
     }
 
-    if (data.Status && data.Status !== "200" && data.Status !== "0" && data.Status !== "SUCCESS" && data.statusCode !== "OK" && data.statusCode !== 200) {
-      throw new Error(data.Message || data.message || "Failed to create campaign");
+    if (data && typeof data === "object") {
+      if (!isSuccessStatus(data as Record<string, unknown>)) {
+        const errMsg = extractErrorMessage(data as Record<string, unknown>);
+        throw new Error(errMsg);
+      }
     }
     return data;
   } catch (err) {
