@@ -21,6 +21,8 @@ export default function NewsEditor() {
     enabled: isEdit,
   });
 
+  const [existingImage, setExistingImage] = useState<string | null>(null);
+
   useEffect(() => {
     if (existing.data) {
       setForm({
@@ -30,28 +32,63 @@ export default function NewsEditor() {
         content: existing.data.content || "",
         author: existing.data.author || "",
       });
+      setExistingImage(existing.data.imageUrl || null);
     }
   }, [existing.data]);
 
   const save = useMutation({
     mutationFn: async () => {
       if (isEdit) {
-        return newsRequest(`api/news/updateNews/${id}`, {
-          method: "PUT",
-          body: { newsType: form.newsType, summary: form.summary, content: form.content },
-        });
+        const payload = { newsType: form.newsType, summary: form.summary, content: form.content };
+        if (file) {
+          const fd = new FormData();
+          fd.append("news", new Blob([JSON.stringify(payload)], { type: "application/json" }));
+          fd.append("images", file);
+          return newsRequest(`api/news/updateNews/${id}`, { method: "PUT", body: fd, isFormData: true });
+        }
+        return newsRequest(`api/news/updateNews/${id}`, { method: "PUT", body: payload });
       }
       const fd = new FormData();
-      fd.append("news", JSON.stringify(form));
+      fd.append("news", new Blob([JSON.stringify(form)], { type: "application/json" }));
       if (file) fd.append("images", file);
-      return newsRequest("api/news/createNews", { method: "POST", body: fd, isFormData: true });
+      
+      try {
+        const res = await fetch("https://api.mycampushut.com/campusHutNews/api/news/createNews", {
+          method: "POST",
+          body: fd
+        });
+        const text = await res.text();
+        console.log("Raw Response Status:", res.status);
+        console.log("Raw Response Text:", text);
+        
+        if (!res.ok) throw new Error("API error: " + res.status + " " + text);
+        
+        let data;
+        try {
+          data = JSON.parse(text);
+          console.log("Parsed JSON Response:", data);
+        } catch (err) {
+          throw new Error("Failed to parse JSON response");
+        }
+
+        if (data.Status !== "200" && data.Status !== "0" && data.Status !== "SUCCESS") {
+           throw new Error(data.Message || "Failed to create news");
+        }
+        return data;
+      } catch (err) {
+        console.error("News Creation Error:", err);
+        throw err;
+      }
     },
     onSuccess: () => {
       toast.success("Article saved!", { className: "border-orange-600" });
       qc.invalidateQueries({ queryKey: ["news"] });
       navigate("/dashboard/news");
     },
-    onError: (e: any) => toast.error(e.message),
+    onError: (e: any) => {
+      console.error("Mutation Error:", e);
+      toast.error(e.message);
+    },
   });
 
   const handleSave = () => {
@@ -95,26 +132,27 @@ export default function NewsEditor() {
           </div>
         </div>
 
-        {!isEdit && (
-          <div>
-            <label className="text-sm text-neutral-300 mb-1 block">Article Image (optional)</label>
-            {!file ? (
-              <label className="cursor-pointer block border-2 border-dashed border-[#2a2a2a] rounded-lg p-6 text-center hover:border-orange-600">
-                <Upload className="w-8 h-8 mx-auto text-orange-600 mb-2" />
-                <div className="text-neutral-400 text-sm">Upload article image</div>
-                <input type="file" hidden accept="image/*" onChange={(e) => setFile(e.target.files?.[0] || null)} />
-              </label>
-            ) : (
-              <div className="relative">
-                <img src={URL.createObjectURL(file)} alt="" className="w-full h-48 object-cover rounded" />
-                <div className="mt-2 flex items-center justify-between text-xs text-neutral-400">
-                  <span>{file.name} — {(file.size / 1024).toFixed(1)} KB</span>
-                  <button onClick={() => setFile(null)} className="p-1 bg-red-600/20 text-red-500 rounded"><X className="w-4 h-4" /></button>
-                </div>
+        <div>
+          <label className="text-sm text-neutral-300 mb-1 block">Article Image (optional)</label>
+          {!file && !existingImage ? (
+            <label className="cursor-pointer block border-2 border-dashed border-[#2a2a2a] rounded-lg p-6 text-center hover:border-orange-600">
+              <Upload className="w-8 h-8 mx-auto text-orange-600 mb-2" />
+              <div className="text-neutral-400 text-sm">Upload article image</div>
+              <input type="file" hidden accept="image/*" onChange={(e) => {
+                setFile(e.target.files?.[0] || null);
+                if (e.target.files?.[0]) setExistingImage(null);
+              }} />
+            </label>
+          ) : (
+            <div className="relative">
+              <img src={file ? URL.createObjectURL(file) : existingImage!} alt="" className="w-full h-48 object-cover rounded" />
+              <div className="mt-2 flex items-center justify-between text-xs text-neutral-400">
+                <span>{file ? `${file.name} — ${(file.size / 1024).toFixed(1)} KB` : "Existing Image"}</span>
+                <button onClick={() => { setFile(null); setExistingImage(null); }} className="p-1 bg-red-600/20 text-red-500 rounded"><X className="w-4 h-4" /></button>
               </div>
-            )}
-          </div>
-        )}
+            </div>
+          )}
+        </div>
 
         <div className="flex justify-end gap-2 pt-2">
           <button onClick={() => navigate("/dashboard/news")} className="border border-[#2a2a2a] text-white px-4 py-2 rounded text-sm">Cancel</button>

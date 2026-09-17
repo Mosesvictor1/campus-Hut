@@ -184,16 +184,41 @@ export async function trackCampaignClick(id: string | number, payload: Record<st
 }
 
 export async function createAdCampaign(payload: Record<string, any>, file?: File): Promise<any> {
-  const formData = new FormData();
   const jsonStr = JSON.stringify(payload);
-  formData.append("request", new Blob([jsonStr], { type: "application/json" }));
-  if (file) formData.append("images", file);
+  const url = `https://api.mycampushut.com/campusHutNews/api/ad-campaigns/createCampaign?request=${encodeURIComponent(jsonStr)}`;
 
-  return adsRequest(`api/ad-campaigns/createCampaign?request=${encodeURIComponent(jsonStr)}`, {
-    method: "POST",
-    body: formData,
-    isFormData: true,
-  });
+  const body = new FormData();
+  if (file) {
+    body.append("images", file);
+  }
+
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      body,
+    });
+    const text = await res.text();
+    console.log("Raw Response Status:", res.status);
+    console.log("Raw Response Text:", text);
+
+    if (!res.ok) throw new Error("API error: " + res.status + " " + text);
+
+    let data;
+    try {
+      data = JSON.parse(text);
+      console.log("Parsed JSON Response:", data);
+    } catch (err) {
+      throw new Error("Failed to parse JSON response");
+    }
+
+    if (data.Status && data.Status !== "200" && data.Status !== "0" && data.Status !== "SUCCESS" && data.statusCode !== "OK" && data.statusCode !== 200) {
+      throw new Error(data.Message || data.message || "Failed to create campaign");
+    }
+    return data;
+  } catch (err) {
+    console.error("Campaign Creation Error:", err);
+    throw err;
+  }
 }
 
 export async function updateAdCampaign(id: string | number, payload: Record<string, any>, file?: File): Promise<any> {

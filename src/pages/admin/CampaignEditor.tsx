@@ -6,7 +6,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { CalendarDays, ImagePlus, Loader2, Megaphone, X } from "lucide-react";
 import { toast } from "sonner";
-import { adsRequest, getAllCampaigns, updateAdCampaign } from "@/lib/api";
+import { adsRequest, createAdCampaign, getAllCampaigns, updateAdCampaign } from "@/lib/api";
 import { firstValue, unwrapList, unwrapObject } from "@/lib/ads";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -124,18 +124,7 @@ export default function CampaignEditor() {
           endDate: formatIsoDate(values.endDate || ""),
           maxImpressions: Number(values.maxImpressions || 10000),
         };
-        const jsonStr = JSON.stringify(payload);
-        const path = `api/ad-campaigns/createCampaign?request=${encodeURIComponent(jsonStr)}`;
-
-        const body = new FormData();
-        body.append("request", new Blob([jsonStr], { type: "application/json" }));
-        if (file) {
-          body.append("banner", file);
-          body.append("images", file);
-        } else {
-          body.append("images", new Blob([], { type: "application/octet-stream" }), "campaign-image");
-        }
-        return adsRequest(path, { method: "POST", body, isFormData: true });
+        return createAdCampaign(payload, file || undefined);
       } else {
         return updateAdCampaign(
           id!,
