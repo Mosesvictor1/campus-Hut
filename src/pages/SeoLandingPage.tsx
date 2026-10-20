@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ArrowRight, CheckCircle2, ChevronRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { blogRequest } from "@/lib/api";
@@ -16,8 +16,7 @@ interface PublicBlogPost {
   category?: string;
 }
 
-const SeoLandingPage = () => {
-  const { slug = "" } = useParams();
+const SeoLandingPage = ({ slug }: { slug: string }) => {
   const page = landingPageBySlug(slug);
 
   if (!page) return null;

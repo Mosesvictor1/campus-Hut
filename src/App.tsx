@@ -84,7 +84,7 @@ const AppRoutes = () => (
       <Route path="/blog" element={<Blog />} />
       <Route path="/blog/:slug" element={<BlogDetail />} />
       {seoLandingPages.map(({ slug }) => (
-        <Route key={slug} path={`/${slug}`} element={<SeoLandingPage />} />
+        <Route key={slug} path={`/${slug}`} element={<SeoLandingPage slug={slug} />} />
       ))}
       <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
