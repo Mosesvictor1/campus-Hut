@@ -1,10 +1,20 @@
 import { Helmet } from "react-helmet-async";
 import { Link, useParams } from "react-router-dom";
 import { ArrowRight, CheckCircle2, ChevronRight } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { blogRequest } from "@/lib/api";
 import StoreButtons from "@/components/StoreButtons";
 import { landingPageBySlug, seoLandingPages } from "@/data/seoLandingPages";
 
 const SITE_URL = "https://mycampushut.com";
+
+interface PublicBlogPost {
+  id: string | number;
+  slug: string;
+  title: string;
+  excerpt?: string;
+  category?: string;
+}
 
 const SeoLandingPage = () => {
   const { slug = "" } = useParams();
@@ -15,6 +25,23 @@ const SeoLandingPage = () => {
   const relatedPages = page.related
     .map((relatedSlug) => seoLandingPages.find((item) => item.slug === relatedSlug))
     .filter((item): item is (typeof seoLandingPages)[number] => Boolean(item));
+  const { data: blogData } = useQuery({
+    queryKey: ["seo-related-blog-posts"],
+    queryFn: () =>
+      blogRequest<{ blogs?: PublicBlogPost[] }>("blogs", {
+        body: { status: "published" },
+      }),
+  });
+  const keywords = page.focusKeyword.toLowerCase().split(/\s+/).filter((word) => word.length > 3 && !["app", "students", "student", "university", "nigeria", "africa"].includes(word));
+  const relatedPosts = (blogData?.blogs ?? [])
+    .map((post) => ({
+      post,
+      score: keywords.filter((word) => `${post.title} ${post.excerpt ?? ""} ${post.category ?? ""}`.toLowerCase().includes(word)).length,
+    }))
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3)
+    .map(({ post }) => post);
   const canonicalUrl = `${SITE_URL}/${page.slug}`;
   const structuredData = {
     "@context": "https://schema.org",
@@ -38,7 +65,7 @@ const SeoLandingPage = () => {
       <Helmet>
         <title>{page.metaTitle}</title>
         <meta name="description" content={page.metaDescription} />
-        <meta name="keywords" content={[page.focusKeyword, ...page.related].join(", ")} />
+        <meta name="keywords" content={[page.focusKeyword, ...relatedPages.map((item) => item.focusKeyword)].join(", ")} />
         <link rel="canonical" href={canonicalUrl} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={page.metaTitle} />
@@ -168,7 +195,15 @@ const SeoLandingPage = () => {
                   </Link>
                 </li>
               ))}
-              <li><Link className="text-campusGreen-800 underline decoration-campusGreen-300 underline-offset-4 hover:decoration-campusGreen-700" to="/blog">Read the CampusHut student blog</Link></li>
+              {relatedPosts.length > 0 ? relatedPosts.map((post) => (
+                <li key={post.id}>
+                  <Link className="text-campusGreen-800 underline decoration-campusGreen-300 underline-offset-4 hover:decoration-campusGreen-700" to={`/blog/${post.slug}`}>
+                    {post.title}
+                  </Link>
+                </li>
+              )) : (
+                <li><Link className="text-campusGreen-800 underline decoration-campusGreen-300 underline-offset-4 hover:decoration-campusGreen-700" to="/blog">Read the CampusHut student blog</Link></li>
+              )}
             </ul>
           </nav>
         </div>
