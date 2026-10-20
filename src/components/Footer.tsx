@@ -92,6 +92,21 @@ const TiktokIcon = ({ size = 30, ...props }) => (
           </div>
 
           <div>
+            <h3 className="font-semibold mb-4">Student Resources</h3>
+            <ul className="space-y-2 text-gray-400">
+              <li><Link to="/best-student-app-nigeria" className="hover:text-campusGreen-400">Student app in Nigeria</Link></li>
+              <li><Link to="/ai-study-app-for-university-students" className="hover:text-campusGreen-400">AI study app</Link></li>
+              <li><Link to="/student-productivity-app-nigeria" className="hover:text-campusGreen-400">Student productivity</Link></li>
+              <li><Link to="/ai-study-assistant-for-students" className="hover:text-campusGreen-400">AI study assistant</Link></li>
+              <li><Link to="/cgpa-tracker-app" className="hover:text-campusGreen-400">CGPA tracker</Link></li>
+              <li><Link to="/pdf-audio-analyser-for-students" className="hover:text-campusGreen-400">PDF and audio analyser</Link></li>
+              <li><Link to="/ai-flashcards-quiz-app" className="hover:text-campusGreen-400">AI flashcards and quizzes</Link></li>
+              <li><Link to="/study-planner-app-for-students" className="hover:text-campusGreen-400">Study planner</Link></li>
+              <li><Link to="/student-success-app-africa" className="hover:text-campusGreen-400">Student success in Africa</Link></li>
+            </ul>
+          </div>
+
+          <div>
             <h3 className="font-semibold mb-4">Legal</h3>
             <ul className="space-y-2 text-gray-400">
               <li>

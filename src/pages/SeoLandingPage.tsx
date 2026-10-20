@@ -1,20 +1,26 @@
-import { Helmet } from "react-helmet-async";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
 import { ArrowRight, CheckCircle2, ChevronRight } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { blogRequest } from "@/lib/api";
 import StoreButtons from "@/components/StoreButtons";
 import { landingPageBySlug, seoLandingPages } from "@/data/seoLandingPages";
 
 const SITE_URL = "https://mycampushut.com";
 
-const SeoLandingPage = () => {
-  const { slug = "" } = useParams();
+interface PublicBlogPost {
+  id: string | number;
+  slug: string;
+  title: string;
+  excerpt?: string;
+  category?: string;
+}
+
+const SeoLandingPage = ({ slug }: { slug: string }) => {
   const page = landingPageBySlug(slug);
 
   if (!page) return null;
 
-  const relatedPages = page.related
-    .map((relatedSlug) => seoLandingPages.find((item) => item.slug === relatedSlug))
-    .filter((item): item is (typeof seoLandingPages)[number] => Boolean(item));
   const canonicalUrl = `${SITE_URL}/${page.slug}`;
   const structuredData = {
     "@context": "https://schema.org",
@@ -33,26 +39,99 @@ const SeoLandingPage = () => {
     },
   };
 
+  useEffect(() => {
+    const originalTitle = document.title;
+    const savedValues: Array<() => void> = [];
+    const setMeta = (attribute: "name" | "property", key: string, value: string) => {
+      let element = document.head.querySelector<HTMLMetaElement>(`meta[${attribute}="${key}"]`);
+      const existed = Boolean(element);
+      if (!element) {
+        element = document.createElement("meta");
+        element.setAttribute(attribute, key);
+        document.head.appendChild(element);
+      }
+      const previous = element.getAttribute("content");
+      element.setAttribute("content", value);
+      const activeElement = element;
+      savedValues.push(() => {
+        if (existed && previous !== null) activeElement.setAttribute("content", previous);
+        else activeElement.remove();
+      });
+    };
+
+    let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    const hadCanonical = Boolean(canonical);
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.rel = "canonical";
+      document.head.appendChild(canonical);
+    }
+    const previousCanonical = canonical.href;
+    canonical.href = canonicalUrl;
+    const activeCanonical = canonical;
+    savedValues.push(() => {
+      if (hadCanonical) activeCanonical.href = previousCanonical;
+      else activeCanonical.remove();
+    });
+
+    let jsonLd = document.getElementById("campushut-route-schema");
+    const hadJsonLd = Boolean(jsonLd);
+    if (!jsonLd) {
+      jsonLd = document.createElement("script");
+      jsonLd.id = "campushut-route-schema";
+      jsonLd.type = "application/ld+json";
+      document.head.appendChild(jsonLd);
+    }
+    const previousJsonLd = jsonLd.textContent;
+    jsonLd.textContent = JSON.stringify(structuredData);
+    const activeJsonLd = jsonLd;
+    savedValues.push(() => {
+      if (hadJsonLd) activeJsonLd.textContent = previousJsonLd;
+      else activeJsonLd.remove();
+    });
+
+    document.title = page.metaTitle;
+    setMeta("name", "description", page.metaDescription);
+    setMeta("name", "keywords", [page.focusKeyword, ...page.related].join(", "));
+    setMeta("property", "og:type", "website");
+    setMeta("property", "og:title", page.metaTitle);
+    setMeta("property", "og:description", page.metaDescription);
+    setMeta("property", "og:url", canonicalUrl);
+    setMeta("property", "og:image", `${SITE_URL}${page.image.src}`);
+    setMeta("property", "og:image:alt", page.image.alt);
+    setMeta("name", "twitter:card", "summary_large_image");
+    setMeta("name", "twitter:title", page.metaTitle);
+    setMeta("name", "twitter:description", page.metaDescription);
+    setMeta("name", "twitter:image", `${SITE_URL}${page.image.src}`);
+
+    return () => {
+      document.title = originalTitle;
+      savedValues.reverse().forEach((restore) => restore());
+    };
+  }, [canonicalUrl, page, structuredData]);
+
+  const relatedPages = page.related
+    .map((relatedSlug) => seoLandingPages.find((item) => item.slug === relatedSlug))
+    .filter((item): item is (typeof seoLandingPages)[number] => Boolean(item));
+  const { data: blogData } = useQuery({
+    queryKey: ["seo-related-blog-posts"],
+    queryFn: () =>
+      blogRequest<{ blogs?: PublicBlogPost[] }>("blogs", {
+        body: { status: "published" },
+      }),
+  });
+  const keywords = page.focusKeyword.toLowerCase().split(/\s+/).filter((word) => word.length > 3 && !["app", "students", "student", "university", "nigeria", "africa"].includes(word));
+  const relatedPosts = (blogData?.blogs ?? [])
+    .map((post) => ({
+      post,
+      score: keywords.filter((word) => `${post.title} ${post.excerpt ?? ""} ${post.category ?? ""}`.toLowerCase().includes(word)).length,
+    }))
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3)
+    .map(({ post }) => post);
   return (
     <>
-      <Helmet>
-        <title>{page.metaTitle}</title>
-        <meta name="description" content={page.metaDescription} />
-        <meta name="keywords" content={[page.focusKeyword, ...page.related].join(", ")} />
-        <link rel="canonical" href={canonicalUrl} />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content={page.metaTitle} />
-        <meta property="og:description" content={page.metaDescription} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:image" content={`${SITE_URL}${page.image.src}`} />
-        <meta property="og:image:alt" content={page.image.alt} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={page.metaTitle} />
-        <meta name="twitter:description" content={page.metaDescription} />
-        <meta name="twitter:image" content={`${SITE_URL}${page.image.src}`} />
-        <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
-      </Helmet>
-
       <div className="min-h-screen bg-white pt-24 text-gray-900">
         <div className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
           <nav aria-label="Breadcrumb" className="mb-8">
@@ -168,7 +247,15 @@ const SeoLandingPage = () => {
                   </Link>
                 </li>
               ))}
-              <li><Link className="text-campusGreen-800 underline decoration-campusGreen-300 underline-offset-4 hover:decoration-campusGreen-700" to="/blog">Read the CampusHut student blog</Link></li>
+              {relatedPosts.length > 0 ? relatedPosts.map((post) => (
+                <li key={post.id}>
+                  <Link className="text-campusGreen-800 underline decoration-campusGreen-300 underline-offset-4 hover:decoration-campusGreen-700" to={`/blog/${post.slug}`}>
+                    {post.title}
+                  </Link>
+                </li>
+              )) : (
+                <li><Link className="text-campusGreen-800 underline decoration-campusGreen-300 underline-offset-4 hover:decoration-campusGreen-700" to="/blog">Read the CampusHut student blog</Link></li>
+              )}
             </ul>
           </nav>
         </div>
