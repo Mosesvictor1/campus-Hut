@@ -30,6 +30,8 @@ import AdvertiserEditor from "./pages/admin/AdvertiserEditor";
 import Campaigns from "./pages/admin/Campaigns";
 import CampaignEditor from "./pages/admin/CampaignEditor";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import SeoLandingPage from "./pages/SeoLandingPage";
+import { seoLandingPages } from "@/data/seoLandingPages";
 
 const queryClient = new QueryClient();
 
@@ -81,6 +83,9 @@ const AppRoutes = () => (
       <Route path="/project" element={<ProjectDetail />} />
       <Route path="/blog" element={<Blog />} />
       <Route path="/blog/:slug" element={<BlogDetail />} />
+      {seoLandingPages.map(({ slug }) => (
+        <Route key={slug} path={`/${slug}`} element={<SeoLandingPage />} />
+      ))}
       <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/" element={<Index />} />
