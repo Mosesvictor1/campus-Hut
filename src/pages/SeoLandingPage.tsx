@@ -18,11 +18,10 @@ interface PublicBlogPost {
 
 const SeoLandingPage = ({ slug }: { slug: string }) => {
   const page = landingPageBySlug(slug);
-
-  if (!page) return null;
-
-  const canonicalUrl = `${SITE_URL}/${page.slug}`;
+  const canonicalUrl = page ? `${SITE_URL}/${page.slug}` : SITE_URL;
   useEffect(() => {
+    if (!page) return;
+
     const originalTitle = document.title;
     const savedValues: Array<() => void> = [];
     const structuredData = {
@@ -112,9 +111,6 @@ const SeoLandingPage = ({ slug }: { slug: string }) => {
     };
   }, [canonicalUrl, page]);
 
-  const relatedPages = page.related
-    .map((relatedSlug) => seoLandingPages.find((item) => item.slug === relatedSlug))
-    .filter((item): item is (typeof seoLandingPages)[number] => Boolean(item));
   const { data: blogData } = useQuery({
     queryKey: ["seo-related-blog-posts"],
     queryFn: () =>
@@ -122,6 +118,12 @@ const SeoLandingPage = ({ slug }: { slug: string }) => {
         body: { status: "published" },
       }),
   });
+
+  if (!page) return null;
+
+  const relatedPages = page.related
+    .map((relatedSlug) => seoLandingPages.find((item) => item.slug === relatedSlug))
+    .filter((item): item is (typeof seoLandingPages)[number] => Boolean(item));
   const keywords = page.focusKeyword.toLowerCase().split(/\s+/).filter((word) => word.length > 3 && !["app", "students", "student", "university", "nigeria", "africa"].includes(word));
   const relatedPosts = (blogData?.blogs ?? [])
     .map((post) => ({
