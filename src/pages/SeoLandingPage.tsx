@@ -22,26 +22,25 @@ const SeoLandingPage = ({ slug }: { slug: string }) => {
   if (!page) return null;
 
   const canonicalUrl = `${SITE_URL}/${page.slug}`;
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    name: page.metaTitle,
-    description: page.metaDescription,
-    url: canonicalUrl,
-    inLanguage: "en",
-    about: { "@type": "Thing", name: page.focusKeyword },
-    breadcrumb: {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-        { "@type": "ListItem", position: 2, name: page.title, item: canonicalUrl },
-      ],
-    },
-  };
-
   useEffect(() => {
     const originalTitle = document.title;
     const savedValues: Array<() => void> = [];
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: page.metaTitle,
+      description: page.metaDescription,
+      url: canonicalUrl,
+      inLanguage: "en",
+      about: { "@type": "Thing", name: page.focusKeyword },
+      breadcrumb: {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+          { "@type": "ListItem", position: 2, name: page.title, item: canonicalUrl },
+        ],
+      },
+    };
     const setMeta = (attribute: "name" | "property", key: string, value: string) => {
       let element = document.head.querySelector<HTMLMetaElement>(`meta[${attribute}="${key}"]`);
       const existed = Boolean(element);
@@ -74,7 +73,7 @@ const SeoLandingPage = ({ slug }: { slug: string }) => {
       else activeCanonical.remove();
     });
 
-    let jsonLd = document.getElementById("campushut-route-schema");
+    let jsonLd = document.head.querySelector<HTMLScriptElement>("#campushut-route-schema");
     const hadJsonLd = Boolean(jsonLd);
     if (!jsonLd) {
       jsonLd = document.createElement("script");
@@ -108,7 +107,7 @@ const SeoLandingPage = ({ slug }: { slug: string }) => {
       document.title = originalTitle;
       savedValues.reverse().forEach((restore) => restore());
     };
-  }, [canonicalUrl, page, structuredData]);
+  }, [canonicalUrl, page]);
 
   const relatedPages = page.related
     .map((relatedSlug) => seoLandingPages.find((item) => item.slug === relatedSlug))
@@ -156,7 +155,6 @@ const SeoLandingPage = ({ slug }: { slug: string }) => {
                 src={page.image.src}
                 alt={page.image.alt}
                 className="mx-auto max-h-[620px] w-full object-contain"
-                fetchPriority="high"
               />
             </figure>
           </header>
