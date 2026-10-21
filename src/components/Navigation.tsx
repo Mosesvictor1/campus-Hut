@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
+import { seoLandingPages } from "@/data/seoLandingPages";
 
 const navLinks = [
   { href: "/#home", label: "Home" },
@@ -41,6 +43,23 @@ const Navigation = () => {
                   {l.label}
                 </a>
               ))}
+              <details className="group relative">
+                <summary className="flex cursor-pointer list-none items-center gap-1 px-2 py-2 text-sm font-medium text-gray-700 hover:text-campusGreen-600">
+                  Student Resources
+                  <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" aria-hidden="true" />
+                </summary>
+                <div className="absolute right-0 top-full z-50 mt-2 max-h-80 w-80 overflow-y-auto border border-gray-200 bg-white py-2 shadow-lg">
+                  {seoLandingPages.map((page) => (
+                    <Link
+                      key={page.slug}
+                      to={`/${page.slug}`}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-campusGreen-700"
+                    >
+                      {page.title}
+                    </Link>
+                  ))}
+                </div>
+              </details>
               <a
                 href="https://play.google.com/store/apps/details?id=com.campushut.app"
                 target="_blank"
@@ -83,6 +102,24 @@ const Navigation = () => {
                   {l.label}
                 </a>
               ))}
+              <details className="group px-3 py-2">
+                <summary className="flex cursor-pointer list-none items-center justify-between text-gray-700 hover:text-campusGreen-600">
+                  Student Resources
+                  <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" aria-hidden="true" />
+                </summary>
+                <div className="mt-2 max-h-64 space-y-1 overflow-y-auto border-l border-gray-200 pl-3">
+                  {seoLandingPages.map((page) => (
+                    <Link
+                      key={page.slug}
+                      to={`/${page.slug}`}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block py-2 text-sm text-gray-700 hover:text-campusGreen-600"
+                    >
+                      {page.title}
+                    </Link>
+                  ))}
+                </div>
+              </details>
               <a
                 href="https://play.google.com/store/apps/details?id=com.campushut.app"
                 target="_blank"
