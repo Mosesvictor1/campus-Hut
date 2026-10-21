@@ -91,7 +91,10 @@ const SeoLandingPage = ({ slug }: { slug: string }) => {
 
     document.title = page.metaTitle;
     setMeta("name", "description", page.metaDescription);
-    setMeta("name", "keywords", [page.focusKeyword, ...page.related].join(", "));
+    const relatedKeywords = page.related
+      .map((relatedSlug) => seoLandingPages.find((item) => item.slug === relatedSlug)?.focusKeyword)
+      .filter((keyword): keyword is string => Boolean(keyword));
+    setMeta("name", "keywords", [page.focusKeyword, ...relatedKeywords].join(", "));
     setMeta("property", "og:type", "website");
     setMeta("property", "og:title", page.metaTitle);
     setMeta("property", "og:description", page.metaDescription);

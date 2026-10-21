@@ -130,7 +130,7 @@ export async function newsRequest<T = any>(
   if (body && !isFormData) {
     options.headers = { "Content-Type": "application/json" };
     options.body = JSON.stringify(body);
-  } else if (body && isFormData) {
+  } else if (body instanceof FormData) {
     // Let the browser set Content-Type + boundary automatically for FormData
     options.body = body;
   }
