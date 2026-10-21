@@ -18,30 +18,28 @@ interface PublicBlogPost {
 
 const SeoLandingPage = ({ slug }: { slug: string }) => {
   const page = landingPageBySlug(slug);
-
-  if (!page) return null;
-
-  const canonicalUrl = `${SITE_URL}/${page.slug}`;
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    name: page.metaTitle,
-    description: page.metaDescription,
-    url: canonicalUrl,
-    inLanguage: "en",
-    about: { "@type": "Thing", name: page.focusKeyword },
-    breadcrumb: {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-        { "@type": "ListItem", position: 2, name: page.title, item: canonicalUrl },
-      ],
-    },
-  };
-
+  const canonicalUrl = page ? `${SITE_URL}/${page.slug}` : SITE_URL;
   useEffect(() => {
+    if (!page) return;
+
     const originalTitle = document.title;
     const savedValues: Array<() => void> = [];
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: page.metaTitle,
+      description: page.metaDescription,
+      url: canonicalUrl,
+      inLanguage: "en",
+      about: { "@type": "Thing", name: page.focusKeyword },
+      breadcrumb: {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+          { "@type": "ListItem", position: 2, name: page.title, item: canonicalUrl },
+        ],
+      },
+    };
     const setMeta = (attribute: "name" | "property", key: string, value: string) => {
       let element = document.head.querySelector<HTMLMetaElement>(`meta[${attribute}="${key}"]`);
       const existed = Boolean(element);
@@ -74,7 +72,7 @@ const SeoLandingPage = ({ slug }: { slug: string }) => {
       else activeCanonical.remove();
     });
 
-    let jsonLd = document.getElementById("campushut-route-schema");
+    let jsonLd = document.head.querySelector<HTMLScriptElement>("#campushut-route-schema");
     const hadJsonLd = Boolean(jsonLd);
     if (!jsonLd) {
       jsonLd = document.createElement("script");
@@ -92,7 +90,10 @@ const SeoLandingPage = ({ slug }: { slug: string }) => {
 
     document.title = page.metaTitle;
     setMeta("name", "description", page.metaDescription);
-    setMeta("name", "keywords", [page.focusKeyword, ...page.related].join(", "));
+    const relatedKeywords = page.related
+      .map((relatedSlug) => seoLandingPages.find((item) => item.slug === relatedSlug)?.focusKeyword)
+      .filter((keyword): keyword is string => Boolean(keyword));
+    setMeta("name", "keywords", [page.focusKeyword, ...relatedKeywords].join(", "));
     setMeta("property", "og:type", "website");
     setMeta("property", "og:title", page.metaTitle);
     setMeta("property", "og:description", page.metaDescription);
@@ -108,11 +109,8 @@ const SeoLandingPage = ({ slug }: { slug: string }) => {
       document.title = originalTitle;
       savedValues.reverse().forEach((restore) => restore());
     };
-  }, [canonicalUrl, page, structuredData]);
+  }, [canonicalUrl, page]);
 
-  const relatedPages = page.related
-    .map((relatedSlug) => seoLandingPages.find((item) => item.slug === relatedSlug))
-    .filter((item): item is (typeof seoLandingPages)[number] => Boolean(item));
   const { data: blogData } = useQuery({
     queryKey: ["seo-related-blog-posts"],
     queryFn: () =>
@@ -120,6 +118,12 @@ const SeoLandingPage = ({ slug }: { slug: string }) => {
         body: { status: "published" },
       }),
   });
+
+  if (!page) return null;
+
+  const relatedPages = page.related
+    .map((relatedSlug) => seoLandingPages.find((item) => item.slug === relatedSlug))
+    .filter((item): item is (typeof seoLandingPages)[number] => Boolean(item));
   const keywords = page.focusKeyword.toLowerCase().split(/\s+/).filter((word) => word.length > 3 && !["app", "students", "student", "university", "nigeria", "africa"].includes(word));
   const relatedPosts = (blogData?.blogs ?? [])
     .map((post) => ({
@@ -156,7 +160,6 @@ const SeoLandingPage = ({ slug }: { slug: string }) => {
                 src={page.image.src}
                 alt={page.image.alt}
                 className="mx-auto max-h-[620px] w-full object-contain"
-                fetchPriority="high"
               />
             </figure>
           </header>

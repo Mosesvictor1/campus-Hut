@@ -75,6 +75,7 @@ export function formatMetric(value: AdsValue | "") {
 
 export function formatDate(value: AdsValue | "") {
   if (!value) return "—";
+  if (typeof value === "boolean") return String(value);
   const date = new Date(value);
   return Number.isNaN(date.getTime()) ? String(value) : date.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
 }
