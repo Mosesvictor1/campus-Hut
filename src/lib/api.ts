@@ -6,6 +6,12 @@ interface BlogReqOpts {
   body?: Record<string, any>;
 }
 
+interface NewsReqOpts {
+  method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
+  body?: Record<string, any> | FormData;
+  isFormData?: boolean;
+}
+
 /**
  * IMPORTANT — Google Apps Script routing constraint:
  *
