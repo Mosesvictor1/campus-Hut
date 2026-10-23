@@ -17,6 +17,12 @@ const navLinks = [
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const closeResourceDropdown = (e: React.MouseEvent) => {
+    const details = (e.currentTarget as HTMLElement).closest("details");
+    if (details) details.open = false;
+    setIsMenuOpen(false);
+  };
+
   return (
     <nav className="fixed top-0 w-full bg-green-50 backdrop-blur-md z-50 border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -53,6 +59,7 @@ const Navigation = () => {
                     <Link
                       key={page.slug}
                       to={`/${page.slug}`}
+                      onClick={closeResourceDropdown}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-campusGreen-700"
                     >
                       {page.title}
@@ -112,7 +119,7 @@ const Navigation = () => {
                     <Link
                       key={page.slug}
                       to={`/${page.slug}`}
-                      onClick={() => setIsMenuOpen(false)}
+                      onClick={closeResourceDropdown}
                       className="block py-2 text-sm text-gray-700 hover:text-campusGreen-600"
                     >
                       {page.title}
