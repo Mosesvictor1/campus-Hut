@@ -59,6 +59,7 @@ const Navigation = () => {
                     <Link
                       key={page.slug}
                       to={`/${page.slug}`}
+                      onClick={closeResourceDropdown}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-campusGreen-700"
                     >
                       {page.title}
@@ -118,7 +119,7 @@ const Navigation = () => {
                     <Link
                       key={page.slug}
                       to={`/${page.slug}`}
-                      onClick={() => setIsMenuOpen(false)}
+                      onClick={closeResourceDropdown}
                       className="block py-2 text-sm text-gray-700 hover:text-campusGreen-600"
                     >
                       {page.title}
