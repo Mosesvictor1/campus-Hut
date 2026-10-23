@@ -78,7 +78,7 @@ const HeroSection = () => {
               data-aos="fade-up"
               data-aos-delay="300"
             >
-              Trusted by 15,000+ students across African universities.
+              Trusted by 30,000+ students across African universities.
             </p>
           </div>
 
@@ -108,11 +108,10 @@ const HeroSection = () => {
                     key={i}
                     onClick={() => setActive(i)}
                     aria-label={`Show slide ${i + 1}`}
-                    className={`h-2 rounded-full transition-all ${
-                      i === active
+                    className={`h-2 rounded-full transition-all ${i === active
                         ? "w-6 bg-campusGreen-600"
                         : "w-2 bg-campusGreen-300 hover:bg-campusGreen-400"
-                    }`}
+                      }`}
                   />
                 ))}
               </div>
