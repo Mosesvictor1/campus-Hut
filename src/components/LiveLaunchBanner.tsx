@@ -43,22 +43,19 @@ const LaunchPopup: React.FC<Props> = ({
     <>
       {/* Backdrop */}
       <div
-        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-300 ${
-          isVisible ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
         onClick={handleClose}
       />
 
       {/* Popup Container */}
       <div
-        className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-300 overflow-y-auto ${
-          isVisible ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+        className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-300 overflow-y-auto ${isVisible ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
       >
         <div
-          className={`relative bg-gradient-to-br from-green-50 via-white to-emerald-50 rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden transition-all duration-500 transform my-8 ${
-            isVisible ? "scale-100 translate-y-0" : "scale-90 translate-y-8"
-          }`}
+          className={`relative bg-gradient-to-br from-green-50 via-white to-emerald-50 rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden transition-all duration-500 transform my-8 ${isVisible ? "scale-100 translate-y-0" : "scale-90 translate-y-8"
+            }`}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Confetti Animation */}
@@ -232,7 +229,7 @@ const LaunchPopup: React.FC<Props> = ({
                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 border-2 border-white" />
                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 border-2 border-white" />
                 </span>
-                Join 15,000+ students already on CampusHut
+                Join 30,000+ students already on CampusHut
               </span>
             </div>
           </div>
