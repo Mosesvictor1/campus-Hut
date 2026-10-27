@@ -114,7 +114,7 @@ export const seoLandingPages: SeoLandingPageData[] = [
       { question: "Can CampusHut remind me about assignments?", answer: "CampusHut includes assignment reminders to help keep academic deadlines in view." },
       { question: "Is CampusHut only for students in Nigeria?", answer: "CampusHut is designed for students in Nigeria and across Africa, and supports university and tertiary study routines." },
     ],
-    image: { src: taskScheduler.url, alt: "CampusHut task scheduler for planning student study and academic tasks" },
+    image: { src: "/assets/SeoProductivity.png", alt: "CampusHut study dashboard with semester progress, weekly stats and assignments for a productive semester" },
     related: ["study-planner-app-for-students", "best-student-app-nigeria", "student-success-app-africa"],
   },
   {
@@ -174,7 +174,7 @@ export const seoLandingPages: SeoLandingPageData[] = [
       { question: "Does a CGPA tracker improve my grades automatically?", answer: "No. Tracking makes academic information easier to review, while study, attendance and course decisions remain yours." },
       { question: "Can I use the tracker with other study tools?", answer: "Yes. CampusHut brings academic goals and tracking together with its study planner, reminders and AI learning tools." },
     ],
-    image: { src: personalisation.url, alt: "CampusHut academic progress and CGPA goal dashboard" },
+    image: { src: "/assets/SeoCgpaTracker.png", alt: "CampusHut dashboard showing the predicted CGPA, semester progress and weekly study indicators" },
     related: ["student-productivity-app-nigeria", "study-planner-app-for-students", "best-student-app-nigeria"],
   },
   {
@@ -204,7 +204,7 @@ export const seoLandingPages: SeoLandingPageData[] = [
       { question: "Does CampusHut include audio analysis?", answer: "Yes. Audio analysis is included among CampusHut's learning tools for students." },
       { question: "Should I verify AI-supported study material?", answer: "Yes. Compare important details with the original document or recording and your lecturer's course materials." },
     ],
-    image: { src: homepage.url, alt: "CampusHut student learning app with tools for working through study resources" },
+    image: { src: "/assets/SeoAnalyser.png", alt: "CampusHut AI Document Analyser screen for uploading PDF, DOCX and voice notes" },
     related: ["ai-study-assistant-for-students", "ai-study-app-for-university-students", "ai-flashcards-quiz-app"],
   },
   {
@@ -234,7 +234,7 @@ export const seoLandingPages: SeoLandingPageData[] = [
       { question: "Can I generate quizzes for exam revision?", answer: "Yes. Use AI-generated quizzes as one part of your revision, alongside lecture notes and other course materials." },
       { question: "Are AI-generated answers always correct?", answer: "AI-generated study material can make mistakes. Check important facts against your original sources and course guidance." },
     ],
-    image: { src: homepage.url, alt: "CampusHut student app with AI learning and revision tools" },
+    image: { src: "/assets/SeoFlashcardsQuiz.png", alt: "CampusHut lesson selection screen for generating quizzes from course modules and lessons" },
     related: ["ai-study-app-for-university-students", "ai-study-assistant-for-students", "pdf-audio-analyser-for-students"],
   },
   {
@@ -294,7 +294,7 @@ export const seoLandingPages: SeoLandingPageData[] = [
       { question: "Is CampusHut designed for African students?", answer: "CampusHut is designed for students at higher institutions in Africa, with a focus on practical academic support." },
       { question: "Does CampusHut guarantee better grades?", answer: "No app can guarantee academic results. CampusHut provides tools students can use to organise study, practise course concepts and review their progress." },
     ],
-    image: { src: personalisation.url, alt: "CampusHut personalised academic goals and progress view" },
+    image: { src: "/assets/SeoStudentSuccess.png", alt: "CampusHut home screen with the study streak and AI recommendations supporting student success" },
     related: ["best-student-app-nigeria", "student-productivity-app-nigeria", "ai-study-app-for-university-students"],
   },
 ];
