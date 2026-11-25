@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.campushut.app",
+      "sha256_cert_fingerprints": [
+        "E7:6E:28:A3:6E:39:6F:7C:5C:15:37:50:53:9C:27:9F:62:1D:7A:C7:06:17:1B:87:4E:21:F4:8A:09:A6:1C:3E"
+      ]
+    }
+  }
+]

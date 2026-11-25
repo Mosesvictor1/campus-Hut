@@ -31,6 +31,7 @@ import Campaigns from "./pages/admin/Campaigns";
 import CampaignEditor from "./pages/admin/CampaignEditor";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import SeoLandingPage from "./pages/SeoLandingPage";
+import JoinReferral from "./pages/JoinReferral";
 import { seoLandingPages } from "@/data/seoLandingPages";
 
 const queryClient = new QueryClient();
@@ -38,7 +39,9 @@ const queryClient = new QueryClient();
 const PublicChrome = ({ children }: { children: React.ReactNode }) => {
   const { pathname } = useLocation();
   const isAdmin = pathname.startsWith("/dashboard") || pathname === "/login";
-  if (isAdmin) return <>{children}</>;
+  // Invite links get a focused page without the site navigation.
+  const isInvite = pathname.startsWith("/join/");
+  if (isAdmin || isInvite) return <>{children}</>;
   return (
     <>
       <Navigation />
@@ -78,6 +81,7 @@ const AppRoutes = () => (
         <Route path="settings" element={<Settings />} />
       </Route>
 
+      <Route path="/join/:code" element={<JoinReferral />} />
       <Route path="/projects" element={<Projects />} />
       <Route path="/projects/:department" element={<DepartmentProjects />} />
       <Route path="/project" element={<ProjectDetail />} />

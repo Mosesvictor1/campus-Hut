@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["JAT9X6A39S.com.campushut.app"],
+        "appID": "JAT9X6A39S.com.campushut.app",
+        "components": [{ "/": "/join/*" }],
+        "paths": ["/join/*"]
+      }
+    ]
+  }
+}
